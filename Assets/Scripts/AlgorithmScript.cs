@@ -10,22 +10,24 @@ using TMPro;
 
 public class ScrollingAlgorithm : MonoBehaviour
 {
-[System.Serializable]
-public struct QuoteData
-{
-    public string quote;
-    public string imageLocation;
-}
+    [System.Serializable]
+    public struct QuoteData
+    {
+        public string quote;
+        public string imageLocation;
+    }
     public GameObject algorithmWindow;
     public Canvas gameCanvas;
     public int numberOfWindows = 15;
-    private float offScreenOffset = -700; // Position of boxes below the canvas
-    private float catapultSpeed = 750f;  // Speed at which the box flies off the screen
+    private float offScreenOffset = -700;
+    private float catapultSpeed = 750f;
+    public float scrollCooldown = 0.5f;
+    private float lastScrollTime = -1f;
 
     private List<GameObject> boxes = new List<GameObject>();
     private List<Color> colors = new List<Color>();
-    private Dictionary<Color, List<QuoteData>> colorData; 
-    private Dictionary<string, Sprite> imageDictionary; 
+    private Dictionary<Color, List<QuoteData>> colorData;
+    private Dictionary<string, Sprite> imageDictionary;
 
     // Start is called before the first frame update
     void Start()
@@ -35,15 +37,24 @@ public struct QuoteData
         PrepareDataDictionary();
         StartCoroutine(SpawnWindows());
     }
-    
-        void LoadImages()
+
+    private void FixedUpdate()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && Time.time > lastScrollTime + scrollCooldown)
+        {
+            lastScrollTime = Time.time;
+            SimulateClick();
+        }
+    }
+
+    void LoadImages()
     {
         imageDictionary = new Dictionary<string, Sprite>();
 
         Sprite[] sprites = Resources.LoadAll<Sprite>("QuoteImages");
         foreach (Sprite sprite in sprites)
         {
-            imageDictionary[sprite.name] = sprite; 
+            imageDictionary[sprite.name] = sprite;
         }
     }
 
@@ -119,7 +130,7 @@ public struct QuoteData
                 rectTransform.anchoredPosition = new Vector2(0, offScreenOffset);
                 offScreenOffset = offScreenOffset + -700;
             }
-            
+
             Image boxImage = gameObject.GetComponent<Image>();
             Color algorithmColor = colors[i];
             boxImage.color = algorithmColor;
@@ -131,7 +142,7 @@ public struct QuoteData
             {
                 List<QuoteData> possibleData = colorData[algorithmColor];
                 QuoteData selectedData = possibleData[Random.Range(0, possibleData.Count)];
-                
+
                 boxText.text = selectedData.quote;
 
                 // Look up the image in the image dictionary
@@ -154,7 +165,7 @@ public struct QuoteData
         }
     }
 
-void CatapultBox(int index)
+    void CatapultBox(int index)
     {
         if (index >= boxes.Count) return;
 
@@ -199,5 +210,19 @@ void CatapultBox(int index)
 
         // Ensure it ends exactly in the center
         rectTransform.anchoredPosition = targetPosition;
+    }
+
+    void SimulateClick()
+    {
+        // Find the currently centered box (the first active box in the list)
+        for (int i = 0; i < boxes.Count; i++)
+        {
+            if (boxes[i] != null && boxes[i].activeSelf)
+            {
+                // Trigger the catapult effect as if it were clicked
+                CatapultBox(i);
+                break;
+            }
+        }
     }
 }
