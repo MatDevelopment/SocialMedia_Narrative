@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - WordGroup1
+  - WordGroup2
+  - WordGroup3
+  - WordManager
   layers:
   - Default
   - TransparentFX
