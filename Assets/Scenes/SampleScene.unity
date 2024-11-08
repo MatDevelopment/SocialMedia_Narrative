@@ -404,10 +404,10 @@ MonoBehaviour:
   playerControls: {fileID: -944628639613478452, guid: 7a993e5349d61cb429e1b8d14a2bf2e8, type: 3}
   wordSpawner: {fileID: 130315572}
   wordManager: {fileID: 2072176394}
-  StringToFakeType: I cant see a thing.
+  StringToFakeType: I dont see
   wordGroupTag: WordGroup2
-  spawnMaximum: 5
-  wordListCurrent: []
+  wordAddedPerMathematicalDivision_Max5: 3
+  wordListCurrentlyChecking: []
   words: []
   isThereStringToType: 0
 --- !u!4 &130315576
@@ -477,10 +477,10 @@ MonoBehaviour:
   playerControls: {fileID: -944628639613478452, guid: 7a993e5349d61cb429e1b8d14a2bf2e8, type: 3}
   wordSpawner: {fileID: 188930605}
   wordManager: {fileID: 2072176394}
-  StringToFakeType: Hi. How are you good sir? Good seeing you here
+  StringToFakeType: Hi
   wordGroupTag: WordGroup1
-  spawnMaximum: 5
-  wordListCurrent: []
+  wordAddedPerMathematicalDivision_Max5: 3
+  wordListCurrentlyChecking: []
   words: []
   isThereStringToType: 0
 --- !u!4 &188930602
@@ -1254,10 +1254,10 @@ MonoBehaviour:
   playerControls: {fileID: -944628639613478452, guid: 7a993e5349d61cb429e1b8d14a2bf2e8, type: 3}
   wordSpawner: {fileID: 583216748}
   wordManager: {fileID: 2072176394}
-  StringToFakeType: There is only the night. Hello
+  StringToFakeType: There is only the night. Hello for you dear
   wordGroupTag: WordGroup3
-  spawnMaximum: 5
-  wordListCurrent: []
+  wordAddedPerMathematicalDivision_Max5: 3
+  wordListCurrentlyChecking: []
   words: []
   isThereStringToType: 0
 --- !u!4 &583216752

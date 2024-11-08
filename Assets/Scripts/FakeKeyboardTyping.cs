@@ -7,6 +7,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 public class FakeKeyboardTyping : MonoBehaviour
@@ -26,10 +27,11 @@ public class FakeKeyboardTyping : MonoBehaviour
 
     private int fakeTypePressesRequired;
     private int currentUserTypePresses;
-    [SerializeField] private int spawnMaximum;
+    [FormerlySerializedAs("spawnMaximum")] private int wordSpawnMaximum;
+    [SerializeField] private int wordAddedPerMathematicalDivision_Max5;
     private int wordsLeftToWrite;
 
-    public List<string> wordListCurrent;
+    public List<string> wordListCurrentlyChecking;
     public List<Word> words;
 
     private bool hasActiveWord;
@@ -44,6 +46,14 @@ public class FakeKeyboardTyping : MonoBehaviour
         anyKeyInput.canceled -= FakeType;
         anyKeyInput.started -= FakeType;*/
 
+        
+        
+        StartTypingRound();
+        
+    }
+
+    private void StartTypingRound()
+    {
         if (StringToFakeType.Length > 0)
         {
             isThereStringToType = true;
@@ -52,18 +62,16 @@ public class FakeKeyboardTyping : MonoBehaviour
         {
             isThereStringToType = false;
         }
-        
-        StartTypingRound();
-        
-    }
 
-    private void StartTypingRound()
-    {
-        wordManager.inTypingRound = true;
-        wordListCurrent.Clear();
-        words.Clear();
-        SplitStringIntoWords(StringToFakeType);
-        StringToFakeType = "";
+        if (isThereStringToType)
+        {
+            Debug.Log("String to type!");
+            wordManager.inTypingRound = true;
+            /*wordListCurrentlyChecking.Clear();
+            words.Clear();*/
+            SplitStringIntoWords(StringToFakeType, wordAddedPerMathematicalDivision_Max5);
+            StringToFakeType = "";
+        }
     }
     
     /*
@@ -90,14 +98,6 @@ public class FakeKeyboardTyping : MonoBehaviour
             Debug.Log("UP");
         }
     }*/
-    
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartTypingRound();
-        }
-    }
 
     /*private void FakeTyping()
     {
@@ -119,46 +119,74 @@ public class FakeKeyboardTyping : MonoBehaviour
         }
     }*/
 
-    void SplitStringIntoWords(string text)
+    void SplitStringIntoWords(string text,int _wordAddedPerMathematicalDivision_Max5)
     {
         /*string text = "'Oh, you can't help that,' said the Cat: 'we're all mad here. I'm mad. You're mad.'"*/;
         char[] punctuation = text.Where(Char.IsPunctuation).Distinct().ToArray();
         var words_ = text.Split().Select(x => x.Trim(punctuation));
+
+        int amountOfWordsInString = 0;
         
         foreach (string word in words_)
         {
-            wordListCurrent.Add(word);
+            wordListCurrentlyChecking.Add(word);
             //print(word);
+            amountOfWordsInString++;
         }
-        AddWordsToType(spawnMaximum);
+        print("Amount of words for " + gameObject.name + ": " + amountOfWordsInString);
+        wordSpawnMaximum = amountOfWordsInString / _wordAddedPerMathematicalDivision_Max5;
+        if (wordSpawnMaximum < 1)
+        {
+            wordSpawnMaximum = 1;
+        }
+        if (wordSpawnMaximum > 5)
+        {
+            wordSpawnMaximum = 5;
+        }
+        
+        
+        /*if (wordSpawnMaximum > 5)
+        {
+            wordSpawnMaximum = ;
+        }
+        else if (wordSpawnMaximum % _wordAddedPerMathematicalDivision_Max5 >= 0)
+        {
+            wordSpawnMaximum /= _wordAddedPerMathematicalDivision_Max5;
+        }*/
+        
+        AddWordsToType(wordSpawnMaximum);
     }
 
     void AddWordsToType(int WordsAmount)
     {
-        int randomIndexMaximum = WordsAmount;
+        int loopsMaximum = WordsAmount;
         for (int i = 0; i < WordsAmount; i++)
         {
-            AddWord(i);
+            AddWord(i, i);
             wordsLeftToWrite++;
         }
         
     }
 
-    public void AddWord(int wordScreenPlacementIndex)
+    public void AddWord(int wordScreenPlacementIndex, int wordListIndex)
     {
-        Word word = new Word(GetRandomWord(), wordSpawner.SpawnWord(wordScreenPlacementIndex, wordGroupTag));
+        Word word = new Word(GetChosenWord(wordListIndex), wordSpawner.SpawnWord(wordScreenPlacementIndex, wordGroupTag));
         Debug.Log(word.word);
         
         words.Add(word);
     }
 
-    public string GetRandomWord()
+    public string GetChosenWord(int wordlistIndex)
     {
-        int randomWordIndex = UnityEngine.Random.Range(0, wordListCurrent.Count);
-        string randomWord = wordListCurrent[randomWordIndex];
-        wordListCurrent.Remove(randomWord);
+        //int wordIndex = wordListCurrentlyChecking[wordlistIndex]
+        // --------- RANDOM WORD PICKING MECHANIC ----------
+        /*int randomWordIndex = UnityEngine.Random.Range(i, wordListCurrentlyChecking.Count);
+        string randomWord = wordListCurrentlyChecking[randomWordIndex];
+        wordListCurrentlyChecking.Remove(randomWord);*/
         
-        return randomWord;
+        string chosenWord = wordListCurrentlyChecking[wordlistIndex];
+        
+        return chosenWord;
     }
 
     public void TypeLetter(char letter)
@@ -220,7 +248,7 @@ public class FakeKeyboardTyping : MonoBehaviour
                 }
                 
                 wordsLeftToWrite = 0;
-                wordListCurrent.Clear();
+                wordListCurrentlyChecking.Clear();
                 words.Clear();
                 wordManager.inTypingRound = false;
                 isThereStringToType = false;
