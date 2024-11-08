@@ -273,6 +273,17 @@
                     "action": "FakeTyping",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ed863ed5-51a8-4a95-afc6-f12ca73e9a24",
+                    "path": "<Keyboard>/#(')",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FakeTyping",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

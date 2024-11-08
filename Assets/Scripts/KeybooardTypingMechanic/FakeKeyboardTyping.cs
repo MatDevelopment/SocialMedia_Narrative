@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditorInternal;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class FakeKeyboardTyping : MonoBehaviour
     [SerializeField] private InputActionAsset playerControls;
     [SerializeField] private WordSpawner wordSpawner;
     [SerializeField] private WordManager wordManager;
+
+    [SerializeField] public TextMeshProUGUI dialogueOptionText;
     
     [SerializeField] private string StringToFakeType;
     private string userFakeTypeString;
@@ -29,15 +32,15 @@ public class FakeKeyboardTyping : MonoBehaviour
     private int currentUserTypePresses;
     [FormerlySerializedAs("spawnMaximum")] private int wordSpawnMaximum;
     [SerializeField] private int wordAddedPerMathematicalDivision_Max5;
-    private int wordsLeftToWrite;
+    public int wordsLeftToWrite;
 
     public List<string> wordListCurrentlyChecking;
     public List<Word> words;
 
-    private bool hasActiveWord;
-    private Word activeWord;
+    public bool hasActiveWord;
+    public Word activeWord;
 
-    [SerializeField] private bool isThereStringToType = false;
+    [SerializeField] public bool isThereStringToType = false;
     
 
     private void Awake()
@@ -70,10 +73,19 @@ public class FakeKeyboardTyping : MonoBehaviour
             /*wordListCurrentlyChecking.Clear();
             words.Clear();*/
             SplitStringIntoWords(StringToFakeType, wordAddedPerMathematicalDivision_Max5);
+            dialogueOptionText.text = StringToFakeType;
             StringToFakeType = "";
         }
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartTypingRound();
+        }
+    }
+
     /*
     private void OnEnable()
     {
@@ -186,6 +198,14 @@ public class FakeKeyboardTyping : MonoBehaviour
         
         string chosenWord = wordListCurrentlyChecking[wordlistIndex];
         
+        if (chosenWord.Contains("’"))       
+        {
+            Debug.Log("Contains apostrophe!!!!!");
+            string apostrophe = "’";
+            int apostropheIndex = apostrophe.IndexOf(apostrophe, StringComparison.Ordinal);
+            chosenWord = chosenWord.Remove(apostropheIndex + 1,1);
+        }
+        
         return chosenWord;
     }
 
@@ -254,7 +274,7 @@ public class FakeKeyboardTyping : MonoBehaviour
                 isThereStringToType = false;
                 wordManager.DestroyObjects();
                 activeWord.word = "";
-                wordManager.finishedPickingADialogue = true;
+                //wordManager.finishedPickingADialogue = true;
             }
         }
         
