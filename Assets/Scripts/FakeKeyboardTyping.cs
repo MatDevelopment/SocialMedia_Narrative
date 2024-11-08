@@ -163,7 +163,7 @@ public class FakeKeyboardTyping : MonoBehaviour
 
     public void TypeLetter(char letter)
     {
-        if (wordManager.finishedPickingADialogue == true)
+        /*if (wordManager.finishedPickingADialogue == true)
         {
             wordsLeftToWrite = 0;
             wordListCurrent.Clear();
@@ -174,7 +174,8 @@ public class FakeKeyboardTyping : MonoBehaviour
             activeWord.word = "";
 
             wordManager.finishedPickingADialogue = false;
-        }
+        }*/
+        
         if (hasActiveWord)
         {
             // Check if letter was next
