@@ -5,6 +5,7 @@ using TMPro;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using UnityEngine.SearchService;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class DialogueManager : MonoBehaviour
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private TextMeshProUGUI displayNameText;
+    [SerializeField] private Animator portraitAnimator;
+    private Animator layoutAnimator;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -25,6 +29,11 @@ public class DialogueManager : MonoBehaviour
     
     // To make this script a singleton we create a static instance of the script
     private static DialogueManager instance;
+
+    // Defining the tags we look for in the dialogue to define who is speaking and the layout.
+    private const string SPEAKER_TAG = "speaker";
+    private const string PORTRAIT_TAG = "portrait";
+    private const string LAYOUT_TAG = "layout";
 
     // In the awake method the instance is then initialized so that it runs once throughout the entire game
     private void Awake()
@@ -47,6 +56,9 @@ public class DialogueManager : MonoBehaviour
         // Ensuring the dialogue is off when starting the game
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
+
+        // Getting the layout animator component to change layout based on tags
+        layoutAnimator = dialoguePanel.GetComponent<Animator>();
 
         // Setting the choices text length to the amount of choices
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -105,11 +117,52 @@ public class DialogueManager : MonoBehaviour
 
             // Displays the choices, if any, for given dialogue line
             DisplayChoices();
+
+            // Handling of tags in the dialogue
+            HandleTags(currentStory.currentTags);
         }
         else
         {
             // If there is no lines of dialogue left it exits the dialogue mode
             ExitDialogueMode();
+        }
+    }
+
+    // Method used for handling all tags in the current line of dialogue which tages a list of strings as input
+    private void HandleTags(List<string> currentTags)
+    {
+        // looping through each tag and handling them accordingly
+        foreach (string tag in currentTags)
+        {
+            // First the key:value pairs are parsed using the Split() method where
+            string[] splitTag = tag.Split(':');
+
+            // Testing to see if the split happened correctly
+            if (splitTag.Length != 2)
+            {
+                Debug.LogError("Tag could not be parsed correctly" + tag);
+            }
+
+            // The first string in the array is the key and the second is the value
+            string tagKey = splitTag[0].Trim();
+            string tagValue = splitTag[1].Trim();
+
+            // A switch case then handles each tag
+            switch (tagKey)
+            {
+                case SPEAKER_TAG:
+                    displayNameText.text = tagValue;
+                    break;
+                case PORTRAIT_TAG:
+                    portraitAnimator.Play(tagValue);
+                    break;
+                case LAYOUT_TAG:
+                    layoutAnimator.Play(tagValue);
+                    break;
+                default:
+                    Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
+                    break;
+            }
         }
     }
 
@@ -151,6 +204,7 @@ public class DialogueManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
     }
 
+    // Method for when making a choice which updates the ink story of the choice and then continues to next line of dialogue
     public void MakeChoice(int choiceIndex)
     {
         currentStory.ChooseChoiceIndex(choiceIndex);
