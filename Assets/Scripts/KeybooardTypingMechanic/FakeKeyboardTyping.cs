@@ -68,7 +68,7 @@ public class FakeKeyboardTyping : MonoBehaviour
 
         if (isThereStringToType)
         {
-            Debug.Log("String to type!");
+            //Debug.Log("String to type!");
             wordManager.inTypingRound = true;
             /*wordListCurrentlyChecking.Clear();
             words.Clear();*/
@@ -183,7 +183,7 @@ public class FakeKeyboardTyping : MonoBehaviour
     public void AddWord(int wordScreenPlacementIndex, int wordListIndex)
     {
         Word word = new Word(GetChosenWord(wordListIndex), wordSpawner.SpawnWord(wordScreenPlacementIndex, wordGroupTag));
-        Debug.Log(word.word);
+        //Debug.Log(word.word);
         
         words.Add(word);
     }
