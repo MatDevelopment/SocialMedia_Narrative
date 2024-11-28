@@ -8,7 +8,20 @@ public class DialogueState : MonoBehaviour
     [SerializeField] private GameObject samDialoguePanel;
     [SerializeField] private GameObject rileyDialoguePanel;
 
-    public string currentDialogue = "sam";
+    [Header("Notification Icons")]
+    [SerializeField] private GameObject samNotificationIcon;
+    [SerializeField] private GameObject rileyNotificationIcon;
+
+    [Header("Misc")]
+    [SerializeField] private GameObject rileyFriendRequest;
+
+    // String that controls what dialogue is shown: "sam", "riley" or ""
+    public string currentDialogue = "";
+
+    // Bools to control what dialogue to trigger based on narrative structure
+    public bool act1_active = true;
+    public bool act2_active = false;
+    public bool act3_active = false;
 
     // To make this script a singleton we create a static instance of the script
     private static DialogueState instance;

@@ -6,6 +6,7 @@ using Ink.Runtime;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using UnityEngine.SearchService;
+using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -21,16 +22,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI displayNameText;
     [SerializeField] private Animator portraitAnimator;
     private Animator layoutAnimator;
+    [SerializeField] private Animator historyAnimator;
 
-    //[Header("Dialogue History")]
-    //[SerializeField] private GameObject dialoguePanelHistoryLeft1;
-    //[SerializeField] private TextMeshProUGUI dialogueTextHistoryLeft1;
-    //[SerializeField] private GameObject dialoguePanelHistoryRight1;
-    //[SerializeField] private TextMeshProUGUI dialogueTextHistoryRight1;
-    //[SerializeField] private GameObject dialoguePanelHistoryLeft2;
-    //[SerializeField] private TextMeshProUGUI dialogueTextHistoryLeft2;
-    //[SerializeField] private GameObject dialoguePanelHistoryRight2;
-    //[SerializeField] private TextMeshProUGUI dialogueTextHistoryRight2;
+    [Header("Dialogue History")]
+    [SerializeField] private GameObject[] messageHistory;
+    private TextMeshProUGUI[] historyText;
+    private List<string> previousMessages = new List<string>();
+    private List<string> previousTags = new List<string>();
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -41,7 +39,7 @@ public class DialogueManager : MonoBehaviour
     public bool dialogueIsPlaying { get; private set; }
     
     // To make this script a singleton we create a static instance of the script
-    private static DialogueManager instance;
+    //private static DialogueManager instance;
 
     // Defining the tags we look for in the dialogue to define who is speaking and the layout.
     private const string SPEAKER_TAG = "speaker";
@@ -82,6 +80,17 @@ public class DialogueManager : MonoBehaviour
         {
             choicesText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
             index++;
+        }
+
+        // Setting the history text length to the amount of choices
+        historyText = new TextMeshProUGUI[messageHistory.Length];
+        int index2 = 0;
+
+        // Setting the historyText list to the text children objects on each frame
+        foreach (GameObject message in messageHistory)
+        {
+            historyText[index2] = message.GetComponentInChildren<TextMeshProUGUI>();
+            index2++;
         }
     }
 
@@ -134,6 +143,42 @@ public class DialogueManager : MonoBehaviour
 
             // Handling of tags in the dialogue
             HandleTags(currentStory.currentTags);
+
+            // Updates chat history
+            previousMessages.Add(dialogueText.text);
+
+            if (previousMessages.Count > 1)
+            {
+                int index = 0;
+                // Enabling and initializing all chat history frames and their texts
+                foreach (GameObject message in messageHistory)
+                {
+                    if (previousMessages.Count - 2 - index >= 0)
+                    {
+                        messageHistory[index].gameObject.SetActive(true);
+                        historyText[index].text = previousMessages[previousMessages.Count - 2 - index];
+
+                        if (index == 0 && previousTags[previousTags.Count - 2 - index] == "left")
+                        {
+                            historyAnimator.Play("HistoryLeft1");
+                        } 
+                        else if (index == 0 && previousTags[previousTags.Count - 2 - index] == "right")
+                        {
+                            historyAnimator.Play("HistoryRight1");
+                        }
+                        else if (index == 1 && previousTags[previousTags.Count - 2 - index] == "left")
+                        {
+                            historyAnimator.Play("HistoryLeft2");
+                        }
+                        else if (index == 1 && previousTags[previousTags.Count - 2 - index] == "right")
+                        {
+                            historyAnimator.Play("HistoryRight2");
+                        }
+
+                        index++;
+                    }
+                }
+            }
         }
         else
         {
@@ -172,6 +217,8 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case LAYOUT_TAG:
                     layoutAnimator.Play(tagValue);
+                    previousTags.Add(tagValue);
+                    // print(previousTags[previousTags.Count - 1]);
                     break;
                 default:
                     Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
@@ -207,7 +254,7 @@ public class DialogueManager : MonoBehaviour
             choices[i].gameObject.SetActive(false);
         }
 
-        // StartCoroutine(SelectFirstChoice());
+        StartCoroutine(SelectFirstChoice());
     }
 
     // Updates the eventsystem to be able to click the choices
