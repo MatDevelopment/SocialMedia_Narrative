@@ -17,6 +17,9 @@ public class FakeKeyboardTyping : MonoBehaviour
     [SerializeField] private InputActionAsset playerControls;
     [SerializeField] private WordSpawner wordSpawner;
     [SerializeField] private WordManager wordManager;
+    [SerializeField] private DialogueManager dialogueManager_Sam;
+    [SerializeField] private DialogueManager dialogueManager_Riley;
+    //[SerializeField] private DialogueState dialogueState;
 
     [SerializeField] public TextMeshProUGUI dialogueOptionText;
     
@@ -33,6 +36,7 @@ public class FakeKeyboardTyping : MonoBehaviour
     [FormerlySerializedAs("spawnMaximum")] private int wordSpawnMaximum;
     [SerializeField] private int wordAddedPerMathematicalDivision_Max5;
     public int wordsLeftToWrite;
+    public int chosenDialogue_index;
 
     public List<string> wordListCurrentlyChecking;
     public List<Word> words;
@@ -51,17 +55,17 @@ public class FakeKeyboardTyping : MonoBehaviour
 
         
         
-        StartTypingRound();
+        //StartTypingRound();
         
     }
 
-    private void StartTypingRound()
+    public void StartTypingRound(string _StringToFakeType)
     {
-        if (StringToFakeType.Length > 0)
+        if (_StringToFakeType.Length > 0)
         {
             isThereStringToType = true;
         }
-        else if (StringToFakeType.Length <= 0)
+        else if (_StringToFakeType.Length <= 0)
         {
             isThereStringToType = false;
         }
@@ -72,18 +76,18 @@ public class FakeKeyboardTyping : MonoBehaviour
             wordManager.inTypingRound = true;
             /*wordListCurrentlyChecking.Clear();
             words.Clear();*/
-            SplitStringIntoWords(StringToFakeType, wordAddedPerMathematicalDivision_Max5);
-            dialogueOptionText.text = StringToFakeType;
-            StringToFakeType = "";
+            SplitStringIntoWords(_StringToFakeType, wordAddedPerMathematicalDivision_Max5);
+            //dialogueOptionText.text = StringToFakeType;
+            //_StringToFakeType = "";
         }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartTypingRound();
-        }
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     StartTypingRound();
+        // }
     }
 
     /*
@@ -204,6 +208,7 @@ public class FakeKeyboardTyping : MonoBehaviour
             string apostrophe = "’";
             int apostropheIndex = apostrophe.IndexOf(apostrophe, StringComparison.Ordinal);
             chosenWord = chosenWord.Remove(apostropheIndex + 1,1);
+            chosenWord = chosenWord.Insert(apostropheIndex + 1, "'");
         }
         
         return chosenWord;
@@ -254,18 +259,23 @@ public class FakeKeyboardTyping : MonoBehaviour
             wordsLeftToWrite--;
             if (wordsLeftToWrite <= 0)
             {
-                if (gameObject.transform.name == "DialogueOption1")
-                {
-                    Debug.Log("DialogueOption 1 chosen");
-                }
-                else if (gameObject.transform.name == "DialogueOption2")
-                {
-                    Debug.Log("DialogueOption 2 chosen");
-                }
-                else if (gameObject.transform.name == "DialogueOption3")
-                {
-                    Debug.Log("DialogueOption 3 chosen");
-                }
+                // if (gameObject.transform.name == "DialogueOption1")
+                // {
+                //     Debug.Log("DialogueOption 1 chosen");
+                // }
+                // else if (gameObject.transform.name == "DialogueOption2")
+                // {
+                //     Debug.Log("DialogueOption 2 chosen");
+                // }
+                // else if (gameObject.transform.name == "DialogueOption3")
+                // {
+                //     Debug.Log("DialogueOption 3 chosen");
+                // }
+                
+                if (DialogueState.GetInstance().currentDialogue == "sam")
+                    dialogueManager_Sam.MakeChoice(chosenDialogue_index);
+                if (DialogueState.GetInstance().currentDialogue == "riley")
+                    dialogueManager_Riley.MakeChoice(chosenDialogue_index);
                 
                 wordsLeftToWrite = 0;
                 wordListCurrentlyChecking.Clear();
@@ -278,11 +288,31 @@ public class FakeKeyboardTyping : MonoBehaviour
             }
         }
         
-        
+    }
+    
+    public void ResetKeyboardTypingMechanic()
+    {
+        hasActiveWord = false;
+        wordsLeftToWrite = 0;
+        wordListCurrentlyChecking.Clear();
+        words.Clear();
+        wordManager.inTypingRound = false;
+        isThereStringToType = false;
+        wordManager.DestroyObjects();
+        activeWord.word = "";
     }
     
     
     
+    // public void SetTypeStringToChosenDialogueOption(int _chosenDialogue_index)
+    // {
+    //     _FakeKeyboardTyping.chosenDialogue_index = _chosenDialogue_index;
+    //     
+    //     string dialogueText = GetComponentInChildren<TextMeshProUGUI>().text;
+    //     
+    //     _FakeKeyboardTyping.StartTypingRound(dialogueText);
+    //     
+    // }
 }
     
 

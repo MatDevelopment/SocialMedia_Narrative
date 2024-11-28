@@ -12,8 +12,8 @@ public class WordManager : MonoBehaviour
     //public bool finishedPickingADialogue;
 
     [SerializeField] private FakeKeyboardTyping DialogueOption1_GameObject;
-    [SerializeField] private FakeKeyboardTyping DialogueOption2_GameObject;
-    [SerializeField] private FakeKeyboardTyping DialogueOption3_GameObject;
+    //[SerializeField] private FakeKeyboardTyping DialogueOption2_GameObject;
+    //[SerializeField] private FakeKeyboardTyping DialogueOption3_GameObject;
 
     [SerializeField] private List<FakeKeyboardTyping> ListOfDialogueOptionGameObjects;
     
@@ -22,8 +22,8 @@ public class WordManager : MonoBehaviour
     private void Awake()
     {
         ListOfDialogueOptionGameObjects.Add(DialogueOption1_GameObject);
-        ListOfDialogueOptionGameObjects.Add(DialogueOption2_GameObject);
-        ListOfDialogueOptionGameObjects.Add(DialogueOption3_GameObject);
+        //ListOfDialogueOptionGameObjects.Add(DialogueOption2_GameObject);
+        //ListOfDialogueOptionGameObjects.Add(DialogueOption3_GameObject);
     }
 
     // Method to destroy each object in the list
@@ -38,7 +38,7 @@ public class WordManager : MonoBehaviour
             dialogueOption.isThereStringToType = false;
             dialogueOption.hasActiveWord = false;
             dialogueOption.activeWord.word = "";
-            dialogueOption.dialogueOptionText.text = "";
+            //dialogueOption.dialogueOptionText.text = "";
         }
         
         
@@ -47,6 +47,7 @@ public class WordManager : MonoBehaviour
             if (obj != null) // Check if the object still exists
                 Destroy(obj);
         }
+        objectsToDestroy.Clear();
         
     }
 }
