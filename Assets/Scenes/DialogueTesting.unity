@@ -1423,7 +1423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &330028995
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2905,7 +2905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd35c7695d1ab7409cba8bd63804fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJSON: {fileID: 4900000, guid: 472abbb26c61ddb4ea8effd94df2e3c2, type: 3}
+  inkJSON: {fileID: 4900000, guid: 2793b7451479d904fa3a61d5c56f9b1e, type: 3}
   dialogueManager: {fileID: 1073663369}
   dialogueName: sam
 --- !u!114 &891567625
