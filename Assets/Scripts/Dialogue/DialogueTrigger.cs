@@ -6,13 +6,17 @@ public class DialogueTrigger : MonoBehaviour
 {
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
+    [SerializeField] private DialogueManager dialogueManager;
+    [SerializeField] private string dialogueName;
 
     // Public method used on button input to trigger a dialogue session
     public void StartDialogue()
     {
-        if (DialogueManager.GetInstance().dialogueIsPlaying == false)
+        DialogueState.GetInstance().currentDialogue = dialogueName;
+        
+        if (dialogueManager.dialogueIsPlaying == false)
         {
-            DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+            dialogueManager.EnterDialogueMode(inkJSON);
         }
     }
 }

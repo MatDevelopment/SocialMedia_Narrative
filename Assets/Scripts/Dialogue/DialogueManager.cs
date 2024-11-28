@@ -11,6 +11,9 @@ public class DialogueManager : MonoBehaviour
 {
     // Script based on tutorial by "Shaped by Rain Studios": https://youtu.be/vY0Sk93YUhA?si=MM12nYC_nWyXA0PH
 
+    [Header("Dialogue Name")]
+    [SerializeField] private string dialogueName;
+
     // Fields in the inspector window for communicating with the UI elements
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
@@ -18,6 +21,16 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI displayNameText;
     [SerializeField] private Animator portraitAnimator;
     private Animator layoutAnimator;
+
+    //[Header("Dialogue History")]
+    //[SerializeField] private GameObject dialoguePanelHistoryLeft1;
+    //[SerializeField] private TextMeshProUGUI dialogueTextHistoryLeft1;
+    //[SerializeField] private GameObject dialoguePanelHistoryRight1;
+    //[SerializeField] private TextMeshProUGUI dialogueTextHistoryRight1;
+    //[SerializeField] private GameObject dialoguePanelHistoryLeft2;
+    //[SerializeField] private TextMeshProUGUI dialogueTextHistoryLeft2;
+    //[SerializeField] private GameObject dialoguePanelHistoryRight2;
+    //[SerializeField] private TextMeshProUGUI dialogueTextHistoryRight2;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -36,20 +49,20 @@ public class DialogueManager : MonoBehaviour
     private const string LAYOUT_TAG = "layout";
 
     // In the awake method the instance is then initialized so that it runs once throughout the entire game
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.Log("There is more than one DialogueManager in the scene");
-        }
-        instance = this;
-    }
+    //private void Awake()
+    //{
+    //    if (instance != null)
+    //    {
+    //        Debug.Log("There is more than one DialogueManager in the scene");
+    //    }
+    //    instance = this;
+    //}
 
     // Static method for accessing the singleton instance from other scripts
-    public static DialogueManager GetInstance()
-    {
-        return instance;
-    }
+    //public static DialogueManager GetInstance()
+    //{
+    //    return instance;
+    //}
 
     private void Start()
     {
@@ -81,7 +94,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         // Handling continuing to next line of dialogue
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && DialogueState.GetInstance().currentDialogue == dialogueName)
         {
             ContinueStory();
         }
@@ -104,6 +117,7 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        DialogueState.GetInstance().currentDialogue = "";
     }
 
     // Method for continuing the story to the next line of dialogue
@@ -193,7 +207,7 @@ public class DialogueManager : MonoBehaviour
             choices[i].gameObject.SetActive(false);
         }
 
-        StartCoroutine(SelectFirstChoice());
+        // StartCoroutine(SelectFirstChoice());
     }
 
     // Updates the eventsystem to be able to click the choices
