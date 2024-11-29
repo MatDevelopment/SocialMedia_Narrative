@@ -29,10 +29,10 @@ public class FakeKeyboardTyping : MonoBehaviour
     [SerializeField]
     private string wordGroupTag;
     
-    private char[] StringFakeCharArray;
+    //private char[] StringFakeCharArray;
 
-    private int fakeTypePressesRequired;
-    private int currentUserTypePresses;
+    //private int fakeTypePressesRequired;
+    //private int currentUserTypePresses;
     [FormerlySerializedAs("spawnMaximum")] private int wordSpawnMaximum;
     [SerializeField] private int wordAddedPerMathematicalDivision_Max5;
     public int wordsLeftToWrite;
@@ -204,7 +204,7 @@ public class FakeKeyboardTyping : MonoBehaviour
         
         if (chosenWord.Contains("’"))       
         {
-            Debug.Log("Contains apostrophe!!!!!");
+            //Debug.Log("Contains apostrophe!!!!!");
             string apostrophe = "’";
             int apostropheIndex = apostrophe.IndexOf(apostrophe, StringComparison.Ordinal);
             chosenWord = chosenWord.Remove(apostropheIndex + 1,1);

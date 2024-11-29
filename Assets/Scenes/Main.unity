@@ -1596,6 +1596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 401601278}
+  - component: {fileID: 401601279}
   m_Layer: 5
   m_Name: TypeWord Spawn Screen Location #5
   m_TagString: Untagged
@@ -1611,17 +1612,25 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401601277}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 0.03201, y: 0.03841, z: 0.06401}
+  m_LocalPosition: {x: 0, y: 0, z: 68.14311}
+  m_LocalScale: {x: 0.02181261, y: 0.026173767, z: 0.043618407}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1195543037}
+  m_Father: {fileID: 869831531}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 464.20752, y: -239.195}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 307.32532, y: -794.0801}
   m_SizeDelta: {x: 6100, y: 1350}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!222 &401601279
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401601277}
+  m_CullTransparentMesh: 1
 --- !u!1 &420916241
 GameObject:
   m_ObjectHideFlags: 0
@@ -2526,6 +2535,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 648378325}
+  - component: {fileID: 648378326}
   m_Layer: 5
   m_Name: TypeWord Spawn Screen Location #4
   m_TagString: Untagged
@@ -2541,17 +2551,25 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648378324}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 0.03201, y: 0.03841, z: 0.06401}
+  m_LocalPosition: {x: 0, y: 0, z: 68.14311}
+  m_LocalScale: {x: 0.02181261, y: 0.026173767, z: 0.043618407}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1195543037}
+  m_Father: {fileID: 869831531}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.20752, y: -239.195}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 154.00343, y: -794.0801}
   m_SizeDelta: {x: 6100, y: 1350}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!222 &648378326
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648378324}
+  m_CullTransparentMesh: 1
 --- !u!1 &695046253
 GameObject:
   m_ObjectHideFlags: 0
@@ -2858,6 +2876,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864762759}
   m_CullTransparentMesh: 1
+--- !u!1 &869831530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 869831531}
+  m_Layer: 5
+  m_Name: TypeWord Spawn Locations
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &869831531
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869831530}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1594772031}
+  - {fileID: 933117483}
+  - {fileID: 1276777660}
+  - {fileID: 648378325}
+  - {fileID: 401601278}
+  m_Father: {fileID: 923949681}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &890324076
 GameObject:
   m_ObjectHideFlags: 0
@@ -3003,7 +3061,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd35c7695d1ab7409cba8bd63804fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJSON: {fileID: 4900000, guid: 2793b7451479d904fa3a61d5c56f9b1e, type: 3}
+  act1_inkJSON: {fileID: 0}
+  act2_inkJSON: {fileID: 0}
+  act3_inkJSON: {fileID: 0}
   dialogueManager: {fileID: 1073663369}
   dialogueName: sam
 --- !u!114 &891567625
@@ -3214,6 +3274,8 @@ RectTransform:
   - {fileID: 601500064}
   - {fileID: 1908182779}
   - {fileID: 27623606}
+  - {fileID: 1195543037}
+  - {fileID: 869831531}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3230,6 +3292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 933117483}
+  - component: {fileID: 933117484}
   m_Layer: 5
   m_Name: TypeWord Spawn Screen Location #2
   m_TagString: Untagged
@@ -3245,17 +3308,25 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933117482}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 0.03201, y: 0.03841, z: 0.06401}
+  m_LocalPosition: {x: 0, y: 0, z: 68.14311}
+  m_LocalScale: {x: 0.02181261, y: 0.026173767, z: 0.043618407}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1195543037}
+  m_Father: {fileID: 869831531}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -210.79248, y: -240.195}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -152.64056, y: -794.76154}
   m_SizeDelta: {x: 6100, y: 1350}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!222 &933117484
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933117482}
+  m_CullTransparentMesh: 1
 --- !u!1 &950856443
 GameObject:
   m_ObjectHideFlags: 0
@@ -3780,6 +3851,8 @@ MonoBehaviour:
   dialogueText: {fileID: 466260779}
   displayNameText: {fileID: 625989479}
   portraitAnimator: {fileID: 1071480709}
+  historyAnimator: {fileID: 0}
+  messageHistory: []
   choices:
   - {fileID: 990022596}
   - {fileID: 1122398546}
@@ -4639,16 +4712,11 @@ Transform:
   m_GameObject: {fileID: 1195543032}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 573.7925, y: 358.195, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -9.000014, y: -6, z: 0}
+  m_LocalScale: {x: 0.68143106, y: 0.68143106, z: 0.68143106}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1594772031}
-  - {fileID: 933117483}
-  - {fileID: 1276777660}
-  - {fileID: 648378325}
-  - {fileID: 401601278}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 923949681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1201718718
 GameObject:
@@ -5100,6 +5168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1276777660}
+  - component: {fileID: 1276777661}
   m_Layer: 5
   m_Name: TypeWord Spawn Screen Location #3
   m_TagString: Untagged
@@ -5115,17 +5184,25 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276777659}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 0.03201, y: 0.03841, z: 0.06401}
+  m_LocalPosition: {x: 0, y: 0, z: 68.14311}
+  m_LocalScale: {x: 0.02181261, y: 0.026173767, z: 0.043618407}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1195543037}
+  m_Father: {fileID: 869831531}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14.20752, y: -240.195}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0.68143106, y: -794.76154}
   m_SizeDelta: {x: 6100, y: 1350}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!222 &1276777661
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276777659}
+  m_CullTransparentMesh: 1
 --- !u!1 &1288093011
 GameObject:
   m_ObjectHideFlags: 0
@@ -5308,7 +5385,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   samDialoguePanel: {fileID: 1908182778}
   rileyDialoguePanel: {fileID: 27623605}
+  samNotificationIcon: {fileID: 0}
+  rileyNotificationIcon: {fileID: 0}
+  rileyFriendRequest: {fileID: 0}
   currentDialogue: 
+  act1_active: 1
+  act2_active: 0
+  act3_active: 0
 --- !u!1 &1420602567
 GameObject:
   m_ObjectHideFlags: 0
@@ -6020,6 +6103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1594772031}
+  - component: {fileID: 1594772032}
   m_Layer: 5
   m_Name: TypeWord Spawn Screen Location #1
   m_TagString: Untagged
@@ -6035,17 +6119,25 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594772030}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 0.03201, y: 0.03841, z: 0.06401}
+  m_LocalPosition: {x: 0, y: 0, z: 68.14311}
+  m_LocalScale: {x: 0.02181261, y: 0.026173767, z: 0.043618407}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1195543037}
+  m_Father: {fileID: 869831531}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -435.79248, y: -240.195}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -305.96243, y: -794.76154}
   m_SizeDelta: {x: 6100, y: 1350}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!222 &1594772032
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594772030}
+  m_CullTransparentMesh: 1
 --- !u!1 &1628041585
 GameObject:
   m_ObjectHideFlags: 0
@@ -6379,6 +6471,8 @@ MonoBehaviour:
   dialogueText: {fileID: 1996869273}
   displayNameText: {fileID: 2088131386}
   portraitAnimator: {fileID: 950856445}
+  historyAnimator: {fileID: 0}
+  messageHistory: []
   choices:
   - {fileID: 1191090196}
   - {fileID: 328718342}
@@ -6662,7 +6756,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd35c7695d1ab7409cba8bd63804fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJSON: {fileID: 4900000, guid: 472abbb26c61ddb4ea8effd94df2e3c2, type: 3}
+  act1_inkJSON: {fileID: 0}
+  act2_inkJSON: {fileID: 0}
+  act3_inkJSON: {fileID: 0}
   dialogueManager: {fileID: 1710211471}
   dialogueName: riley
 --- !u!114 &1917597857
@@ -7162,4 +7258,3 @@ SceneRoots:
   - {fileID: 923949681}
   - {fileID: 1524881039}
   - {fileID: 1745711417}
-  - {fileID: 1195543037}
