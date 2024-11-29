@@ -23,6 +23,7 @@ public class ScrollingAlgorithm : MonoBehaviour
     private float catapultSpeed = 750f;
     public float scrollCooldown = 0.5f;
     private float lastScrollTime = -1f;
+    private bool currentlyMoving = false;
 
     private List<GameObject> boxes = new List<GameObject>();
     private List<Color> colors = new List<Color>();
@@ -110,27 +111,33 @@ public class ScrollingAlgorithm : MonoBehaviour
 
     IEnumerator SpawnWindows()
     {
+        // Get the RectTransform of the canvas to calculate proper positioning
         RectTransform canvasRect = gameCanvas.GetComponent<RectTransform>();
+        float canvasHeight = canvasRect.rect.height; // The height of the canvas area
+        float pileOffset = -canvasHeight - 100; // Initial pile offset below the canvas
 
         for (int i = 0; i < numberOfWindows; i++)
         {
-            Debug.Log($"Spawning window {i + 1}/{numberOfWindows}"); // Debug log to check spawning
-
             // Instantiate the window
             GameObject gameObject = Instantiate(algorithmWindow, gameCanvas.transform);
             RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
 
-            // Position first box in the center, others below the canvas
+            // Position boxes as described
             if (i == 0)
             {
-                rectTransform.anchoredPosition = Vector2.zero;
+                rectTransform.anchoredPosition = Vector2.zero; // Center of the canvas
+            }
+            else if (i == 1)
+            {
+                rectTransform.anchoredPosition = new Vector2(0, -canvasHeight); // Just below the canvas
             }
             else
             {
-                rectTransform.anchoredPosition = new Vector2(0, offScreenOffset);
-                offScreenOffset = offScreenOffset + -700;
+                rectTransform.anchoredPosition = new Vector2(0, pileOffset); // Stacked in a pile
+                pileOffset -= 50; // Adjust for a stacked effect
             }
 
+            // Configure visuals, colors, and quotes (same as before)
             Image boxImage = gameObject.GetComponent<Image>();
             Color algorithmColor = colors[i];
             boxImage.color = algorithmColor;
@@ -145,7 +152,6 @@ public class ScrollingAlgorithm : MonoBehaviour
 
                 boxText.text = selectedData.quote;
 
-                // Look up the image in the image dictionary
                 if (imageDictionary.TryGetValue(selectedData.imageLocation, out Sprite foundImage))
                 {
                     quoteImage.sprite = foundImage;
@@ -157,7 +163,7 @@ public class ScrollingAlgorithm : MonoBehaviour
             }
 
             Button button = gameObject.AddComponent<Button>();
-            int currentIndex = i; // Capture current index in loop scope
+            int currentIndex = i;
             button.onClick.AddListener(() => CatapultBox(currentIndex));
 
             boxes.Add(gameObject);
@@ -165,54 +171,133 @@ public class ScrollingAlgorithm : MonoBehaviour
         }
     }
 
+
     void CatapultBox(int index)
     {
-        if (index >= boxes.Count) return;
+        if (index >= boxes.Count || currentlyMoving) return;  // Ignore if moving or invalid index
 
-        // Animate the clicked box upwards off-screen
-        StartCoroutine(CatapultAnimation(boxes[index]));
+        GameObject currentBox = boxes[index];
+        GameObject nextBox = (index + 1 < boxes.Count) ? boxes[index + 1] : null;
+        GameObject pileBox = (index + 2 < boxes.Count) ? boxes[index + 2] : null;
 
-        // Slide the next box in line to the center position, if available
-        if (index + 1 < boxes.Count)
-        {
-            StartCoroutine(SlideToCenter(boxes[index + 1]));
-        }
+        StartCoroutine(CatapultAndSlide(currentBox, nextBox, pileBox));
     }
 
-    // Coroutine to move the box upwards off the screen
-    IEnumerator CatapultAnimation(GameObject box)
+    IEnumerator CatapultAndSlide(GameObject currentBox, GameObject nextBox, GameObject pileBox)
     {
-        RectTransform rectTransform = box.GetComponent<RectTransform>();
-        float targetY = gameCanvas.GetComponent<RectTransform>().rect.height / 2 + 300; // Move it far off-screen
+        currentlyMoving = true;  // Set flag to true when starting the animation
 
-        while (rectTransform.anchoredPosition.y < targetY)
+        RectTransform currentRect = currentBox.GetComponent<RectTransform>();
+        RectTransform nextRect = nextBox?.GetComponent<RectTransform>();
+        RectTransform pileRect = pileBox?.GetComponent<RectTransform>();
+
+        // Get the canvas RectTransform
+        RectTransform canvasRect = gameCanvas.GetComponent<RectTransform>();
+        float canvasHeight = canvasRect.rect.height;
+
+        // Target positions
+        float targetYOut = canvasHeight / 2 + 500; // Move current box off-screen
+        Vector2 nextTargetPosition = Vector2.zero; // Center of canvas for next box
+        Vector2 pileTargetPosition = new Vector2(0, -canvasHeight); // Below the canvas
+
+        // Animation speed
+        float transitionSpeed = catapultSpeed;
+
+        // Animation loop
+        while (true)
         {
-            rectTransform.anchoredPosition += Vector2.up * catapultSpeed * Time.deltaTime;
+            bool currentBoxDone = true;
+            bool nextBoxDone = true;
+            bool pileBoxDone = true;
+
+            // Move current box upward
+            if (currentRect.anchoredPosition.y < targetYOut)
+            {
+                currentRect.anchoredPosition += Vector2.up * transitionSpeed * Time.deltaTime;
+                currentBoxDone = false;
+            }
+
+            // Move next box to the center
+            if (nextRect != null && Vector2.Distance(nextRect.anchoredPosition, nextTargetPosition) > 1f)
+            {
+                nextRect.anchoredPosition = Vector2.MoveTowards(nextRect.anchoredPosition, nextTargetPosition, transitionSpeed * Time.deltaTime);
+                nextBoxDone = false;
+            }
+
+            // Move the first pile box to just below the canvas
+            if (pileRect != null && Vector2.Distance(pileRect.anchoredPosition, pileTargetPosition) > 1f)
+            {
+                pileRect.anchoredPosition = Vector2.MoveTowards(pileRect.anchoredPosition, pileTargetPosition, transitionSpeed * Time.deltaTime);
+                pileBoxDone = false;
+            }
+
+            // Exit loop if all animations are done
+            if (currentBoxDone && nextBoxDone && pileBoxDone)
+                break;
+
             yield return null;
         }
 
-        // Destroy box once it's fully off-screen
-        Destroy(box);
-    }
+        // Ensure positions are correct
+        if (currentRect.anchoredPosition.y < targetYOut)
+            currentRect.anchoredPosition = new Vector2(currentRect.anchoredPosition.x, targetYOut);
+        if (nextRect != null)
+            nextRect.anchoredPosition = nextTargetPosition;
+        if (pileRect != null)
+            pileRect.anchoredPosition = pileTargetPosition;
 
-    // Coroutine to slide the next box smoothly to the center of the canvas
-    IEnumerator SlideToCenter(GameObject box)
-    {
-        RectTransform rectTransform = box.GetComponent<RectTransform>();
-        Vector2 startPosition = rectTransform.anchoredPosition;
-        Vector2 targetPosition = Vector2.zero; // Center position
+        // Destroy the current box after it has moved off-screen
+        Color currentBoxColor = currentBox.GetComponent<Image>().color; // Get the color of the destroyed box
+        Destroy(currentBox); // Destroy the current box
 
-        while (Vector2.Distance(rectTransform.anchoredPosition, targetPosition) > 1f)
+        // Instantiate a new box of the same color and add it to the pile
+        GameObject newBox = Instantiate(algorithmWindow, gameCanvas.transform); // Create a new box
+        RectTransform newBoxRect = newBox.GetComponent<RectTransform>();
+        float pileSpawnY = -canvasHeight - 100; // Place it initially off-screen below the canvas
+        newBoxRect.anchoredPosition = new Vector2(0, pileSpawnY); // Position it below the canvas
+
+        // Set the new box's color to match the destroyed one
+        newBox.GetComponent<Image>().color = currentBoxColor;
+
+        // Add the new box to the pile and update the boxes list
+        boxes.Add(newBox); // Add the new box to the list of boxes
+
+        // Configure visuals for the new box (same as before)
+        TextMeshProUGUI newBoxText = newBox.GetComponentInChildren<TextMeshProUGUI>();
+        Image newQuoteImage = newBox.transform.Find("QuoteImage").GetComponent<Image>();
+
+        if (colorData.ContainsKey(currentBoxColor))
         {
-            rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, targetPosition, catapultSpeed * Time.deltaTime);
-            yield return null;
+            List<QuoteData> possibleData = colorData[currentBoxColor];
+            QuoteData selectedData = possibleData[Random.Range(0, possibleData.Count)];
+
+            newBoxText.text = selectedData.quote;
+
+            if (imageDictionary.TryGetValue(selectedData.imageLocation, out Sprite foundImage))
+            {
+                newQuoteImage.sprite = foundImage;
+            }
+            else
+            {
+                Debug.LogWarning($"Image with key {selectedData.imageLocation} not found in image dictionary.");
+            }
         }
 
-        // Ensure it ends exactly in the center
-        rectTransform.anchoredPosition = targetPosition;
+        // Add the button click listener for the new box
+        Button button = newBox.AddComponent<Button>();
+        button.onClick.AddListener(() =>
+        {
+            int newBoxIndex = boxes.IndexOf(newBox); // Get the correct index of the new box
+            if (newBoxIndex >= 0) // Ensure the index is valid
+            {
+                CatapultBox(newBoxIndex);  // Set the button to call CatapultBox with the new box's index
+            }
+        });
+
+        currentlyMoving = false;  // Reset the flag after the animation is complete
     }
 
-    void SimulateClick()
+void SimulateClick()
     {
         // Find the currently centered box (the first active box in the list)
         for (int i = 0; i < boxes.Count; i++)
