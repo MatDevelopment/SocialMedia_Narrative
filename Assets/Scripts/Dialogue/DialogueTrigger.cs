@@ -15,7 +15,7 @@ public class DialogueTrigger : MonoBehaviour
     public void StartDialogue()
     {
         DialogueState.GetInstance().currentDialogue = dialogueName;
-        
+
         if (dialogueManager.dialogueIsPlaying == false)
         {
             if (DialogueState.GetInstance().act1_active == true)
@@ -30,6 +30,10 @@ public class DialogueTrigger : MonoBehaviour
             {
                 dialogueManager.EnterDialogueMode(act3_inkJSON);
             }
+        }
+        else if (dialogueManager.dialogueIsPlaying)
+        {
+            dialogueManager.RefreshUI();
         }
     }
 }

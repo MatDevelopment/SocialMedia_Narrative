@@ -15,6 +15,12 @@ public class DialogueState : MonoBehaviour
     [Header("Misc")]
     [SerializeField] private GameObject rileyFriendRequest;
 
+    // String for player name
+    public string playerName = "Player";
+
+    // String for the name of the animation for the selected player icon
+    public string playerPortrait = "player";
+
     // String that controls what dialogue is shown: "sam", "riley" or ""
     public string currentDialogue = "";
 

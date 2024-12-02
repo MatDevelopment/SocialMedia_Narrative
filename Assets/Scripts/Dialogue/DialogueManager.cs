@@ -134,9 +134,9 @@ public class DialogueManager : MonoBehaviour
     private void ExitDialogueMode()
     {
         dialogueIsPlaying = false;
-        dialoguePanel.SetActive(false);
-        dialogueText.text = "";
-        DialogueState.GetInstance().currentDialogue = "";
+        //dialoguePanel.SetActive(false);
+        //dialogueText.text = "";
+        //DialogueState.GetInstance().currentDialogue = "";
     }
 
     // Method for continuing the story to the next line of dialogue
@@ -152,7 +152,7 @@ public class DialogueManager : MonoBehaviour
             DisplayChoices();
 
             // Handling of tags in the dialogue
-            HandleTags(currentStory.currentTags);
+            HandleTags(currentStory.currentTags, true);
 
             // Updates chat history
             previousMessages.Add(dialogueText.text);
@@ -198,7 +198,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     // Method used for handling all tags in the current line of dialogue which tages a list of strings as input
-    private void HandleTags(List<string> currentTags)
+    private void HandleTags(List<string> currentTags, bool logTag)
     {
         // looping through each tag and handling them accordingly
         foreach (string tag in currentTags)
@@ -220,15 +220,31 @@ public class DialogueManager : MonoBehaviour
             switch (tagKey)
             {
                 case SPEAKER_TAG:
-                    displayNameText.text = tagValue;
+                    if (tagValue == "Player")
+                    {
+                        displayNameText.text = DialogueState.GetInstance().playerName;
+                    }
+                    else
+                    {
+                        displayNameText.text = tagValue;
+                    }
                     break;
                 case PORTRAIT_TAG:
-                    portraitAnimator.Play(tagValue);
+                    if (tagValue == "player")
+                    {
+                        portraitAnimator.Play(DialogueState.GetInstance().playerPortrait);
+                    }
+                    else
+                    {
+                        portraitAnimator.Play(tagValue);
+                    }
                     break;
                 case LAYOUT_TAG:
                     layoutAnimator.Play(tagValue);
-                    previousTags.Add(tagValue);
-                    // print(previousTags[previousTags.Count - 1]);
+                    if (logTag)
+                    {
+                        previousTags.Add(tagValue);
+                    }
                     break;
                 default:
                     Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
@@ -291,5 +307,44 @@ public class DialogueManager : MonoBehaviour
     {
         currentStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
+    }
+
+    public void RefreshUI()
+    {
+        // Handling of tags in the dialogue
+        HandleTags(currentStory.currentTags, false);
+
+        if (previousMessages.Count > 1)
+        {
+            int index = 0;
+            // Enabling and initializing all chat history frames and their texts
+            foreach (GameObject message in messageHistory)
+            {
+                if (previousMessages.Count - 2 - index >= 0)
+                {
+                    messageHistory[index].gameObject.SetActive(true);
+                    historyText[index].text = previousMessages[previousMessages.Count - 2 - index];
+
+                    if (index == 0 && previousTags[previousTags.Count - 2 - index] == "left")
+                    {
+                        history1Animator.Play("HistoryLeft1");
+                    }
+                    else if (index == 0 && previousTags[previousTags.Count - 2 - index] == "right")
+                    {
+                        history1Animator.Play("HistoryRight1");
+                    }
+                    else if (index == 1 && previousTags[previousTags.Count - 2 - index] == "left")
+                    {
+                        history2Animator.Play("HistoryLeft2");
+                    }
+                    else if (index == 1 && previousTags[previousTags.Count - 2 - index] == "right")
+                    {
+                        history2Animator.Play("HistoryRight2");
+                    }
+
+                    index++;
+                }
+            }
+        }
     }
 }
