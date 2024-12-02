@@ -11,7 +11,10 @@ public class AlgorithmScoreHolder : MonoBehaviour
     private RectTransform canvasRect;    
     private float timer = 0f;      
     public float centerThreshold = 10f;
-    private Button button;
+    private Button algorithmButton;
+    private Button likeButton;
+    private float likeButtonTimeBonus = 10f;
+    private AlgorithmHolder algorithmHolder;
 
 
     // Start is called before the first frame update
@@ -20,6 +23,7 @@ public class AlgorithmScoreHolder : MonoBehaviour
         windowImage = GetComponent<Image>();
         WindowColor = windowImage.color;
         rectTransform = GetComponent<RectTransform>();
+        algorithmHolder = FindAnyObjectByType<AlgorithmHolder>();
         Canvas canvas = GetComponentInParent<Canvas>();
 
         if (canvas != null)
@@ -31,15 +35,27 @@ public class AlgorithmScoreHolder : MonoBehaviour
             Debug.LogWarning("Box is not inside a canvas!");
         }
 
-        button = GetComponent<Button>();
 
-        if (button != null)
+        algorithmButton = GetComponent<Button>();
+
+        if (algorithmButton != null)
         {
-            button.onClick.AddListener(OnBoxClicked);
+            algorithmButton.onClick.AddListener(OnBoxClicked);
         }
         else
         {
             Debug.LogWarning("Button component not found on this box.");
+        }
+
+        Transform likeButtonTransform = transform.Find("LikeButton");
+        if (likeButtonTransform != null)
+        {
+            likeButton = likeButtonTransform.GetComponent<Button>();
+            likeButton.onClick.AddListener(OnLikeButtonClicked); // Add listener for like button
+        }
+        else
+        {
+            Debug.LogWarning("Like button not found in prefab!");
         }
     }
 
@@ -49,7 +65,6 @@ public class AlgorithmScoreHolder : MonoBehaviour
         if (IsCentered())
         {
             timer += Time.deltaTime;
-            Debug.Log($"Box at the center for {timer:F2} seconds & current color is " + TranslateColor(WindowColor));
         }
         else
         {
@@ -92,6 +107,14 @@ public class AlgorithmScoreHolder : MonoBehaviour
     private void OnBoxClicked()
     {
         Debug.Log($"Box clicked! Last centered time: {timer:F2} seconds, Color: {TranslateColor(WindowColor)}");
+        algorithmHolder.AddScore(timer, TranslateColor(WindowColor));
+    }
+
+    private void OnLikeButtonClicked()
+    {
+        // Add time bonus to the timer
+        timer += likeButtonTimeBonus;
+        Debug.Log($"Like button clicked! Timer increased by {likeButtonTimeBonus:F2} seconds. Total time: {timer:F2}");
     }
 }
 
