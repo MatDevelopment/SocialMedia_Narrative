@@ -5951,8 +5951,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   samDialoguePanel: {fileID: 1908182778}
   rileyDialoguePanel: {fileID: 27623605}
-  samNotificationIcon: {fileID: 0}
-  rileyNotificationIcon: {fileID: 0}
+  samNotificationIcon: {fileID: 446994067}
+  rileyNotificationIcon: {fileID: 330028994}
   rileyFriendRequest: {fileID: 0}
   currentDialogue: 
   act1_active: 1

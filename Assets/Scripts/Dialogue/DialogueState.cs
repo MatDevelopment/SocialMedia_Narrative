@@ -31,7 +31,7 @@ public class DialogueState : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.Log("There is more than one DialogueManager in the scene");
+            Debug.Log("There is more than one DialogueState in the scene");
         }
         instance = this;
     }

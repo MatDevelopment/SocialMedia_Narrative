@@ -38,6 +38,8 @@ public class DialogueManager : MonoBehaviour
     // Defining a variable to hold the currently active dialogue and if it is playing
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
+
+    private bool waitingForResponse = false;
     
     // To make this script a singleton we create a static instance of the script
     //private static DialogueManager instance;
@@ -103,9 +105,16 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        // Handling continuing to next line of dialogue
-        if (Input.GetKeyDown(KeyCode.Space) && DialogueState.GetInstance().currentDialogue == dialogueName)
+        if (currentStory.currentChoices.Count == 0 && DialogueState.GetInstance().currentDialogue == dialogueName && waitingForResponse == false)
         {
+            StartCoroutine(WaitThenContinue(3));
+        }
+
+        // Handling continuing to next line of dialogue
+        if (Input.GetKeyDown(KeyCode.Space) && DialogueState.GetInstance().currentDialogue == dialogueName && currentStory.currentChoices.Count == 0 && waitingForResponse == true)
+        {
+            waitingForResponse = false;
+            StopAllCoroutines();
             ContinueStory();
         }
     }
@@ -264,6 +273,17 @@ public class DialogueManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
         EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+    }
+
+    private IEnumerator WaitThenContinue(int waitTime)
+    {
+        waitingForResponse = true;
+        yield return new WaitForSeconds(waitTime);
+        if (waitingForResponse == true)
+        {
+            ContinueStory();
+            waitingForResponse = false;
+        }
     }
 
     // Method for when making a choice which updates the ink story of the choice and then continues to next line of dialogue
