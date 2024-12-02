@@ -255,7 +255,7 @@ public class DialogueManager : MonoBehaviour
             choices[i].gameObject.SetActive(false);
         }
 
-        StartCoroutine(SelectFirstChoice());
+        // StartCoroutine(SelectFirstChoice());
     }
 
     // Updates the eventsystem to be able to click the choices
