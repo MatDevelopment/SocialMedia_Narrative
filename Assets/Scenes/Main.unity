@@ -7690,6 +7690,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862040589}
   m_CullTransparentMesh: 1
+--- !u!1 &1904626931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1904626933}
+  - component: {fileID: 1904626932}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1904626932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904626931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c5a4675149cdb4fa098c5b6a1bd046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: KeyClick
+    clip: {fileID: 8300000, guid: fb550075fef92f342a4d67ff3904e41b, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: ChatMessageSound
+    clip: {fileID: 8300000, guid: f052a3c214e4f1f46abc0951fe86261c, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: NotificationSound
+    clip: {fileID: 8300000, guid: f2cb21e81f1551543b7c822b9daa54f5, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+--- !u!4 &1904626933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904626931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 544.8954, y: 349.04538, z: -2.2692802}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1908182778
 GameObject:
   m_ObjectHideFlags: 0
@@ -8343,6 +8403,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1904626933}
   - {fileID: 1341143886}
   - {fileID: 890324079}
   - {fileID: 923949681}
