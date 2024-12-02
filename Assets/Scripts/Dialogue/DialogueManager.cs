@@ -22,10 +22,11 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI displayNameText;
     [SerializeField] private Animator portraitAnimator;
     private Animator layoutAnimator;
-    [SerializeField] private Animator historyAnimator;
 
     [Header("Dialogue History")]
     [SerializeField] private GameObject[] messageHistory;
+    [SerializeField] private Animator history1Animator;
+    [SerializeField] private Animator history2Animator;
     private TextMeshProUGUI[] historyText;
     private List<string> previousMessages = new List<string>();
     private List<string> previousTags = new List<string>();
@@ -160,19 +161,19 @@ public class DialogueManager : MonoBehaviour
 
                         if (index == 0 && previousTags[previousTags.Count - 2 - index] == "left")
                         {
-                            historyAnimator.Play("HistoryLeft1");
+                            history1Animator.Play("HistoryLeft1");
                         } 
                         else if (index == 0 && previousTags[previousTags.Count - 2 - index] == "right")
                         {
-                            historyAnimator.Play("HistoryRight1");
+                            history1Animator.Play("HistoryRight1");
                         }
                         else if (index == 1 && previousTags[previousTags.Count - 2 - index] == "left")
                         {
-                            historyAnimator.Play("HistoryLeft2");
+                            history2Animator.Play("HistoryLeft2");
                         }
                         else if (index == 1 && previousTags[previousTags.Count - 2 - index] == "right")
                         {
-                            historyAnimator.Play("HistoryRight2");
+                            history2Animator.Play("HistoryRight2");
                         }
 
                         index++;
