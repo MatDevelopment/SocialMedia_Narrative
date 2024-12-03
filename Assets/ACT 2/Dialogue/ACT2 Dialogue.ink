@@ -18,100 +18,69 @@ Hey! #speaker:Riley #portrait:riley #layout:left
 I saw that you were online. #speaker:Riley #portrait:riley #layout:left
 Thought I'd say hi, since we haven’t really gotten a chance to talk to each other yet. #speaker:Riley #portrait:riley #layout:left
 
-    * Hi. Remind me. Who are you again? #speaker:Player #portrait:player #layout:right
-        Oh, I'm Riley. #speaker:Riley #portrait:riley #layout:left
-        I sent you a friend request a few days ago. #speaker:Riley #portrait:riley #layout:left
-        I just love meeting new people on here, so hope you won’t mind chatting, and sharing some stuff from the feed. #speaker:Riley #portrait:riley #layout:left
-        -> stitch2
-        
-    * Do I know you? #speaker:Player #portrait:player #layout:right
-    Oh, I'm Riley. #speaker:Riley #portrait:riley #layout:left
-        I sent you a friend request a few days ago. #speaker:Riley #portrait:riley #layout:left
-        I just love meeting new people on here, so hope you won’t mind chatting, and sharing some stuff from the feed. #speaker:Riley #portrait:riley #layout:left
-        -> stitch2
-    
-    * Oh hi. Sure, we can talk. #speaker:Player #portrait:player #layout:right
-    Nice, nice. #speaker:Riley #portrait:riley #layout:left
-    I just love meeting new people on here, so hope you won’t mind chatting, and sharing some stuff from the feed. #speaker:Riley #portrait:riley #layout:left
-        -> stitch2
+* Hi. Remind me. Who are you again? #speaker:Player #portrait:player #layout:right  
+    Oh, I’m Riley! #speaker:Riley #portrait:riley #layout:left  
+    I sent you a friend request a few days ago. #speaker:Riley #portrait:riley #layout:left  
+    I love meeting new people here. Hope you don’t mind chatting? #speaker:Riley #portrait:riley #layout:left  
+    -> stitch2
+
+* Do I know you? #speaker:Player #portrait:player #layout:right  
+    Oh, I’m Riley! #speaker:Riley #portrait:riley #layout:left  
+    I sent you a friend request a few days ago. #speaker:Riley #portrait:riley #layout:left  
+    I’m always excited to connect with new people. Mind if we chat? #speaker:Riley #portrait:riley #layout:left  
+    -> stitch2
+
+* Oh hi. Sure, we can talk. #speaker:Player #portrait:player #layout:right  
+    Nice, nice. #speaker:Riley #portrait:riley #layout:left  
+    I’m always happy to meet someone new! #speaker:Riley #portrait:riley #layout:left  
+    -> stitch2
+
 
 
 // Engage with Riley
 = stitch2        
 VAR willToShare = false
 
-* Not really interested. #speaker:Player #portrait:player #layout:right
+* Not really interested. #speaker:Player #portrait:player #layout:right  
+    Oh, no worries. I get that. #speaker:Riley #portrait:riley #layout:left  
+    I could still share something cool with you if you’re okay with that? #speaker:Riley #portrait:riley #layout:left  
     -> stitch4
-    
-* Won’t mind at all. #speaker:Player #portrait:player #layout:right
-    Awesome! #speaker:Riley #portrait:riley #layout:left
-    Does your feed have some good stuff? #speaker:Riley #portrait:riley #layout:left
-    ** Sure do. I can try and share something with you #speaker:Player #portrait:player #layout:right
-        ~ willToShare = "true"
-        Pls do :) #speaker:Riley #portrait:riley #layout:left
-        -> stitch3
-    ** I would say so. Give me a sec to find something #speaker:Player #portrait:player #layout:right
-        ~ willToShare = "true"
-        Ok. i'll wait. #speaker:Riley #portrait:riley #layout:left
-        -> stitch3
-    ** Not really. #speaker:Player #portrait:player #layout:right
-        Bummer. #speaker:Riley #portrait:riley #layout:left
-        Well, i'll go ahead and share something with you then. #speaker:Riley #portrait:riley #layout:left
-        Should hopefully get your algorithm up and running so that your feed gets a little more interesting. #speaker:Riley #portrait:riley #layout:left
-                *** You don't have to do that. That's not necessary. #speaker:Player #portrait:player #layout:right
-                    You'll like it. Trust me #speaker:Riley #portrait:riley #layout:left
-                    -> stitch4
-                *** Sure, go for it. #speaker:Player #portrait:player #layout:right
-                    ~ willToShare = "true"
-                    Ok. Just give me a sec. #speaker:Riley #portrait:riley #layout:left
-                    -> stitch4
-                *** Algorithm? What is an algorithm? #speaker:Player #portrait:player #layout:right
-                    Umm.... #speaker:Riley #portrait:riley #layout:left
-                    well... #speaker:Riley #portrait:riley #layout:left
-                    An alogithm is basically a system that tries to make sure you see content that you are actually interested in. #speaker:Riley #portrait:riley #layout:left
-                    So like, it monitors what posts you engage with and then uses that information to give you more of / similar posts in your feed  #speaker:Riley #portrait:riley #layout:left
-                    **** Huh. Sounds pretty intrusive #speaker:Player #portrait:player #layout:right
-                    **** Interesting. #speaker:Player #portrait:player #layout:right
-                    ---- Nah. Don't think about it. #speaker:Riley #portrait:riley #layout:left
-                        All social media has something like that integrated. #speaker:Riley #portrait:riley #layout:left
-                        Almost unavoidable at this point. Anyway. I found a good one for you. #speaker:Riley #portrait:riley #layout:left
-                        -> stitch4
-        
-* I guess I don't mind. #speaker:Player #portrait:player #layout:right
-    Cool. #speaker:Riley #portrait:riley #layout:left
-    Getting anything good on your feed you would mind sharing? #speaker:Riley #portrait:riley #layout:left
-    I can also share something from my feed if you would prefer that? Just to break the ice. #speaker:Riley #portrait:riley #layout:left
-        ** Sure. Just give me a sec and i'll send you something. #speaker:Player #portrait:player #layout:right
-            ~ willToShare = "true"
-            Epic. #speaker:Riley #portrait:riley #layout:left
-            -> stitch3
-        ** I’d prefer not to share anything, but you are welcome to share something if you want.
-            That's ok. #speaker:Riley #portrait:riley #layout:left
-            I'll share something from my feed i think you'll like. #speaker:Riley #portrait:riley #layout:left
-            -> stitch4
-        ** My feed is pretty boring so you just go ahead. #speaker:Player #portrait:player #layout:right
-            Bummer. #speaker:Riley #portrait:riley #layout:left
-            Well, i'll go ahead and send you something.#speaker:Riley #portrait:riley #layout:left
-            Should hopefully get your algorithm up and running so that your feed gets a little more interesting. #speaker:Riley #portrait:riley #layout:left
-                *** You don't have to do that. That's not necessary. #speaker:Player #portrait:player #layout:right
-                    You'll like it. Trust me #speaker:Riley #portrait:riley #layout:left
-                    -> stitch4
-                *** Sure, go for it. #speaker:Player #portrait:player #layout:right
-                    ~ willToShare = "true"
-                    Ok. Just give me a sec. #speaker:Riley #portrait:riley #layout:left
-                    -> stitch4
-                *** Algorithm? What is an algorithm? #speaker:Player #portrait:player #layout:right
-                    Umm.... #speaker:Riley #portrait:riley #layout:left
-                    well... #speaker:Riley #portrait:riley #layout:left
-                    An alogithm is basically a system that tries to make sure you see content that you are actually interested in. #speaker:Riley #portrait:riley #layout:left
-                    So like, it monitors what posts you engage with and then uses that information to give you more of / similar posts in your feed  #speaker:Riley #portrait:riley #layout:left
-                    **** Huh. Sounds pretty intrusive #speaker:Player #portrait:player #layout:right
-                    **** Interesting. #speaker:Player #portrait:player #layout:right
-                    ---- Nah. Don't think about it. #speaker:Riley #portrait:riley #layout:left
-                    All social media has something like that integrated. #speaker:Riley #portrait:riley #layout:left
-                    Almost unavoidable at this point. #speaker:Riley #portrait:riley #layout:left
-                    Anyway. I found a good one for you. #speaker:Riley #portrait:riley #layout:left
-                    -> stitch4
+
+* Sure, I don’t mind. #speaker:Player #portrait:player #layout:right  
+    Awesome! #speaker:Riley #portrait:riley #layout:left  
+    Have anything interesting on your feed to share? #speaker:Riley #portrait:riley #layout:left  
+    Just to break the ice a bit. #speaker:Riley #portrait:riley #layout:left  
+
+    ** Yeah, give me a sec to find something. #speaker:Player #portrait:player #layout:right  
+        ~ willToShare = true  
+        Cool! Can’t wait to see. #speaker:Riley #portrait:riley #layout:left  
+        -> stitch3  
+
+    ** Not really. My feed’s kind of boring. #speaker:Player #portrait:player #layout:right  
+        Bummer. #speaker:Riley #portrait:riley #layout:left  
+        I’ll share something with you to spice it up! #speaker:Riley #portrait:riley #layout:left  
+        -> stitch4
+
+    ** Not really. #speaker:Player #portrait:player #layout:right  
+        What about you? Got anything cool to share? #speaker:Player #portrait:player #layout:right  
+        Of course! I’ve got a ton of interesting stuff. #speaker:Riley #portrait:riley #layout:left  
+        Here, let me find something. #speaker:Riley #portrait:riley #layout:left  
+        -> stitch4
+
+* Maybe. What kind of stuff are you into? #speaker:Player #portrait:player #layout:right  
+    Oh, a little bit of everything—funny memes, interesting articles, deep stuff. #speaker:Riley #portrait:riley #layout:left  
+    If you’re down, I can send you something cool! #speaker:Riley #portrait:riley #layout:left  
+
+    ** Sure, send something over. #speaker:Player #portrait:player #layout:right  
+        ~ willToShare = true  
+        Alright, let me grab something for you. #speaker:Riley #portrait:riley #layout:left  
+        -> stitch4  
+
+    ** I’ll see if I have something to share too. #speaker:Player #portrait:player #layout:right  
+        ~ willToShare = true  
+        Great! Looking forward to it. #speaker:Riley #portrait:riley #layout:left  
+        -> stitch3  
+
                 
 
 = stitch3
@@ -238,10 +207,8 @@ VAR shareTopic = 1
         The continuous grind will just burn you out. #speaker:Player #portrait:player #layout:right
         With that mindset you are not getting very far. #speaker:Riley #portrait:riley #layout:left
         *** We’ll see. #speaker:Player #portrait:player #layout:right
-            Thanks for the talk. #speaker:Player #portrait:player #layout:right
         ->stitch9
         *** Or maybe I'll get further. #speaker:Player #portrait:player #layout:right
-            Thanks for the talk. #speaker:Player #portrait:player #layout:right
         ->stitch9
 
 // Body Image
