@@ -7,6 +7,7 @@ public class DialogueState : MonoBehaviour
     [Header("Dialogue Panels")]
     [SerializeField] private GameObject samDialoguePanel;
     [SerializeField] private GameObject rileyDialoguePanel;
+    [SerializeField] private GameObject feedPanel;
 
     [Header("Notification Icons")]
     [SerializeField] private GameObject samNotificationIcon;
@@ -66,6 +67,15 @@ public class DialogueState : MonoBehaviour
         else if (currentDialogue != "riley")
         {
             rileyDialoguePanel.SetActive(false);
+        }
+
+        if (currentDialogue == "feed" && !feedPanel.activeInHierarchy)
+        {
+            feedPanel.SetActive(true);
+        }
+        else if (currentDialogue != "feed")
+        {
+            feedPanel.SetActive(false);
         }
     }
 

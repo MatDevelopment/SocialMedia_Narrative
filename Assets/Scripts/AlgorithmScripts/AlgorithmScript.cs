@@ -8,7 +8,7 @@ using Image = UnityEngine.UI.Image;
 using Button = UnityEngine.UI.Button;
 using TMPro;
 
-public class ScrollingAlgorithm : MonoBehaviour
+public class AlgorithmScript : MonoBehaviour
 {
     [System.Serializable]
     public struct QuoteData
@@ -18,6 +18,7 @@ public class ScrollingAlgorithm : MonoBehaviour
     }
     public GameObject algorithmWindow;
     public Canvas gameCanvas;
+    public Transform feedPanel;
     public int numberOfWindows = 15;
     private float offScreenOffset = -700;
     private float catapultSpeed = 750f;
@@ -38,6 +39,7 @@ public class ScrollingAlgorithm : MonoBehaviour
         PrepareDataDictionary();
         StartCoroutine(SpawnWindows());
     }
+
 
     private void FixedUpdate()
     {
@@ -119,7 +121,7 @@ public class ScrollingAlgorithm : MonoBehaviour
         for (int i = 0; i < numberOfWindows; i++)
         {
             // Instantiate the window
-            GameObject gameObject = Instantiate(algorithmWindow, gameCanvas.transform);
+            GameObject gameObject = Instantiate(algorithmWindow, feedPanel);
             RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
 
             // Position boxes as described
@@ -251,7 +253,7 @@ public class ScrollingAlgorithm : MonoBehaviour
         Destroy(currentBox); // Destroy the current box
 
         // Instantiate a new box of the same color and add it to the pile
-        GameObject newBox = Instantiate(algorithmWindow, gameCanvas.transform); // Create a new box
+        GameObject newBox = Instantiate(algorithmWindow, feedPanel); // Create a new box
         RectTransform newBoxRect = newBox.GetComponent<RectTransform>();
         float pileSpawnY = -canvasHeight - 100; // Place it initially off-screen below the canvas
         newBoxRect.anchoredPosition = new Vector2(0, pileSpawnY); // Position it below the canvas
@@ -309,5 +311,10 @@ void SimulateClick()
                 break;
             }
         }
+    }
+
+public void ShowFeed()
+    {
+        DialogueState.GetInstance().currentDialogue = "feed";
     }
 }
