@@ -16,6 +16,9 @@ public class AlgorithmScoreHolder : MonoBehaviour
     private float likeButtonTimeBonus = 10f;
     private AlgorithmHolder algorithmHolder;
 
+    private bool likeButtonPressed = false;
+    private Animator likeButtonAnimator;
+
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +60,8 @@ public class AlgorithmScoreHolder : MonoBehaviour
         {
             Debug.LogWarning("Like button not found in prefab!");
         }
+
+        likeButtonAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -113,8 +118,19 @@ public class AlgorithmScoreHolder : MonoBehaviour
     private void OnLikeButtonClicked()
     {
         // Add time bonus to the timer
-        timer += likeButtonTimeBonus;
-        Debug.Log($"Like button clicked! Timer increased by {likeButtonTimeBonus:F2} seconds. Total time: {timer:F2}");
+        if (!likeButtonPressed)
+        {
+            timer += likeButtonTimeBonus;
+            likeButtonAnimator.Play("LikeClicked");
+            Debug.Log($"Like button clicked! Timer increased by {likeButtonTimeBonus:F2} seconds. Total time: {timer:F2}");
+            likeButtonPressed = true;
+        } else if (likeButtonPressed)
+        {
+            timer -= likeButtonTimeBonus;
+            likeButtonAnimator.Play("LikeNotClicked");
+            Debug.Log($"Like button clicked! Timer decreased by {likeButtonTimeBonus:F2} seconds. Total time: {timer:F2}");
+            likeButtonPressed = false;
+        }
     }
 }
 
