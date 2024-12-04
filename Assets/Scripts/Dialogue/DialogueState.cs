@@ -8,10 +8,15 @@ public class DialogueState : MonoBehaviour
     [SerializeField] private GameObject samDialoguePanel;
     [SerializeField] private GameObject rileyDialoguePanel;
     [SerializeField] private GameObject feedPanel;
+    [SerializeField] private GameObject chatPanel;
 
     [Header("Dialogue Managers")]
     [SerializeField] private DialogueManager dialogueManagerSam;
     [SerializeField] private DialogueManager dialogueManagerRiley;
+
+    [Header("UI Animators")]
+    [SerializeField] private Animator homeButtonAnimator;
+    [SerializeField] private Animator chatButtonAnimator;
 
     [Header("Notification Icons")]
     [SerializeField] private GameObject samNotificationIcon;
@@ -81,10 +86,23 @@ public class DialogueState : MonoBehaviour
         if (currentDialogue == "feed" && !feedPanel.activeInHierarchy)
         {
             feedPanel.SetActive(true);
+            homeButtonAnimator.Play("HomeClicked");
         }
         else if (currentDialogue != "feed" && feedPanel.activeInHierarchy)
         {
             feedPanel.SetActive(false);
+            homeButtonAnimator.Play("HomeNotClicked");
+        }
+
+        if (currentDialogue == "chat" && !chatPanel.activeInHierarchy)
+        {
+            chatPanel.SetActive(true);
+            chatButtonAnimator.Play("ChatClicked");
+        }
+        else if (currentDialogue != "chat" && chatPanel.activeInHierarchy)
+        {
+            chatPanel.SetActive(false);
+            chatButtonAnimator.Play("ChatNotClicked");
         }
 
         // Code for handling the notification icons based on if there is a new message or not
@@ -107,4 +125,8 @@ public class DialogueState : MonoBehaviour
         }
     }
 
+    public void ShowChat()
+    {
+        currentDialogue = "chat";
+    }
 }
