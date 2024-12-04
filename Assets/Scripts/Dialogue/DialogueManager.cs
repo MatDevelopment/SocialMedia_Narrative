@@ -189,6 +189,20 @@ public class DialogueManager : MonoBehaviour
                     }
                 }
             }
+            
+            // Setting the notification icon on if new message is given when not on the page
+            if (DialogueState.GetInstance().currentDialogue != dialogueName)
+            {
+                if (dialogueName == "sam")
+                {
+                    DialogueState.GetInstance().newMessageSam = true;
+                }
+                else if (dialogueName == "riley")
+                {
+                    DialogueState.GetInstance().newMessageRiley = true;
+                }
+            }
+
         }
         else
         {

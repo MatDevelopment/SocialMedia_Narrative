@@ -16,6 +16,17 @@ public class DialogueTrigger : MonoBehaviour
     {
         DialogueState.GetInstance().currentDialogue = dialogueName;
 
+        // Removing nofitication icon when pressing the button
+        if (dialogueName == "sam")
+        {
+            DialogueState.GetInstance().newMessageSam = false;
+        } 
+        else if (dialogueName == "riley")
+        {
+            DialogueState.GetInstance().newMessageRiley = false;
+        }
+
+        // Logic based on the DialogueState script for what ink file to start when pressing the button
         if (dialogueManager.dialogueIsPlaying == false)
         {
             if (DialogueState.GetInstance().act1_active == true)
@@ -30,10 +41,6 @@ public class DialogueTrigger : MonoBehaviour
             {
                 dialogueManager.EnterDialogueMode(act3_inkJSON);
             }
-        }
-        else if (dialogueManager.dialogueIsPlaying)
-        {
-            dialogueManager.RefreshUI();
         }
     }
 }

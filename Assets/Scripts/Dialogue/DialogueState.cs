@@ -9,9 +9,15 @@ public class DialogueState : MonoBehaviour
     [SerializeField] private GameObject rileyDialoguePanel;
     [SerializeField] private GameObject feedPanel;
 
+    [Header("Dialogue Managers")]
+    [SerializeField] private DialogueManager dialogueManagerSam;
+    [SerializeField] private DialogueManager dialogueManagerRiley;
+
     [Header("Notification Icons")]
     [SerializeField] private GameObject samNotificationIcon;
     [SerializeField] private GameObject rileyNotificationIcon;
+    public bool newMessageSam = false;
+    public bool newMessageRiley = false;
 
     [Header("Misc")]
     [SerializeField] private GameObject rileyFriendRequest;
@@ -51,11 +57,13 @@ public class DialogueState : MonoBehaviour
 
     private void Update()
     {
+        // Code that changes what page is active based on the "currentDialogue" string
         if (currentDialogue == "sam" && !samDialoguePanel.activeInHierarchy)
         {
             samDialoguePanel.SetActive(true);
+            dialogueManagerSam.RefreshUI();
         }
-        else if (currentDialogue != "sam")
+        else if (currentDialogue != "sam" && samDialoguePanel.activeInHierarchy)
         {
             samDialoguePanel.SetActive(false);
         }
@@ -63,8 +71,9 @@ public class DialogueState : MonoBehaviour
         if (currentDialogue == "riley" && !rileyDialoguePanel.activeInHierarchy)
         {
             rileyDialoguePanel.SetActive(true);
+            dialogueManagerRiley.RefreshUI();
         }
-        else if (currentDialogue != "riley")
+        else if (currentDialogue != "riley" && rileyDialoguePanel.activeInHierarchy)
         {
             rileyDialoguePanel.SetActive(false);
         }
@@ -73,9 +82,28 @@ public class DialogueState : MonoBehaviour
         {
             feedPanel.SetActive(true);
         }
-        else if (currentDialogue != "feed")
+        else if (currentDialogue != "feed" && feedPanel.activeInHierarchy)
         {
             feedPanel.SetActive(false);
+        }
+
+        // Code for handling the notification icons based on if there is a new message or not
+        if (newMessageSam && !samNotificationIcon.activeInHierarchy)
+        {
+            samNotificationIcon.SetActive(true);
+        }
+        else if (!newMessageSam && samNotificationIcon.activeInHierarchy)
+        {
+            samNotificationIcon.SetActive(false);
+        }
+
+        if (newMessageRiley && !rileyNotificationIcon.activeInHierarchy)
+        {
+            rileyNotificationIcon.SetActive(true);
+        }
+        else if (!newMessageRiley && rileyNotificationIcon.activeInHierarchy)
+        {
+            rileyNotificationIcon.SetActive(false);
         }
     }
 
