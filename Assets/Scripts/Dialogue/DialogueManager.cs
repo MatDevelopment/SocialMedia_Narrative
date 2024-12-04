@@ -94,6 +94,7 @@ public class DialogueManager : MonoBehaviour
         {
             historyText[index2] = message.GetComponentInChildren<TextMeshProUGUI>();
             index2++;
+            message.SetActive(false);
         }
     }
 

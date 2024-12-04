@@ -12,6 +12,8 @@ public class CreateAccount : MonoBehaviour
     [SerializeField] private GameObject createAccountPanel;
     [SerializeField] private TextMeshProUGUI nameInput;
     [SerializeField] private Animator profileButtonAnimator;
+    [SerializeField] private Animator playerNameAnimator;
+    [SerializeField] private TextMeshProUGUI playerNameText;
 
     private void Start()
     {
@@ -24,6 +26,7 @@ public class CreateAccount : MonoBehaviour
     public void CreateButton()
     {
         DialogueState.GetInstance().playerName = nameInput.text;
+        playerNameText.text = nameInput.text;
         createAccountPanel.SetActive(false);
     }
 
@@ -31,5 +34,6 @@ public class CreateAccount : MonoBehaviour
     {
         DialogueState.GetInstance().playerPortrait = portraitName;
         profileButtonAnimator.Play(portraitName);
+        playerNameAnimator.Play(portraitName);
     }
 }
