@@ -84,15 +84,15 @@ VAR willToShare = false
                 
 
 = stitch3
-VAR sharedRileyPost = 0
+VAR sharedRileyPost = 4
 
 //0-2 Riley means it. 3-4 Riley is sarcastic or "plays along"
 {sharedRileyPost:
 - 0: Haha. Nice one. I think i can beat it however. #speaker:Riley #portrait:riley #layout:left
 - 1: Sorry to say, but that was kind of lame. #speaker:Riley #portrait:riley #layout:left
 - 2: Interesting. Reminds me of something like this. #speaker:Riley #portrait:riley #layout:left
-- 3: haha. nice one. But just you wait till you see this one #speaker:Riley #portrait:riley #layout:left
-- 4: interesting. #speaker:Riley #portrait:riley #layout:left
+- 3: Haha. nice one. But just you wait till you see this one #speaker:Riley #portrait:riley #layout:left
+- 4: Interesting. #speaker:Riley #portrait:riley #layout:left
 }
 
 -> stitch4
@@ -126,10 +126,12 @@ VAR shareTopic = 1
         Like, is it too late for us to do anything about it?#speaker:Player #portrait:player #layout:right
         
         Probably. With the way things are going it wouldn’t surprise me. #speaker:Riley #portrait:riley #layout:left
-        *** I don't believe that. i don't want to believe that. #speaker:Player #portrait:player #layout:right
-        ->stitch8
+        *** I don't believe that. I don't want to believe that. #speaker:Player #portrait:player #layout:right
+            Well you better believe it. Its a trusted news source. Why would they lie?
+            **** I guess they wouldn't.  
+                ->stitch8
         *** There must be something to do about it. What if. #speaker:Player #portrait:player #layout:right
-        ->stitch8
+            ->stitch8
 
     **[I don’t think you need to look at it that way.] #speaker:Player #portrait:player #layout:right
         I don’t think you need to look at it that way. #speaker:Player #portrait:player #layout:right
@@ -142,9 +144,9 @@ VAR shareTopic = 1
         -> stitch9
 
 * That doesn’t sound right. Must be fake. #speaker:Player #portrait:player #layout:right
-    I swear. You can trust this one. Things are really turning for the worse. #speaker:Riley #portrait:riley #layout:left
+    I swear you can trust this one. Things are really turning for the worse. #speaker:Riley #portrait:riley #layout:left
     
-    ** I don't believe that. i don't want to believe that. #speaker:Player #portrait:player #layout:right
+    **  #speaker:Player #portrait:player #layout:right
         ->stitch8
         
     ** [Do you think there is anything we can do about it anymore?] #speaker:Player #portrait:player #layout:right
@@ -279,6 +281,7 @@ VAR shareTopic = 1
 
 // Connected with Riley
 = stitch8
+VAR RileyConnected = true
 Oh, Sorry. My mom is calling for dinner. I'll talk to you later after i've eaten. #speaker:Player #portrait:player #layout:right
 
 Of course. I’ll talk to you later. #speaker:Riley #portrait:riley #layout:left
@@ -297,6 +300,7 @@ End of Act 2
 
 // Disconnected with Riley
 = stitch9
+~ RileyConnected = false
 Thanks for the talk. #speaker:Riley #portrait:riley #layout:left
 
 /*
