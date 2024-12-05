@@ -238,6 +238,8 @@ GameObject:
   - component: {fileID: 408354429855888847}
   - component: {fileID: 4381158065957352890}
   - component: {fileID: 7461317973674672218}
+  - component: {fileID: 3638641838660876821}
+  - component: {fileID: 6020371681297168373}
   m_Layer: 5
   m_Name: PostRedo
   m_TagString: Untagged
@@ -325,6 +327,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 30
   image: {fileID: 4381158065957352890}
+--- !u!114 &3638641838660876821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414550111234433057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90559fb9be1585448a526bacc1b598e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerThreshold: 10
+--- !u!95 &6020371681297168373
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414550111234433057}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ef10361241987974ea0e1432abb534bf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1618115450793991545
 GameObject:
   m_ObjectHideFlags: 0
