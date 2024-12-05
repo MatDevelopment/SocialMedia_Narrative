@@ -5,11 +5,9 @@ using UnityEngine.UI;
 
 public class AlgorithmScoreHolder : MonoBehaviour
 {
-    private Image windowImage;
-    private Color WindowColor;
-    private RectTransform rectTransform; 
-    private RectTransform canvasRect;    
-    private float timer = 0f;      
+    private RectTransform rectTransform;
+    private RectTransform canvasRect;
+    private float timer = 0f;
     public float centerThreshold = 10f;
     private Button algorithmButton;
     private Button likeButton;
@@ -19,12 +17,10 @@ public class AlgorithmScoreHolder : MonoBehaviour
     private bool likeButtonPressed = false;
     private Animator likeButtonAnimator;
 
+    private string algorithmCategory; 
 
-    // Start is called before the first frame update
     void Start()
     {
-        windowImage = GetComponent<Image>();
-        WindowColor = windowImage.color;
         rectTransform = GetComponent<RectTransform>();
         algorithmHolder = FindAnyObjectByType<AlgorithmHolder>();
         Canvas canvas = GetComponentInParent<Canvas>();
@@ -37,7 +33,6 @@ public class AlgorithmScoreHolder : MonoBehaviour
         {
             Debug.LogWarning("Box is not inside a canvas!");
         }
-
 
         algorithmButton = GetComponent<Button>();
 
@@ -54,7 +49,7 @@ public class AlgorithmScoreHolder : MonoBehaviour
         if (likeButtonTransform != null)
         {
             likeButton = likeButtonTransform.GetComponent<Button>();
-            likeButton.onClick.AddListener(OnLikeButtonClicked); // Add listener for like button
+            likeButton.onClick.AddListener(OnLikeButtonClicked);
         }
         else
         {
@@ -62,9 +57,14 @@ public class AlgorithmScoreHolder : MonoBehaviour
         }
 
         likeButtonAnimator = GetComponent<Animator>();
+
+        algorithmCategory = GetCategoryFromName(gameObject.name);
+        if (string.IsNullOrEmpty(algorithmCategory))
+        {
+            Debug.LogWarning("Could not determine category from the box name.");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (IsCentered())
@@ -84,47 +84,40 @@ public class AlgorithmScoreHolder : MonoBehaviour
         return Mathf.Abs(anchoredPosition.x) <= centerThreshold && Mathf.Abs(anchoredPosition.y) <= centerThreshold;
     }
 
-    private string TranslateColor(Color color)
+    private string GetCategoryFromName(string name)
     {
-        Color red = new Color(1f, 0f, 0f);
-        Color blue = new Color(0f, 0f, 1f);
-        Color yellow = new Color(1f, 1f, 0f);
+        if (name.Contains("stress"))
+        {
+            return "stress";
+        }
+        else if (name.Contains("grind"))
+        {
+            return "grind";
+        }
+        else if (name.Contains("anger"))
+        {
+            return "anger";
+        }
 
-        float tolerance = 0.1f;
-
-        if (AreColorsSimilar(color, red, tolerance))
-            return "Red";
-        if (AreColorsSimilar(color, blue, tolerance))
-            return "Blue";
-        if (AreColorsSimilar(color, yellow, tolerance))
-            return "Yellow";
-
-        return "Unknown";
-    }
-
-    private bool AreColorsSimilar(Color c1, Color c2, float tolerance)
-    {
-        return Mathf.Abs(c1.r - c2.r) <= tolerance &&
-               Mathf.Abs(c1.g - c2.g) <= tolerance &&
-               Mathf.Abs(c1.b - c2.b) <= tolerance;
+        return string.Empty; // Return empty if no match is found
     }
 
     private void OnBoxClicked()
     {
-        Debug.Log($"Box clicked! Last centered time: {timer:F2} seconds, Color: {TranslateColor(WindowColor)}");
-        algorithmHolder.AddScore(timer, TranslateColor(WindowColor));
+        Debug.Log($"Box clicked! Last centered time: {timer:F2} seconds, Category: {algorithmCategory}");
+        algorithmHolder.AddScore(timer, algorithmCategory);
     }
 
     private void OnLikeButtonClicked()
     {
-        // Add time bonus to the timer
         if (!likeButtonPressed)
         {
             timer += likeButtonTimeBonus;
             likeButtonAnimator.Play("LikeClicked");
             Debug.Log($"Like button clicked! Timer increased by {likeButtonTimeBonus:F2} seconds. Total time: {timer:F2}");
             likeButtonPressed = true;
-        } else if (likeButtonPressed)
+        }
+        else if (likeButtonPressed)
         {
             timer -= likeButtonTimeBonus;
             likeButtonAnimator.Play("LikeNotClicked");
@@ -133,4 +126,3 @@ public class AlgorithmScoreHolder : MonoBehaviour
         }
     }
 }
-

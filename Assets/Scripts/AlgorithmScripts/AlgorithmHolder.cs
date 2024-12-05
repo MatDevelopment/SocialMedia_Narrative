@@ -4,33 +4,40 @@ using UnityEngine;
 
 public class AlgorithmHolder : MonoBehaviour
 {
-    private float redScore = 0;
-    private float blueScore = 0;
-    private float yellowScore = 0;
+    private float angerScore = 0;
+    private float stressScore = 0;
+    private float grindScore = 0;
 
-    public void AddScore(float time, string colorCategory)
+    private float lastStress;
+    private float lastGrind;
+    private float lastAnger;
+
+    public void AddScore(float time, string algorithmCategory)
     {
-        // Round time to two decimal places
         float roundedTime = Mathf.Round(time * 100f) / 100f;
 
-        // Update score based on color category
-        switch (colorCategory)
+        switch (algorithmCategory)
         {
-            case "Red":
-                redScore += roundedTime;
+            case "anger":
+                angerScore += roundedTime;
                 break;
-            case "Blue":
-                blueScore += roundedTime;
+            case "stress":
+                stressScore += roundedTime;
                 break;
-            case "Yellow":
-                yellowScore += roundedTime;
+            case "grind":
+                grindScore += roundedTime;
                 break;
             default:
-                Debug.LogWarning($"Unknown color category: {colorCategory}");
+                Debug.LogWarning($"Unknown color category: {algorithmCategory}");
                 break;
         }
+        Debug.Log($"Score Updated! Anger: {angerScore:F2}, Stress: {stressScore:F2}, Grind: {grindScore:F2}");
+    }
 
-        // Log updated scores
-        Debug.Log($"Score Updated! Red: {redScore:F2}, Blue: {blueScore:F2}, Yellow: {yellowScore:F2}");
+    public void finalScore()
+    {
+        lastStress = stressScore;
+        lastAnger = angerScore;
+        lastAnger = grindScore;
     }
 }
