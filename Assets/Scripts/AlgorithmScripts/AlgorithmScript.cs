@@ -4,6 +4,7 @@ using UnityEngine;
 using Image = UnityEngine.UI.Image;
 using Button = UnityEngine.UI.Button;
 using TMPro;
+using UnityEngine.UIElements;
 
 public class AlgorithmScript : MonoBehaviour
 {
@@ -21,11 +22,13 @@ public class AlgorithmScript : MonoBehaviour
     public float scrollCooldown = 0.5f;
     private float lastScrollTime = -1f;
     private bool currentlyMoving = false;
+    public float centerThreshold = 10f;
 
     private List<GameObject> boxes = new List<GameObject>();
     private List<string> algorithmCategories = new List<string>();
     private Dictionary<string, List<QuoteData>> algorithmCategoriesData;
     private Dictionary<string, Sprite> imageDictionary;
+    private AlgorithmScore algorithmScore;
 
     void Start()
     {
@@ -38,7 +41,7 @@ public class AlgorithmScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && Time.time > lastScrollTime + scrollCooldown)
+        if (Input.GetAxis("Mouse ScrollWheel") < 0 && Time.time > lastScrollTime + scrollCooldown)
         {
             lastScrollTime = Time.time;
             SimulateClick();
@@ -49,7 +52,7 @@ public class AlgorithmScript : MonoBehaviour
     {
         imageDictionary = new Dictionary<string, Sprite>();
 
-        Sprite[] sprites = Resources.LoadAll<Sprite>("QuoteImages");
+        Sprite[] sprites = Resources.LoadAll<Sprite>("PostPictures");
         foreach (Sprite sprite in sprites)
         {
             imageDictionary[sprite.name] = sprite;
@@ -58,8 +61,8 @@ public class AlgorithmScript : MonoBehaviour
 
     void PrepareAlgorithmCategoryList()
     {
-        algorithmCategories.Add("stress"); //former blue
-        algorithmCategories.Add("anger");  //former red
+        algorithmCategories.Add("stress"); //former blue + esteem
+        algorithmCategories.Add("anger");  //former red + anixety
         algorithmCategories.Add("grind");  //former yellow
 
         for (int i = 0; i < 4; i++)  // 4 sets of 3 more to get to 15 in total
@@ -83,25 +86,25 @@ public class AlgorithmScript : MonoBehaviour
         algorithmCategoriesData = new Dictionary<string, List<QuoteData>>()
         {
             { "stress", new List<QuoteData> {
-                new QuoteData { quote = "I know I should take a break, but I can’t seem to relax. My mind is constantly jumping from one thing to the next. Does anyone else feel like they can never fully switch off?", imageLocation = "anxiety_1" },
-                new QuoteData { quote = "Some days I feel like I’m doing okay, and other days it’s just… a lot. Like, I can’t breathe right. Anyone else trying to keep it all together but struggling to do so?", imageLocation = "anxiety_2" },
-                new QuoteData { quote = "You ever have those moments where you feel like everything's moving so fast and you're just... trying to keep up? It’s like everyone else is already where they need to be", imageLocation = "anxiety_3" },
-                new QuoteData { quote = "The more I think about it, the more I realize that maybe I don't actually know how to relax. I always feel like there’s something I should be doing", imageLocation = "anxiety_4" },
-                new QuoteData { quote = "I love how everyone seems so sure of themselves online. It's weird, right? How they just... handle everything. I sometimes feel like I’m always one step behind", imageLocation = "anxiety_5" }
+                new QuoteData { quote = "I know I should take a break, but I can’t seem to relax. My mind is constantly jumping from one thing to the next. Does anyone else feel like they can never fully switch off?", imageLocation = "AI_leaksPrivateData" },
+                new QuoteData { quote = "Some days I feel like I’m doing okay, and other days it’s just… a lot. Like, I can’t breathe right. Anyone else trying to keep it all together but struggling to do so?", imageLocation = "AsteroidEarth" },
+                new QuoteData { quote = "You ever have those moments where you feel like everything's moving so fast and you're just... trying to keep up? It’s like everyone else is already where they need to be", imageLocation = "ClimateDisasterSiberia" },
+                new QuoteData { quote = "The more I think about it, the more I realize that maybe I don't actually know how to relax. I always feel like there’s something I should be doing", imageLocation = "ConferenceWoman" },
+                new QuoteData { quote = "I love how everyone seems so sure of themselves online. It's weird, right? How they just... handle everything. I sometimes feel like I’m always one step behind", imageLocation = "CoralReef" }
             }},
             { "grind", new List<QuoteData> {
-                new QuoteData { quote = "I saw a tweet saying, 'You don’t get weekends off if you want to win.' Can’t let up if you want to succeed, right?", imageLocation = "grind_1" },
-                new QuoteData { quote = "You know, it's not about luck or talent. It’s about working nonstop. I’ve learned that sleep is overrated", imageLocation = "grind_2" },
-                new QuoteData { quote = "Woke up at 5 AM again today. People say that's when the real hustlers are working. I can already feel the difference. This is the grind", imageLocation = "grind_3" },
-                new QuoteData { quote = "Saw some people complaining about how hard their week was. Honestly, though, if you really want to achieve something big, you’ve got to push through. There’s no room for weakness", imageLocation = "grind_4" },
-                new QuoteData { quote = "Another early morning, another grind. But you know, the hustle never stops. You can’t expect anything if you don’t push yourself to the absolute limit", imageLocation = "grind_5" }
+                new QuoteData { quote = "I saw a tweet saying, 'You don’t get weekends off if you want to win.' Can’t let up if you want to succeed, right?", imageLocation = "CoupleAtFancyRestaurant" },
+                new QuoteData { quote = "You know, it's not about luck or talent. It’s about working nonstop. I’ve learned that sleep is overrated", imageLocation = "FratParty" },
+                new QuoteData { quote = "Woke up at 5 AM again today. People say that's when the real hustlers are working. I can already feel the difference. This is the grind", imageLocation = "GroupHikingBackTurned" },
+                new QuoteData { quote = "Saw some people complaining about how hard their week was. Honestly, though, if you really want to achieve something big, you’ve got to push through. There’s no room for weakness", imageLocation = "GroupHikingFront" },
+                new QuoteData { quote = "Another early morning, another grind. But you know, the hustle never stops. You can’t expect anything if you don’t push yourself to the absolute limit", imageLocation = "ManMirrorGymSelfie" }
             }},
             { "anger", new List<QuoteData> {
-                new QuoteData { quote = "Woke up feeling great after a week of hard work at the gym. It’s amazing what consistency can do for you. Who else is on a fitness journey?", imageLocation = "body_image_1" },
-                new QuoteData { quote = "Found a new skincare routine that’s totally transformed my skin. Feels so good to be able to go out without makeup now! Anyone else tried something that totally changed the game?", imageLocation = "body_image_2" },
-                new QuoteData { quote = "Just finished my workout. The progress is slow, but at least it’s progress, right? One step closer", imageLocation = "body_image_3" },
-                new QuoteData { quote = "Tried a new recipe today. They say if you want to get serious, you need to treat food like fuel. But it’s hard not to compare when I see what others are eating", imageLocation = "body_image_4" },
-                new QuoteData { quote = "I’ve been really into taking care of myself lately. Everyone says self-care is important, but I wonder how long it takes before you start really seeing the results", imageLocation = "body_image_5" }
+                new QuoteData { quote = "Woke up feeling great after a week of hard work at the gym. It’s amazing what consistency can do for you. Who else is on a fitness journey?", imageLocation = "NewjobWoman" },
+                new QuoteData { quote = "Found a new skincare routine that’s totally transformed my skin. Feels so good to be able to go out without makeup now! Anyone else tried something that totally changed the game?", imageLocation = "PodcastChad" },
+                new QuoteData { quote = "Just finished my workout. The progress is slow, but at least it’s progress, right? One step closer", imageLocation = "WomanGymSelfie" },
+                new QuoteData { quote = "Tried a new recipe today. They say if you want to get serious, you need to treat food like fuel. But it’s hard not to compare when I see what others are eating", imageLocation = "SportsWatchFlex" },
+                new QuoteData { quote = "I’ve been really into taking care of myself lately. Everyone says self-care is important, but I wonder how long it takes before you start really seeing the results", imageLocation = "StockTradeGrinding" }
             }}
         };
     }
@@ -249,19 +252,35 @@ public class AlgorithmScript : MonoBehaviour
 
     void SimulateClick()
     {
-        // Find the currently centered box (the first active box in the list)
-        for (int i = 0; i < boxes.Count; i++)
+        foreach (GameObject box in boxes)
         {
-            if (boxes[i] != null && boxes[i].activeSelf)
+            if (box == null || !box.activeSelf) continue;
+
+            AlgorithmScore scoreHolder = box.GetComponent<AlgorithmScore>();
+            if (scoreHolder != null && IsBoxCentered(scoreHolder))
             {
-                // Trigger the catapult effect as if it were clicked
-                CatapultBox(i);
+                scoreHolder.OnBoxClicked();
+
+                int index = boxes.IndexOf(box);
+                if (index >= 0)
+                    CatapultBox(index);
                 break;
             }
         }
     }
 
-public void ShowFeed()
+    private bool IsBoxCentered(AlgorithmScore scoreHolder)
+    {
+        RectTransform rectTransform = scoreHolder.GetComponent<RectTransform>();
+        if (rectTransform == null) return false;
+
+        // Check if the box is within the center threshold
+        Vector2 anchoredPosition = rectTransform.anchoredPosition;
+        return Mathf.Abs(anchoredPosition.x) <= centerThreshold &&
+               Mathf.Abs(anchoredPosition.y) <= centerThreshold;
+    }
+
+    public void ShowFeed()
     {
         DialogueState.GetInstance().currentDialogue = "feed";
     }

@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AlgorithmScoreHolder : MonoBehaviour
+public class AlgorithmScore : MonoBehaviour
 {
     private RectTransform rectTransform;
     private RectTransform canvasRect;
@@ -13,11 +14,14 @@ public class AlgorithmScoreHolder : MonoBehaviour
     private Button likeButton;
     private float likeButtonTimeBonus = 10f;
     private AlgorithmHolder algorithmHolder;
+    public float scrollCooldown = 0.5f;
+    private float lastScrollTime = -1f;
 
+    private bool isPointerOver = false;
     private bool likeButtonPressed = false;
     private Animator likeButtonAnimator;
 
-    private string algorithmCategory; 
+    private string algorithmCategory;
 
     void Start()
     {
@@ -102,9 +106,8 @@ public class AlgorithmScoreHolder : MonoBehaviour
         return string.Empty; // Return empty if no match is found
     }
 
-    private void OnBoxClicked()
+    public void OnBoxClicked()
     {
-        Debug.Log($"Box clicked! Last centered time: {timer:F2} seconds, Category: {algorithmCategory}");
         algorithmHolder.AddScore(timer, algorithmCategory);
     }
 
