@@ -21,79 +21,61 @@ Thought I'd say hi, since we haven’t really gotten a chance to talk to each ot
 * Hi. Remind me. Who are you again? #speaker:Player #portrait:player #layout:right  
     Oh, I’m Riley! #speaker:Riley #portrait:riley #layout:left  
     I sent you a friend request a few days ago. #speaker:Riley #portrait:riley #layout:left  
-    I love meeting new people here. Hope you don’t mind chatting? #speaker:Riley #portrait:riley #layout:left  
+    I love meeting new people here. #speaker:Riley #portrait:riley #layout:left  
     -> stitch2
 
 * Do I know you? #speaker:Player #portrait:player #layout:right  
     Oh, I’m Riley! #speaker:Riley #portrait:riley #layout:left  
     I sent you a friend request a few days ago. #speaker:Riley #portrait:riley #layout:left  
-    I’m always excited to connect with new people. Mind if we chat? #speaker:Riley #portrait:riley #layout:left  
+    I’m always excited to connect with new people. #speaker:Riley #portrait:riley #layout:left  
     -> stitch2
 
-* Oh hi. Sure, we can talk. #speaker:Player #portrait:player #layout:right  
-    Nice, nice. #speaker:Riley #portrait:riley #layout:left  
+* Oh, of course Riley.. #speaker:Player #portrait:player #layout:right  
+    Yeah that is me. #speaker:Riley #portrait:riley #layout:left  
+    I sent you a friend request not long ago #speaker:Riley #portrait:riley #layout:left
     I’m always happy to meet someone new! #speaker:Riley #portrait:riley #layout:left  
     -> stitch2
 
 
 
-// Engage with Riley
+// Start of chat with riley
 = stitch2        
-VAR willToShare = false
+Mind if we chat? #speaker:Riley #portrait:riley #layout:left 
 
-* Not really interested. #speaker:Player #portrait:player #layout:right  
-    Oh, no worries. I get that. #speaker:Riley #portrait:riley #layout:left  
-    I could still share something cool with you if you’re okay with that? #speaker:Riley #portrait:riley #layout:left  
-    -> END
+* Sure, what do you want to talk about? #speaker:Player #portrait:player #layout:right
+    Great! #speaker:Riley #portrait:riley #layout:left 
+    -> stitch3
+* I am quite busy, but sure. #speaker:Player #portrait:player #layout:right
+    Ey, thanks for taking time out of that busy schedule of yours ;) #speaker:Riley #portrait:riley #layout:left 
+    -> stitch3
+* Alright, I guess I don't have anything else to do. #speaker:Player #portrait:player #layout:right
+    Wow.. Rude, but ok I will take that as a yes. #speaker:Riley #portrait:riley #layout:left 
+    -> stitch3
 
-* Sure, I don’t mind. #speaker:Player #portrait:player #layout:right  
-    Awesome! #speaker:Riley #portrait:riley #layout:left  
-    Have anything interesting on your feed to share? #speaker:Riley #portrait:riley #layout:left  
-    Just to break the ice a bit. #speaker:Riley #portrait:riley #layout:left  
+// Middle of chat with riley
+= stitch3  
+I saw that you just recently started on YapChat. #speaker:Riley #portrait:riley #layout:left 
+What is your opinion on it so far? #speaker:Riley #portrait:riley #layout:left 
+* I really like it so far, seems like a great website #speaker:Player #portrait:player #layout:right
+    Awesome! #speaker:Riley #portrait:riley #layout:left 
+    That makes us two then. #speaker:Riley #portrait:riley #layout:left 
+    I have been spending too much time on this website already, #speaker:Riley #portrait:riley #layout:left 
+    but I say it is worth it x) #speaker:Riley #portrait:riley #layout:left 
+    -> stitch4
+* I do not know yet, still figuring how i all works #speaker:Player #portrait:player #layout:right
+    Well welcome to the club #speaker:Riley #portrait:riley #layout:left 
+    I have been using it too much already #speaker:Riley #portrait:riley #layout:left 
+    Just ask if you need help with anything, okay? #speaker:Riley #portrait:riley #layout:left 
+    -> stitch4
+* Well at least it is something to waste my time on #speaker:Player #portrait:player #layout:right
+    I feel the same way too #speaker:Riley #portrait:riley #layout:left 
+    not much different than Facebonk or instablam in my opinion, but hey... #speaker:Riley #portrait:riley #layout:left 
+    at least there is a lot of people on here to connect with, like you. #speaker:Riley #portrait:riley #layout:left 
+    -> stitch4
 
-    ** Yeah, give me a sec to find something. #speaker:Player #portrait:player #layout:right  
-        ~ willToShare = true  
-        Cool! Can’t wait to see. #speaker:Riley #portrait:riley #layout:left  
-        -> stitch3  
 
-    ** Not really. My feed’s kind of boring. #speaker:Player #portrait:player #layout:right  
-        Bummer. #speaker:Riley #portrait:riley #layout:left  
-        I’ll share something with you to spice it up! #speaker:Riley #portrait:riley #layout:left  
-        -> END
-
-    ** Not really. #speaker:Player #portrait:player #layout:right  
-        What about you? Got anything cool to share? #speaker:Player #portrait:player #layout:right  
-        Of course! I’ve got a ton of interesting stuff. #speaker:Riley #portrait:riley #layout:left  
-        Here, let me find something. #speaker:Riley #portrait:riley #layout:left  
-        -> END
-
-* Maybe. What kind of stuff are you into? #speaker:Player #portrait:player #layout:right  
-    Oh, a little bit of everything—funny memes, interesting articles, deep stuff. #speaker:Riley #portrait:riley #layout:left  
-    If you’re down, I can send you something cool! #speaker:Riley #portrait:riley #layout:left  
-
-    ** Sure, send something over. #speaker:Player #portrait:player #layout:right  
-        ~ willToShare = true  
-        Alright, let me grab something for you. #speaker:Riley #portrait:riley #layout:left  
-        -> END  
-
-    ** I’ll see if I have something to share too. #speaker:Player #portrait:player #layout:right  
-        ~ willToShare = true  
-        Great! Looking forward to it. #speaker:Riley #portrait:riley #layout:left  
-        -> stitch3  
-
-                
-
-= stitch3
-VAR sharedRileyPost = 4
-
-//0-2 Riley means it. 3-4 Riley is sarcastic or "plays along"
-{sharedRileyPost:
-- 0: Haha. Nice one. I think i can beat it however. #speaker:Riley #portrait:riley #layout:left
-- 1: Sorry to say, but that was kind of lame. #speaker:Riley #portrait:riley #layout:left
-- 2: Interesting. Reminds me of something like this. #speaker:Riley #portrait:riley #layout:left
-- 3: Haha. nice one. But just you wait till you see this one #speaker:Riley #portrait:riley #layout:left
-- 4: Interesting. #speaker:Riley #portrait:riley #layout:left
-}
+= stitch4
+I have gotten a lot of interesting posts on my feed lately #speaker:Riley #portrait:riley #layout:left 
 
 -> END
 
