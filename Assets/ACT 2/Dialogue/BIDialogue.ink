@@ -30,7 +30,7 @@
     What do you mean? #speaker:Riley #portrait:riley #layout:left
     
     ** They clearly only post these kinds of things to get attention. #speaker:Player #portrait:player #layout:right
-        I bet you they don’t really look like that. #speaker:Player #portrait:player #layout:right
+        I bet you they don't really look like that. #speaker:Player #portrait:player #layout:right
         
         Of course they don't, but don't you still get the feeling that you could look like that? #speaker:Riley #portrait:riley #layout:left
         Like, its achievable. #speaker:Riley #portrait:riley #layout:left
@@ -43,7 +43,7 @@
         
         
     
-    ** Idk, just doesn’t feel real. #speaker:Player #portrait:player #layout:right
+    ** Idk, just doesn't feel real. #speaker:Player #portrait:player #layout:right
     
         Of course its not real, but don't you still get the feeling that you could look like that? #speaker:Riley #portrait:riley #layout:left
         Like, its achievable. #speaker:Riley #portrait:riley #layout:left
@@ -70,7 +70,7 @@
 = stitch8
 Oh, Sorry. My mom is calling for dinner. I'll talk to you later after i've eaten. #speaker:Player #portrait:player #layout:right
 
-Of course. I’ll talk to you later. #speaker:Riley #portrait:riley #layout:left
+Of course. I'll talk to you later. #speaker:Riley #portrait:riley #layout:left
 
 /*
 5. Act End - fade to black

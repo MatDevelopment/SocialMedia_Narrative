@@ -10,19 +10,19 @@
         ->stitch8
     ** I feel kind of energized after seeing that. #speaker:Player #portrait:player #layout:right
         Like, I suddenly have a lot to do #speaker:Player #portrait:player #layout:right
-        Same. It’s very motivational. #speaker:Riley #portrait:riley #layout:left
+        Same. It's very motivational. #speaker:Riley #portrait:riley #layout:left
         ->stitch8
 * Hmmm… That all just sounds way too over exaggerated #speaker:Player #portrait:player #layout:right
     It's just how the world works. #speaker:Riley #portrait:riley #layout:left
     If you want to keep up with everyone else. #speaker:Riley #portrait:riley #layout:left
-    You’ve gotta push hard. #speaker:Riley #portrait:riley #layout:left
+    You've gotta push hard. #speaker:Riley #portrait:riley #layout:left
     ** Agree. Gotta keep grinding. #speaker:Player #portrait:player #layout:right
         Gotta keep grinding. #speaker:Riley #portrait:riley #layout:left
         ->stitch8
     ** But you should also have time to live. #speaker:Player #portrait:player #layout:right
         The continuous grind will just burn you out. #speaker:Player #portrait:player #layout:right
         With that mindset you are not getting very far. #speaker:Riley #portrait:riley #layout:left
-        *** We’ll see. #speaker:Player #portrait:player #layout:right
+        *** We'll see. #speaker:Player #portrait:player #layout:right
             Thanks for the talk. #speaker:Player #portrait:player #layout:right
         ->stitch9
         *** Or maybe I'll get further. #speaker:Player #portrait:player #layout:right
@@ -39,7 +39,7 @@
     ** But you should also have time to live. #speaker:Player #portrait:player #layout:right
         The continuous grind will just burn you out. #speaker:Player #portrait:player #layout:right
         With that mindset you are not getting very far. #speaker:Riley #portrait:riley #layout:left
-        *** We’ll see. #speaker:Player #portrait:player #layout:right
+        *** We'll see. #speaker:Player #portrait:player #layout:right
             Thanks for the talk. #speaker:Player #portrait:player #layout:right
         ->stitch9
         *** Or maybe I'll get further. #speaker:Player #portrait:player #layout:right
@@ -51,7 +51,7 @@
 = stitch8
 Oh, Sorry. My mom is calling for dinner. I'll talk to you later after i've eaten. #speaker:Player #portrait:player #layout:right
 
-Of course. I’ll talk to you later. #speaker:Riley #portrait:riley #layout:left
+Of course. I'll talk to you later. #speaker:Riley #portrait:riley #layout:left
 
 /*
 5. Act End - fade to black

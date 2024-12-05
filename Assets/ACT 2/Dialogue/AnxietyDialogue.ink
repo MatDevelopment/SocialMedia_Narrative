@@ -4,57 +4,57 @@
 ===Anxiety===
 * Did that happen recently? #speaker:Player #portrait:player #layout:right
     Yes. I swear, the world is slowly falling apart. #speaker:Riley #portrait:riley #layout:left
-    ** [Do you think there is anything we can do about it anymore?] #speaker:Player #portrait:player #layout:right
+    ** [Do you think there is anything we can do about it anymore?] 
         Do you think there is anything we can do about it anymore?.#speaker:Player #portrait:player #layout:right
         Like, is it too late for us to do anything about it?#speaker:Player #portrait:player #layout:right
         
-        Probably. With the way things are going it wouldn’t surprise me. #speaker:Riley #portrait:riley #layout:left
+        Probably. With the way things are going it wouldn't surprise me. #speaker:Riley #portrait:riley #layout:left
         *** I don't believe that. i don't want to believe that. #speaker:Player #portrait:player #layout:right
         ->stitch8
         *** There must be something to do about it. What if. #speaker:Player #portrait:player #layout:right
         ->stitch8
 
-    **[I don’t think you need to look at it that way.] #speaker:Player #portrait:player #layout:right
-        I don’t think you need to look at it that way. #speaker:Player #portrait:player #layout:right
+    **[I don't think you need to look at it that way.] 
+        I don't think you need to look at it that way. #speaker:Player #portrait:player #layout:right
         Yes, shit happens, but not something that you should worry about too much. #speaker:Player #portrait:player #layout:right
         
         You're saying I shouldn't care about the world that I live in? #speaker:Riley #portrait:riley #layout:left
-        *** I’m saying that there is nothing to gain from worrying about these things. #speaker:Player #portrait:player #layout:right
+        *** I'm saying that there is nothing to gain from worrying about these things. #speaker:Player #portrait:player #layout:right
         -> stitch9
-        *** No, no, of course you should care. Just don’t forget yourself in the process. #speaker:Player #portrait:player #layout:right
+        *** No, no, of course you should care. Just don't forget yourself in the process. #speaker:Player #portrait:player #layout:right
         -> stitch9
 
-* That doesn’t sound right. Must be fake. #speaker:Player #portrait:player #layout:right
+* That doesn't sound right. Must be fake. #speaker:Player #portrait:player #layout:right
     I swear. You can trust this one. Things are really turning for the worse. #speaker:Riley #portrait:riley #layout:left
     
     ** I don't believe that. i don't want to believe that. #speaker:Player #portrait:player #layout:right
         ->stitch8
         
-    ** [Do you think there is anything we can do about it anymore?] #speaker:Player #portrait:player #layout:right
+    ** [Do you think there is anything we can do about it anymore?] 
         Do you think there is anything we can do about it anymore?. #speaker:Player #portrait:player #layout:right
         Like, is it too late for us to do anything about it? #speaker:Player #portrait:player #layout:right
         
-        Probably. With the way things are going it wouldn’t surprise me. #speaker:Riley #portrait:riley #layout:left
+        Probably. With the way things are going it wouldn't surprise me. #speaker:Riley #portrait:riley #layout:left
         *** I don't believe that. i don't want to believe that. #speaker:Player #portrait:player #layout:right
         ->stitch8
         *** There must be something to do about it. What if. #speaker:Player #portrait:player #layout:right
         ->stitch8
 
-    **[I don’t think you need to look at it that way.]  #speaker:Player #portrait:player #layout:right
-        I don’t think you need to look at it that way.  #speaker:Player #portrait:player #layout:right
+    **[I don't think you need to look at it that way.]  
+        I don't think you need to look at it that way.  #speaker:Player #portrait:player #layout:right
         Yes, shit happens, but not something that you should worry about too much. #speaker:Player #portrait:player #layout:right
         
         You're saying I shouldn't care about the world that I live in? #speaker:Riley #portrait:riley #layout:left
-        *** I’m saying that there is nothing to gain from worrying about these things. #speaker:Player #portrait:player #layout:right 
+        *** I'm saying that there is nothing to gain from worrying about these things. #speaker:Player #portrait:player #layout:right 
         -> stitch9
-        *** No, no, of course you should care. Just don’t forget yourself in the process #speaker:Player #portrait:player #layout:right
+        *** No, no, of course you should care. Just don't forget yourself in the process #speaker:Player #portrait:player #layout:right
         -> stitch9
         
 // Connected with Riley
 = stitch8
 Oh, Sorry. My mom is calling for dinner. I'll talk to you later after i've eaten. #speaker:Player #portrait:player #layout:right
 
-Of course. I’ll talk to you later. #speaker:Riley #portrait:riley #layout:left
+Of course. I'll talk to you later. #speaker:Riley #portrait:riley #layout:left
 
 /*
 5. Act End - fade to black
