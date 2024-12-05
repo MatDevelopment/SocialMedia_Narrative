@@ -59,7 +59,7 @@ public class ProfileManager : MonoBehaviour
         LPB = GameObject.Find("Liked Posts Button");
         friendButton = GameObject.Find("Friends Button");
         myPanel = GameObject.Find("ProfilePanel");
-        currentChatPFP = GameObject.Find("CurrentChatPortrait");
+        currentChatPFP = GameObject.Find("PlayerName");
 ;
     }
 
