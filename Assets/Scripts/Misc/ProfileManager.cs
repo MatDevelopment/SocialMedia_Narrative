@@ -65,20 +65,8 @@ public class ProfileManager : MonoBehaviour
 
     private void Update()
     {
-        if (myPanel.activeSelf)
-        {
-            friendFrame.SetActive(false);
-            LPB.SetActive(false);
-            friendButton.SetActive(false);
-            currentChatPFP.SetActive(false);
-        }
-        else if (!myPanel.activeSelf)
-        {
-            friendFrame.SetActive(true);
-            LPB.SetActive(true);
-            friendButton.SetActive(true);
-            currentChatPFP?.SetActive(true);
-        }
+        characterText.text = DialogueState.GetInstance().playerName;
+        EnsureEverythingIsFine();
     }
 
     public void YourProfile()
@@ -86,9 +74,9 @@ public class ProfileManager : MonoBehaviour
         friendFrame.SetActive(false);
         LPB.SetActive(false);
         friendButton.SetActive(false);
-        characterText.text = "TBD";
+        characterText.text = DialogueState.GetInstance().playerName;
         profileDescription.text = "I'm Me";
-        friendListHeader.text = "Your friend list:";
+        friendListHeader.text = characterText.text + "'s friend list:";
         friendList1Name.text = "Sam";
         friendList1Status.color = Color.green;
         friend1StatusText.text = "online";
@@ -114,7 +102,7 @@ public class ProfileManager : MonoBehaviour
             characterText.text = "Sam";
             profileDescription.text = "I'm Sam";
             friendListHeader.text = "Sam's friend list:";
-            friendList1Name.text = "Your name";
+            friendList1Name.text = DialogueState.GetInstance().playerName;
             friendList1Status.color = Color.green;
             friend1StatusText.text = "online";
             friendList2.SetActive(false);
@@ -131,11 +119,34 @@ public class ProfileManager : MonoBehaviour
         characterText.text = "Riley";
         profileDescription.text = "I'm Riley";
         friendListHeader.text = "Riley's friend list:";
-        friendList1Name.text = "Your name";
+        friendList1Name.text = DialogueState.GetInstance().playerName;
         friendList1Status.color = Color.green;
         friend1StatusText.text = "online";
         friendList2.SetActive(false);
         currentlyOnRiley = true;
+    }
+
+    public void EnsureEverythingIsFine()
+    {
+        if (characterText.text == "Placeholder Name" || characterText.text == "Player")
+        {
+            characterText.text = DialogueState.GetInstance().playerName;
+        }
+        if (myPanel.activeSelf)
+        {
+            friendFrame.SetActive(false);
+            LPB.SetActive(false);
+            friendButton.SetActive(false);
+            currentChatPFP.SetActive(false);
+        }
+        else if (!myPanel.activeSelf)
+        {
+            friendFrame.SetActive(true);
+            LPB.SetActive(true);
+            friendButton.SetActive(true);
+            currentChatPFP?.SetActive(true);
+        }
+
     }
 
     public void ShowProfile()
