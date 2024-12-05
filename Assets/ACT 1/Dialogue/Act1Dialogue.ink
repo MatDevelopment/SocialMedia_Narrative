@@ -36,11 +36,11 @@ Anyway, welcome to YapChat!. #speaker:Sam #portrait:sam #layout:left
         Yeah, that’s what gives it its charm. #speaker:Sam #portrait:sam #layout:left
         It is condensed to basically two aspects. #speaker:Sam #portrait:sam #layout:left
         Liking and sharing content from the feed, and then chatting about the content with your friends. #speaker:Sam #portrait:sam #layout:left
-        You can try sharing something on the feed with me, just to get a hang of things. #speaker:Sam #portrait:sam #layout:left
-            ** Will do. #speaker:Player #portrait:player #layout:right
-            -> DONE
-            ** I'll go browse the feed then. #speaker:Player #portrait:player #layout:right
-            -> DONE
+        
+            ** Well that sounds simple enough. #speaker:Player #portrait:player #layout:right
+            -> stitch3
+            ** I think I understand it. #speaker:Player #portrait:player #layout:right
+            -> stitch3
 
     * Thanks. Think i’ll have a look around YapChat! and explore it a bit.  #speaker:Player #portrait:player #layout:right
         Sure.  #speaker:Sam #portrait:sam #layout:left
@@ -49,21 +49,21 @@ Anyway, welcome to YapChat!. #speaker:Sam #portrait:sam #layout:left
             Yeah, that’s what gives it its charm. #speaker:Sam #portrait:sam #layout:left
             It is condensed to basically two aspects. #speaker:Sam #portrait:sam #layout:left 
             Liking and sharing content from the feed, and then chatting about the content with your friends. #speaker:Sam #portrait:sam #layout:left
-            You can try sharing something on the feed with me, just to get a hang of things. #speaker:Sam #portrait:sam #layout:left
-                *** Will do. #speaker:Player #portrait:player #layout:right
-                -> DONE
-                *** I'll go browse the feed then. #speaker:Player #portrait:player #layout:right
-                -> DONE
+            
+                *** Well that sounds simple enough. #speaker:Player #portrait:player #layout:right
+                -> stitch3
+                *** I think I understand it. #speaker:Player #portrait:player #layout:right
+                -> stitch3
+            
             ** I don't think i understand how this works, could you explain it to me? #speaker:Player #portrait:player #layout:right
                 Well it is rather simple actually. There are basically only two aspects to YapChat!. #speaker:Sam #portrait:sam #layout:left
                 Liking and sharing content from the feed, and then chatting about the content with your friends. #speaker:Sam #portrait:sam #layout:left
                 That is why there are only two tabs you will see on the home page. #speaker:Sam #portrait:sam #layout:left
-                You can try sharing something on the feed with me, just to get a hang of things. #speaker:Sam #portrait:sam #layout:left
-                *** Will do. #speaker:Player #portrait:player #layout:right
-                -> DONE
-                *** I'll go browse the feed then. #speaker:Player #portrait:player #layout:right
-                -> DONE
-            -> DONE
+                
+                *** Well that sounds simple enough. #speaker:Player #portrait:player #layout:right
+                -> stitch3
+                *** I think I understand it. #speaker:Player #portrait:player #layout:right
+                -> stitch3
                 
     * I’ve never had a social media account before so would you mind helping me understand how i navigate? #speaker:Player #portrait:player #layout:right
         Really? #speaker:Sam #portrait:sam #layout:left
@@ -71,8 +71,32 @@ Anyway, welcome to YapChat!. #speaker:Sam #portrait:sam #layout:left
         There are basically only two aspects to YapChat!. #speaker:Sam #portrait:sam #layout:left
         Liking and sharing content from the feed, and then chatting about the content with your friends. #speaker:Sam #portrait:sam #layout:left
         That is why there are only two tabs you will see on the home page. #speaker:Sam #portrait:sam #layout:left
-        You can try sharing something on the feed with me, just to get a hang of things. #speaker:Sam #portrait:sam #layout:left
-            ** Will do. #speaker:Player #portrait:player #layout:right
-            -> DONE
-            ** I'll go browse the feed then. #speaker:Player #portrait:player #layout:right
-            -> DONE
+        
+            ** Well that sounds simple enough. #speaker:Player #portrait:player #layout:right
+            -> stitch3
+            ** I think I understand it. #speaker:Player #portrait:player #layout:right
+            -> stitch3
+
+=stitch3
+You should get familiar with it fairly quickly. #speaker:Sam #portrait:sam #layout:left
+There are a lot of interesting things on YapChat! and it only gets more interesting the more you explore. #speaker:Sam #portrait:sam #layout:left
+I would love to talk more and maybe share some posts back an forth, but something just came up. #speaker:Sam #portrait:sam #layout:left
+I'll talk to you later. #speaker:Sam #portrait:sam #layout:left
+
+    * Oh. Ok. Talk to you later. #speaker:Player #portrait:player #layout:right
+    -> DONE
+    * But I just got on here.  #speaker:Player #portrait:player #layout:right
+    -> DONE
+    
+/*
+5. Friend Request from Riley
+(After a few seconds, the player gets a notification)
+
+System Message:
+You have a new friend request from Riley.
+
+(Act 1 ends) (fade to black)
+*/
+
+-> END
+
