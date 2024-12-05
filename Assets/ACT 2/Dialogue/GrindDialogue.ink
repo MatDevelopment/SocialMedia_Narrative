@@ -1,5 +1,7 @@
 // Grind Culture
-= stitch6
+-> Grind
+
+===Grind===
 * Damn! That hits hard. #speaker:Player #portrait:player #layout:right
     I know right! Really a wake up call to start getting shit done. #speaker:Riley #portrait:riley #layout:left
     ** Suddenly I feel behind on everything. #speaker:Player #portrait:player #layout:right

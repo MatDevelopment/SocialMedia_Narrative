@@ -1,5 +1,7 @@
 // Body Image
-= stitch7
+-> BodyIm
+
+===BodyIm===
 * Literally the dream to look like that. #speaker:Player #portrait:player #layout:right
     Yep. #speaker:Riley #portrait:riley #layout:left
     Sometimes it feels unfair that some people naturally look this good. #speaker:Riley #portrait:riley #layout:left
