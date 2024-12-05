@@ -27,6 +27,7 @@ public class ProfileManager : MonoBehaviour
 
     private bool currentlyOnSam;
     private bool currentlyOnRiley;
+    private bool weGotOurName = false;
 
     private GameObject friendFrame;
     private GameObject LPB;
@@ -65,7 +66,6 @@ public class ProfileManager : MonoBehaviour
 
     private void Update()
     {
-        characterText.text = DialogueState.GetInstance().playerName;
         EnsureEverythingIsFine();
     }
 
@@ -130,16 +130,18 @@ public class ProfileManager : MonoBehaviour
     {
         if (characterText.text == "Placeholder Name" || characterText.text == "Player")
         {
+            weGotOurName = true;
             characterText.text = DialogueState.GetInstance().playerName;
         }
-        if (myPanel.activeSelf)
+
+        if (myPanel.activeInHierarchy)
         {
             friendFrame.SetActive(false);
             LPB.SetActive(false);
             friendButton.SetActive(false);
             currentChatPFP.SetActive(false);
         }
-        else if (!myPanel.activeSelf)
+        else if (!myPanel.activeInHierarchy)
         {
             friendFrame.SetActive(true);
             LPB.SetActive(true);
