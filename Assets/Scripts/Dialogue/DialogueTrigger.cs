@@ -6,6 +6,7 @@ public class DialogueTrigger : MonoBehaviour
 {
     [Header("Ink JSON")]
     [SerializeField] private TextAsset act1InkJSON;
+    [SerializeField] private TextAsset act2IntroInkJSON;
     [SerializeField] private TextAsset act2AnxietyInkJSON;
     [SerializeField] private TextAsset act2LowSelfEsteemInkJSON;
     [SerializeField] private TextAsset act2GrindInkJSON;
@@ -37,6 +38,10 @@ public class DialogueTrigger : MonoBehaviour
             }
             else if (DialogueState.GetInstance().act2_active == true && dialogueName == "riley")
             {
+                dialogueManager.EnterDialogueMode(act2IntroInkJSON);
+            }
+            else if (DialogueState.GetInstance().act2_done == true && dialogueName == "riley")
+            {
                 if (DialogueState.GetInstance().finalTheme == "anxiety")
                 {
                     dialogueManager.EnterDialogueMode(act2AnxietyInkJSON);
@@ -54,6 +59,10 @@ public class DialogueTrigger : MonoBehaviour
             else if (DialogueState.GetInstance().act3_active == true)
             {
                 dialogueManager.EnterDialogueMode(act3InkJSON);
+            }
+            else
+            {
+                Debug.Log($"No current dialogue for: {dialogueName}");
             }
         }
     }

@@ -16,6 +16,12 @@ public class CreateAccount : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private GameObject friendsPanel;
 
+    [Header("Riley UI")]
+    [SerializeField] private GameObject rileyActiveButton;
+    [SerializeField] private GameObject rileyChatButton;
+    [SerializeField] private GameObject rileyFriendsPanel;
+    [SerializeField] private GameObject rileyFriendRequest;
+
     private void Start()
     {
         if (showOnStart)
@@ -48,5 +54,16 @@ public class CreateAccount : MonoBehaviour
         {
             friendsPanel.SetActive(false);
         }
+    }
+
+    public void AcceptFriendRequest()
+    {
+        rileyFriendRequest.SetActive(false);
+        DialogueState.GetInstance().act1_done = false;
+        DialogueState.GetInstance().act2_active = true;
+
+        rileyActiveButton.SetActive(true);
+        rileyChatButton.SetActive(true);
+        rileyFriendsPanel.SetActive(true);
     }
 }
