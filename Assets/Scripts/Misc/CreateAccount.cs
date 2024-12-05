@@ -14,6 +14,7 @@ public class CreateAccount : MonoBehaviour
     [SerializeField] private Animator profileButtonAnimator;
     [SerializeField] private Animator playerNameAnimator;
     [SerializeField] private TextMeshProUGUI playerNameText;
+    [SerializeField] private GameObject friendsPanel;
 
     private void Start()
     {
@@ -35,5 +36,17 @@ public class CreateAccount : MonoBehaviour
         DialogueState.GetInstance().playerPortrait = portraitName;
         profileButtonAnimator.Play(portraitName);
         playerNameAnimator.Play(portraitName);
+    }
+
+    public void OpenFriendsPanel()
+    {
+        if (!friendsPanel.activeInHierarchy)
+        {
+            friendsPanel.SetActive(true);
+        }
+        else if (friendsPanel.activeInHierarchy)
+        {
+            friendsPanel.SetActive(false);
+        }
     }
 }

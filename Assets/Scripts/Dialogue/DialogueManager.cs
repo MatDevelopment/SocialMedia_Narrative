@@ -135,6 +135,22 @@ public class DialogueManager : MonoBehaviour
     private void ExitDialogueMode()
     {
         dialogueIsPlaying = false;
+
+        if (DialogueState.GetInstance().act1_active)
+        {
+            DialogueState.GetInstance().act1_active = false;
+            DialogueState.GetInstance().act1_done = true;
+        } 
+        else if (DialogueState.GetInstance().act2_active)
+        {
+            DialogueState.GetInstance().act2_active = false;
+            DialogueState.GetInstance().act2_done = true;
+        }
+        else if (DialogueState.GetInstance().act3_active)
+        {
+            DialogueState.GetInstance().act3_active = false;
+            DialogueState.GetInstance().act3_done = true;
+        }
         //dialoguePanel.SetActive(false);
         //dialogueText.text = "";
         //DialogueState.GetInstance().currentDialogue = "";

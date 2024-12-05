@@ -24,6 +24,12 @@ public class DialogueState : MonoBehaviour
     public bool newMessageSam = false;
     public bool newMessageRiley = false;
 
+    [Header("Algorithm")]
+    [SerializeField] private AlgorithmHolder algorithmHolder;
+    private bool listeningToAlgorithm = true;
+    [SerializeField] private float algorithmThreshold = 100f;
+    public string finalTheme = "";
+
     [Header("Misc")]
     [SerializeField] private GameObject rileyFriendRequest;
 
@@ -38,8 +44,11 @@ public class DialogueState : MonoBehaviour
 
     // Bools to control what dialogue to trigger based on narrative structure
     public bool act1_active = true;
+    public bool act1_done = false;
     public bool act2_active = false;
+    public bool act2_done = false;
     public bool act3_active = false;
+    public bool act3_done = false;
 
     // To make this script a singleton we create a static instance of the script
     private static DialogueState instance;
@@ -122,6 +131,32 @@ public class DialogueState : MonoBehaviour
         else if (!newMessageRiley && rileyNotificationIcon.activeInHierarchy)
         {
             rileyNotificationIcon.SetActive(false);
+        }
+
+        // Code for Listening to algorithm scores to define theme for act 2
+        if (listeningToAlgorithm)
+        {
+            if (algorithmHolder.angerScore >= algorithmThreshold && act1_done)
+            {
+                finalTheme = "anxiety";
+                rileyFriendRequest.SetActive(true);
+                listeningToAlgorithm = false;
+                print(finalTheme);
+            }
+            else if (algorithmHolder.stressScore >= algorithmThreshold && act1_done)
+            {
+                finalTheme = "lowselfesteem";
+                rileyFriendRequest.SetActive(true);
+                listeningToAlgorithm = false;
+                print(finalTheme);
+            }
+            else if (algorithmHolder.grindScore >= algorithmThreshold && act1_done)
+            {
+                finalTheme = "grind";
+                rileyFriendRequest.SetActive(true);
+                listeningToAlgorithm = false;
+                print(finalTheme);
+            }
         }
     }
 

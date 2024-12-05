@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AlgorithmHolder : MonoBehaviour
 {
-    private float angerScore = 0;
-    private float stressScore = 0;
-    private float grindScore = 0;
+    public float angerScore = 0;
+    public float stressScore = 0;
+    public float grindScore = 0;
 
     private float lastStress;
     private float lastGrind;
@@ -32,12 +32,5 @@ public class AlgorithmHolder : MonoBehaviour
                 break;
         }
         Debug.Log($"Score Updated! Anger: {angerScore:F2}, Stress: {stressScore:F2}, Grind: {grindScore:F2}");
-    }
-
-    public void finalScore()
-    {
-        lastStress = stressScore;
-        lastAnger = angerScore;
-        lastAnger = grindScore;
     }
 }
