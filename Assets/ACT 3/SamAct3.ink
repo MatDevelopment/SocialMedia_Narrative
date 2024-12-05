@@ -9,7 +9,6 @@ INCLUDE GlobalVariables.ink
 
 {RileyConnected == true:
     // Act 2 ended with Riley connection
-    // Sam writes after talking with Riley in act 3
     Hey. #speaker:Sam #portrait:sam #layout:left
     
     Look, I know it’s been a while since we talked. #speaker:Sam #portrait:sam #layout:left
@@ -33,7 +32,6 @@ INCLUDE GlobalVariables.ink
 }
 {RileyConnected == false:
     // Act 2 ended without Riley connection
-    // Sam writes before talking with Riley in act 3
     Hey. #speaker:Sam #portrait:sam #layout:left
     
     I know I’ve been out of touch. #speaker:Sam #portrait:sam #layout:left
