@@ -9,6 +9,7 @@ public class DialogueState : MonoBehaviour
     [SerializeField] private GameObject rileyDialoguePanel;
     [SerializeField] private GameObject feedPanel;
     [SerializeField] private GameObject chatPanel;
+    [SerializeField] private GameObject profilePanel;
 
     [Header("Dialogue Managers")]
     [SerializeField] private DialogueManager dialogueManagerSam;
@@ -112,6 +113,14 @@ public class DialogueState : MonoBehaviour
         {
             chatPanel.SetActive(false);
             chatButtonAnimator.Play("ChatNotClicked");
+        }
+        if (currentDialogue == "profile" && !profilePanel.activeInHierarchy)
+        {
+            profilePanel.SetActive(true);
+        }
+        else if (currentDialogue != "profile" && profilePanel.activeInHierarchy)
+        {
+            profilePanel.SetActive(false);
         }
 
         // Code for handling the notification icons based on if there is a new message or not

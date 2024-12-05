@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using JetBrains.Annotations;
+using System.Runtime.CompilerServices;
 
 public class ProfileManager : MonoBehaviour
 {
@@ -26,6 +28,11 @@ public class ProfileManager : MonoBehaviour
     private bool currentlyOnSam;
     private bool currentlyOnRiley;
 
+    private GameObject friendFrame;
+    private GameObject LPB;
+    private GameObject friendButton;
+    private GameObject myPanel;
+    private GameObject currentChatPFP;
 
     void Start()
     {
@@ -48,10 +55,37 @@ public class ProfileManager : MonoBehaviour
         currentlyOnSam = false;
         currentlyOnRiley = false;
 
-}
+        friendFrame = GameObject.Find("ActiveFriendsFrame");
+        LPB = GameObject.Find("Liked Posts Button");
+        friendButton = GameObject.Find("Friends Button");
+        myPanel = GameObject.Find("ProfilePanel");
+        currentChatPFP = GameObject.Find("CurrentChatPortrait");
+;
+    }
 
-public void YourProfile()
+    private void Update()
     {
+        if (myPanel.activeSelf)
+        {
+            friendFrame.SetActive(false);
+            LPB.SetActive(false);
+            friendButton.SetActive(false);
+            currentChatPFP.SetActive(false);
+        }
+        else if (!myPanel.activeSelf)
+        {
+            friendFrame.SetActive(true);
+            LPB.SetActive(true);
+            friendButton.SetActive(true);
+            currentChatPFP?.SetActive(true);
+        }
+    }
+
+    public void YourProfile()
+    {
+        friendFrame.SetActive(false);
+        LPB.SetActive(false);
+        friendButton.SetActive(false);
         characterText.text = "TBD";
         profileDescription.text = "I'm Me";
         friendListHeader.text = "Your friend list:";
@@ -74,6 +108,9 @@ public void YourProfile()
         }
         else
         {
+            friendFrame.SetActive(false);
+            LPB.SetActive(false);
+            friendButton.SetActive(false);
             characterText.text = "Sam";
             profileDescription.text = "I'm Sam";
             friendListHeader.text = "Sam's friend list:";
@@ -85,8 +122,12 @@ public void YourProfile()
         }
     }
 
+
     public void RileyProfile()
     {
+        friendFrame.SetActive(false);
+        LPB.SetActive(false);
+        friendButton.SetActive(false);
         characterText.text = "Riley";
         profileDescription.text = "I'm Riley";
         friendListHeader.text = "Riley's friend list:";
@@ -95,5 +136,10 @@ public void YourProfile()
         friend1StatusText.text = "online";
         friendList2.SetActive(false);
         currentlyOnRiley = true;
+    }
+
+    public void ShowProfile()
+    {
+        DialogueState.GetInstance().currentDialogue = "profile";
     }
 }
