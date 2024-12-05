@@ -33,8 +33,14 @@ public class FadeController : MonoBehaviour
 
             if (Input.GetKey(KeyCode.Alpha3))
             {
-                ShowEndText();
-                Debug.Log("Showing End Text");
+                ShowText();
+                Debug.Log("Showing Text");
+            }
+
+            if (Input.GetKey(KeyCode.Alpha4))
+            {
+                HideText();
+                Debug.Log("Hiding Text");
             }
         }
     }
@@ -50,10 +56,16 @@ public class FadeController : MonoBehaviour
         fadeAnimator.SetTrigger("FadeIn");
     }
 
-    public void ShowEndText()
+    public void ShowText()
     {
-        fadeAnimator.SetTrigger("ShowEndText");
+        fadeAnimator.SetTrigger("ShowText");
     }
+
+    public void HideText()
+    {
+        fadeAnimator.SetTrigger("HideText");
+    }
+
 
     public void FadeInAfterTime(float delay)
     {
