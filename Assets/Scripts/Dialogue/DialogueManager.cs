@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private string dialogueName;
     [SerializeField] private FadeController fadeScript;
     private DialogueTrigger dialogueTrigger;
+    [SerializeField] private AudioManager _audioManager;
 
     // Fields in the inspector window for communicating with the UI elements
     [Header("Dialogue UI")]
@@ -234,6 +235,7 @@ public class DialogueManager : MonoBehaviour
             // Setting the notification icon on if new message is given when not on the page
             if (DialogueState.GetInstance().currentDialogue != dialogueName)
             {
+                _audioManager.Play("NotificationSound", 1);
                 if (dialogueName == "sam")
                 {
                     DialogueState.GetInstance().newMessageSam = true;
@@ -242,6 +244,10 @@ public class DialogueManager : MonoBehaviour
                 {
                     DialogueState.GetInstance().newMessageRiley = true;
                 }
+            }
+            else if (DialogueState.GetInstance().currentDialogue == dialogueName)
+            {
+                _audioManager.Play("ChatMessageSound", 1);
             }
 
         }
