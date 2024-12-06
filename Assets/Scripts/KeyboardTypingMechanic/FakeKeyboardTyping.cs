@@ -21,6 +21,9 @@ public class FakeKeyboardTyping : MonoBehaviour
     [SerializeField] private DialogueManager dialogueManager_Riley;
     //[SerializeField] private DialogueState dialogueState;
 
+    [SerializeField] private GameObject dialoguePanelCoverGameObject_Riley;
+    [SerializeField] private GameObject dialoguePanelCoverGameObject_Sam;
+    
     [SerializeField] public TextMeshProUGUI dialogueOptionText;
     
     [SerializeField] private string StringToFakeType;
@@ -54,9 +57,10 @@ public class FakeKeyboardTyping : MonoBehaviour
         anyKeyInput.started -= FakeType;*/
 
         
-        
         //StartTypingRound();
         
+        dialoguePanelCoverGameObject_Sam.SetActive(false);
+        dialoguePanelCoverGameObject_Riley.SetActive(false);
     }
 
     public void StartTypingRound(string _StringToFakeType)
@@ -72,6 +76,15 @@ public class FakeKeyboardTyping : MonoBehaviour
 
         if (isThereStringToType)
         {
+            if (DialogueState.GetInstance().currentDialogue == "riley")
+            {
+                dialoguePanelCoverGameObject_Riley.SetActive(true);
+            }
+            if (DialogueState.GetInstance().currentDialogue == "sam")
+            {
+                dialoguePanelCoverGameObject_Sam.SetActive(true);
+            }
+            
             //Debug.Log("String to type!");
             wordManager.inTypingRound = true;
             /*wordListCurrentlyChecking.Clear();
@@ -271,12 +284,19 @@ public class FakeKeyboardTyping : MonoBehaviour
                 // {
                 //     Debug.Log("DialogueOption 3 chosen");
                 // }
-                
+
                 if (DialogueState.GetInstance().currentDialogue == "sam")
+                {
                     dialogueManager_Sam.MakeChoice(chosenDialogue_index);
+                }
+                    
                 if (DialogueState.GetInstance().currentDialogue == "riley")
+                {
                     dialogueManager_Riley.MakeChoice(chosenDialogue_index);
+                }
                 
+                dialoguePanelCoverGameObject_Sam.SetActive(false);
+                dialoguePanelCoverGameObject_Riley.SetActive(false);
                 wordsLeftToWrite = 0;
                 wordListCurrentlyChecking.Clear();
                 words.Clear();
@@ -292,6 +312,8 @@ public class FakeKeyboardTyping : MonoBehaviour
     
     public void ResetKeyboardTypingMechanic()
     {
+        dialoguePanelCoverGameObject_Riley.SetActive(false);
+        dialoguePanelCoverGameObject_Sam.SetActive(false);
         hasActiveWord = false;
         wordsLeftToWrite = 0;
         wordListCurrentlyChecking.Clear();
