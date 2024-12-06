@@ -113,7 +113,7 @@ public class ProfileManager : MonoBehaviour, IPointerClickHandler
             currentlyOnRiley = false;
             PFPAnimator.Play("sam");
             characterText.text = "Sam";
-            profileDescription.text = "I'm Sam";
+            profileDescription.text = "Hello I'm Sam!\n\nI love my 2 dogs Kessie & Buster, alongside cooking. My Italian food is TheBomb.com\n\nDream of becoming a doctor one day :)\n\nExcited to yap with you!";
             friendListHeader.text = "Sam's friend list:";
             samAnimator.Play(whatPortrait);
             currentlyOnSam = true;
@@ -127,7 +127,7 @@ public class ProfileManager : MonoBehaviour, IPointerClickHandler
         currentlyOnSam = false;
         PFPAnimator.Play("riley");
         characterText.text = "Riley";
-        profileDescription.text = "I'm Riley";
+        profileDescription.text = "A powerful aura is approaching...\n\nName is Riley, aka XtheRylstar26X for true G's\n\nHang with the best squad & don't associate with cringe\n\nDon't be a stranger, HMU if you got rizz ;)";
         friendListHeader.text = "Riley's friend list:";
         currentlyOnRiley = true;
         GetSimilarStuff();
