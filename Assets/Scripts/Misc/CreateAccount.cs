@@ -22,6 +22,11 @@ public class CreateAccount : MonoBehaviour
     [SerializeField] private GameObject rileyFriendsPanel;
     [SerializeField] private GameObject rileyFriendRequest;
 
+    [Header("Fade Controller")]
+    [SerializeField] private FadeController fadeController;
+    //[SerializeField] private TextMeshProUGUI fadeTitle;
+    //[SerializeField] private TextMeshProUGUI fadeText;
+
     private void Start()
     {
         if (showOnStart)
@@ -59,11 +64,24 @@ public class CreateAccount : MonoBehaviour
     public void AcceptFriendRequest()
     {
         rileyFriendRequest.SetActive(false);
-        DialogueState.GetInstance().act1_done = false;
-        DialogueState.GetInstance().act2_active = true;
+        DialogueState.GetInstance().currentAct = "act2-1";
+
+        StartCoroutine(fadeController.FadeToNewAct("Act 2", "A few days has passed and Sam has not been online in a while. Now a new friend wants to chat"));
 
         rileyActiveButton.SetActive(true);
         rileyChatButton.SetActive(true);
         rileyFriendsPanel.SetActive(true);
     }
+
+    //public IEnumerator FadeToNewAct(string fadeControllerTitle, string fadeControllerText)
+    //{
+    //    fadeTitle.text = fadeControllerTitle;
+    //    fadeText.text = fadeControllerText;
+
+    //    fadeController.FadeOut();
+    //    fadeController.ShowText();
+    //    yield return new WaitForSeconds(5);
+    //    fadeController.HideText();
+    //    fadeController.FadeIn();
+    //}
 }

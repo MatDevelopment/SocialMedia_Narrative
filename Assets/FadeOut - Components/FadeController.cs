@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FadeController : MonoBehaviour
@@ -12,6 +13,10 @@ public class FadeController : MonoBehaviour
     //These are related to testing the methods of the script through number input.
     [Tooltip("While active: Fades can be tested. Press 1 to run FadeOut. Press 2 to run FadeIn. Press 3 to run ShowEndText.")]
     [SerializeField] private bool testFades = true;
+
+    [Header("UI Elements")]
+    [SerializeField] private TextMeshProUGUI fadeTitle;
+    [SerializeField] private TextMeshProUGUI fadeText;
 
     // Update is called once per frame
     void Update()
@@ -74,5 +79,17 @@ public class FadeController : MonoBehaviour
     public void FadeOutAfterTime(float delay)
     {
         Invoke(nameof(FadeOut), delay);
+    }
+
+    public IEnumerator FadeToNewAct(string fadeControllerTitle, string fadeControllerText)
+    {
+        fadeTitle.text = fadeControllerTitle;
+        fadeText.text = fadeControllerText;
+
+        FadeOut();
+        ShowText();
+        yield return new WaitForSeconds(8);
+        HideText();
+        FadeIn();
     }
 }

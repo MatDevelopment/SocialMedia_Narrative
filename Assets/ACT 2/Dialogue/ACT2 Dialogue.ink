@@ -13,6 +13,7 @@
 
 // Riley introduction
 = stitch1
+VAR timerEnabled = false
 Hey! #speaker:Riley #portrait:riley #layout:left
 
 I saw that you were online. #speaker:Riley #portrait:riley #layout:left

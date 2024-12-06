@@ -17,6 +17,8 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue Name")]
     [SerializeField] private string dialogueName;
+    [SerializeField] private FadeController fadeScript;
+    private DialogueTrigger dialogueTrigger;
 
     // Fields in the inspector window for communicating with the UI elements
     [Header("Dialogue UI")]
@@ -75,12 +77,18 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
+        // Makes the timer start off as default
+        ResetTimer();
+
         // Ensuring the dialogue is off when starting the game
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
 
         // Getting the layout animator component to change layout based on tags
         layoutAnimator = dialoguePanel.GetComponent<Animator>();
+
+        // Getting the layout animator component to change layout based on tags
+        dialogueTrigger = GetComponent<DialogueTrigger>();
 
         // Setting the choices text length to the amount of choices
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -144,20 +152,28 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueIsPlaying = false;
 
-        if (DialogueState.GetInstance().act1_active)
+        if (DialogueState.GetInstance().currentAct == "act1-1")
         {
-            DialogueState.GetInstance().act1_active = false;
-            DialogueState.GetInstance().act1_done = true;
+            DialogueState.GetInstance().currentAct = "act1-2";
         } 
-        else if (DialogueState.GetInstance().act2_active)
+        else if (DialogueState.GetInstance().currentAct == "act2-1")
         {
-            DialogueState.GetInstance().act2_active = false;
-            DialogueState.GetInstance().act2_done = true;
+            DialogueState.GetInstance().currentAct = "act2-2";
+            dialogueTrigger.StartDialogue();
         }
-        else if (DialogueState.GetInstance().act3_active)
+        else if (DialogueState.GetInstance().currentAct == "act2-2")
         {
-            DialogueState.GetInstance().act3_active = false;
-            DialogueState.GetInstance().act3_done = true;
+            DialogueState.GetInstance().currentAct = "act2-3";
+            dialogueTrigger.StartDialogue();
+        }
+        else if (DialogueState.GetInstance().currentAct == "act2-3")
+        {
+            DialogueState.GetInstance().currentAct = "act3-1";
+            StartCoroutine(fadeScript.FadeToNewAct("Act 3", "After your talk with Riley a few days has passed. Sam has finally returned, but has something troubling him, while Riley still wants your attention. A choice has to be made..."));
+        }
+        else if (DialogueState.GetInstance().currentAct == "act3-1")
+        {
+            DialogueState.GetInstance().currentAct = "act3-2";
         }
         //dialoguePanel.SetActive(false);
         //dialogueText.text = "";
@@ -301,11 +317,18 @@ public class DialogueManager : MonoBehaviour
         if (currentStory.currentChoices.Count != 0)
         {
             // Checks if there is a timer enabled for choosing options
-            timerEnabled = (bool)currentStory.variablesState["timerEnabled"];
-
-            if (timerEnabled)
+            try
             {
-                StartCoroutine(ChoiceTimer(choiceTimerDuration));
+                timerEnabled = (bool)currentStory.variablesState["timerEnabled"];
+
+                if (timerEnabled)
+                {
+                    StartCoroutine(ChoiceTimer(choiceTimerDuration));
+                }
+            }
+            catch
+            {
+                Debug.Log("No timerEnabled bool in current Ink File");
             }
         }
 
