@@ -22,6 +22,7 @@ You have a new friend request from Sam.
 
 // First interaction - welcome to YapChat
 = stitch1
+VAR timerEnabled = true
 About time you got your account set up. What took you so long? #speaker:Sam #portrait:sam #layout:left
     * Sorry about that. Had to help my mom with something before I could get to my computer. #speaker:Player #portrait:player #layout:right
     * I’ve almost just started my computer. I literally couldn’t be here any quicker #speaker:Player #portrait:player #layout:right

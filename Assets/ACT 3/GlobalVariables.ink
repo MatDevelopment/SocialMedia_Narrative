@@ -1,4 +1,4 @@
-VAR RileyConnected = false
+VAR RileyConnected = true
 VAR reality_awareness = 0
 VAR MeetSam = false
 VAR SamWait = 0

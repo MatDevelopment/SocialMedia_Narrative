@@ -4,9 +4,12 @@ using UnityEngine;
 using TMPro;
 using Ink.Runtime;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SearchService;
 using System.Linq;
+using Ink;
+using Unity.VisualScripting;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -34,12 +37,17 @@ public class DialogueManager : MonoBehaviour
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
+    [SerializeField] private Image uiFillImage;
+    [SerializeField] private float choiceTimerDuration = 10;
+    private float updateTimerRate = 0.05f;
+    private float remainingTime = 10;
 
     // Defining a variable to hold the currently active dialogue and if it is playing
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
 
     private bool waitingForResponse = false;
+    private bool timerEnabled = false;
     
     // To make this script a singleton we create a static instance of the script
     //private static DialogueManager instance;
@@ -290,6 +298,17 @@ public class DialogueManager : MonoBehaviour
         // Checks the current ink Story running and returns a list of Ink Choice objects
         List<Choice> currentChoices = currentStory.currentChoices;
 
+        if (currentStory.currentChoices.Count != 0)
+        {
+            // Checks if there is a timer enabled for choosing options
+            timerEnabled = (bool)currentStory.variablesState["timerEnabled"];
+
+            if (timerEnabled)
+            {
+                StartCoroutine(ChoiceTimer(choiceTimerDuration));
+            }
+        }
+
         // Check to see if the UI supports the amount of choices in the story
         if (currentChoices.Count > choices.Length)
         {
@@ -322,7 +341,7 @@ public class DialogueManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
     }
 
-    private IEnumerator WaitThenContinue(int waitTime)
+    private IEnumerator WaitThenContinue(float waitTime)
     {
         waitingForResponse = true;
         yield return new WaitForSeconds(waitTime);
@@ -333,11 +352,58 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    private IEnumerator ChoiceTimer(float waitTime)
+    {
+        remainingTime = waitTime;
+        
+        while (remainingTime > 0)
+        {
+            UpdateTimerUI(remainingTime, waitTime);
+            remainingTime -= updateTimerRate;
+            yield return new WaitForSeconds(updateTimerRate);
+        }
+
+        uiFillImage.fillAmount = 0f;
+
+        if (dialogueName == "sam")
+        {
+            DialogueState.GetInstance().samIgnored = true;
+            Debug.Log($"Timer ended: {dialogueName} ignored: {DialogueState.GetInstance().samIgnored}");
+        } 
+        else if (dialogueName == "riley")
+        {
+            DialogueState.GetInstance().rileyIgnored = true;
+            Debug.Log($"Timer ended: {dialogueName} ignored: {DialogueState.GetInstance().rileyIgnored}");
+        }
+        else
+        {
+            Debug.Log($"Timer ended but no person was ignored dialgoueName: {dialogueName}");
+        }
+    }
+
+    private void UpdateTimerUI(float remainingTime, float duration)
+    {
+        uiFillImage.fillAmount = Mathf.InverseLerp(0, duration, remainingTime);
+    }
+
+    private void ResetTimer()
+    {
+        remainingTime = choiceTimerDuration;
+        uiFillImage.fillAmount = 0f;
+    }
+
     // Method for when making a choice which updates the ink story of the choice and then continues to next line of dialogue
     public void MakeChoice(int choiceIndex)
     {
         currentStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
+        
+        // Stops choice timer
+        if (timerEnabled)
+        {
+            ResetTimer();
+            StopAllCoroutines();
+        }
     }
 
     public void RefreshUI()

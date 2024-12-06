@@ -6,6 +6,7 @@ INCLUDE GlobalVariables.ink
 
 // Intro
 =stitch1
+VAR timerEnabled = false
 
 {RileyConnected == true:
     // Act 2 ended with Riley connection
@@ -74,6 +75,7 @@ He is fine now, but we really didn't think he was gonna make it, when they initi
 I'm still kind of on edge from this whole experience and could really use a friend right now. #speaker:Sam #portrait:sam #layout:left
 
 Could we meet up somewhere? #speaker:Sam #portrait:sam #layout:left
+~ timerEnabled = true
 
 * Of course. Any particular place you had in mind? #speaker:Player #portrait:player #layout:right
     ~ reality_awareness += 2

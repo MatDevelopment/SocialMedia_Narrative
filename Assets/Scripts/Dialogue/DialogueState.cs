@@ -51,6 +51,10 @@ public class DialogueState : MonoBehaviour
     public bool act3_active = false;
     public bool act3_done = false;
 
+    // Bools for ignoring in Act 3
+    public bool samIgnored = false;
+    public bool rileyIgnored = false;
+
     // To make this script a singleton we create a static instance of the script
     private static DialogueState instance;
 
