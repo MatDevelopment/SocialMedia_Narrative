@@ -3,23 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using JetBrains.Annotations;
 using System.Runtime.CompilerServices;
 
-public class ProfileManager : MonoBehaviour
+public class ProfileManager : MonoBehaviour, IPointerClickHandler
 {
     //Main profile fields
     private TMP_Text characterText;
-    private Image profilePicture;
+    private Animator PFPAnimator;
     private TMP_Text profileDescription;
+    private GameObject profileDescriptionObject;
+    private InputField profileDescriptionInput;
+    private GameObject PDInputObject;
+    private string descriptionWritten;
+    private string whatPortrait;
 
     //Friend list fields
     private TMP_Text friendListHeader;
-    private Image friendList1PFP;
+    private Animator samAnimator;
     private TMP_Text friendList1Name;
     private Image friendList1Status;
     private TMP_Text friend1StatusText;
-    private Image friendList2PFP;
+    private Animator rileyAnimator;
     private TMP_Text friendList2Name;
     private Image friendList2Status;
     private TMP_Text friend2StatusText;
@@ -27,7 +33,6 @@ public class ProfileManager : MonoBehaviour
 
     private bool currentlyOnSam;
     private bool currentlyOnRiley;
-    private bool weGotOurName = false;
 
     private GameObject friendFrame;
     private GameObject LPB;
@@ -35,19 +40,23 @@ public class ProfileManager : MonoBehaviour
     private GameObject myPanel;
     private GameObject currentChatPFP;
 
+
     void Start()
     {
         characterText = GameObject.Find("CharacterText").GetComponent<TMP_Text>();
-        profilePicture = GameObject.Find("ProfilePictureHolder").GetComponent<Image>();
+        PFPAnimator = GameObject.Find("ProfilePictureHolder").GetComponent<Animator>();
         profileDescription = GameObject.Find("DescriptionText").GetComponent <TMP_Text>();
+        profileDescriptionObject = GameObject.Find("DescriptionText");
+        profileDescriptionInput = GameObject.Find("DescriptionToWriteIn").GetComponent<InputField>();
+        PDInputObject = GameObject.Find("DescriptionToWriteIn");
 
         friendListHeader = GameObject.Find("FriendListText").GetComponent<TMP_Text>();
-        friendList1PFP = GameObject.Find("SamPFPHolder").GetComponent<Image>();
+        samAnimator = GameObject.Find("SamPFPHolder").GetComponent<Animator>();
         friendList1Name = GameObject.Find("SamText").GetComponent<TMP_Text>();
         friendList1Status = GameObject.Find("SamStatus").GetComponent<Image>();
         friend1StatusText = GameObject.Find("SamStatusHere").GetComponent<TMP_Text>();
 
-        friendList2PFP = GameObject.Find("RileyPFPHolder").GetComponent<Image>();
+        rileyAnimator = GameObject.Find("RileyPFPHolder").GetComponent<Animator>();
         friendList2Name = GameObject.Find("RileyText").GetComponent<TMP_Text>();
         friendList2Status = GameObject.Find("RileyStatus").GetComponent<Image>();
         friend2StatusText = GameObject.Find("RileyStatusHere").GetComponent<TMP_Text>();
@@ -69,13 +78,16 @@ public class ProfileManager : MonoBehaviour
         EnsureEverythingIsFine();
     }
 
-    public void YourProfile()
+    public void StartProfile()
     {
         friendFrame.SetActive(false);
         LPB.SetActive(false);
         friendButton.SetActive(false);
+        PFPAnimator.Play(whatPortrait);
+        samAnimator.Play("sam");
         characterText.text = DialogueState.GetInstance().playerName;
-        profileDescription.text = "I'm Me";
+        profileDescriptionObject.SetActive(false);
+        PDInputObject.SetActive(true);
         friendListHeader.text = characterText.text + "'s friend list:";
         friendList1Name.text = "Sam";
         friendList1Status.color = Color.green;
@@ -86,73 +98,104 @@ public class ProfileManager : MonoBehaviour
         friendList2.SetActive(true);
         currentlyOnSam = false;
         currentlyOnRiley = false;
+        rileyAnimator.Play("riley");
+
     }
 
     public void SamsProfile()
     {
-        if (currentlyOnSam || currentlyOnRiley == true)
+        if (currentlyOnSam == true || currentlyOnRiley == true)
         {
-            YourProfile();
+            StartProfile();
         }
         else
         {
-            friendFrame.SetActive(false);
-            LPB.SetActive(false);
-            friendButton.SetActive(false);
+            currentlyOnRiley = false;
+            PFPAnimator.Play("sam");
             characterText.text = "Sam";
             profileDescription.text = "I'm Sam";
             friendListHeader.text = "Sam's friend list:";
-            friendList1Name.text = DialogueState.GetInstance().playerName;
-            friendList1Status.color = Color.green;
-            friend1StatusText.text = "online";
-            friendList2.SetActive(false);
+            samAnimator.Play(whatPortrait);
             currentlyOnSam = true;
+            GetSimilarStuff();
         }
     }
 
 
     public void RileyProfile()
     {
-        friendFrame.SetActive(false);
-        LPB.SetActive(false);
-        friendButton.SetActive(false);
+        currentlyOnSam = false;
+        PFPAnimator.Play("riley");
         characterText.text = "Riley";
         profileDescription.text = "I'm Riley";
         friendListHeader.text = "Riley's friend list:";
+        currentlyOnRiley = true;
+        GetSimilarStuff();
+    }
+
+    public void GetSimilarStuff()
+    {
+        profileDescriptionObject.SetActive(true);
+        PDInputObject.SetActive(false);
+        friendFrame.SetActive(false);
+        LPB.SetActive(false);
+        friendButton.SetActive(false);
         friendList1Name.text = DialogueState.GetInstance().playerName;
+        samAnimator.Play(whatPortrait);
         friendList1Status.color = Color.green;
         friend1StatusText.text = "online";
         friendList2.SetActive(false);
-        currentlyOnRiley = true;
+
     }
 
     public void EnsureEverythingIsFine()
     {
         if (characterText.text == "Placeholder Name" || characterText.text == "Player")
         {
-            weGotOurName = true;
             characterText.text = DialogueState.GetInstance().playerName;
+            friendListHeader.text = DialogueState.GetInstance().playerName + "'s friend list";
         }
-
         if (myPanel.activeInHierarchy)
         {
             friendFrame.SetActive(false);
             LPB.SetActive(false);
             friendButton.SetActive(false);
             currentChatPFP.SetActive(false);
+            whatPortrait = DialogueState.GetInstance().playerPortrait;
+
         }
         else if (!myPanel.activeInHierarchy)
         {
             friendFrame.SetActive(true);
             LPB.SetActive(true);
             friendButton.SetActive(true);
-            currentChatPFP?.SetActive(true);
+            currentChatPFP.SetActive(true);
         }
+    }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        profileDescriptionInput.ActivateInputField();
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        string descriptionWritten = profileDescriptionInput.text;
+        Debug.Log("Player entered: " + descriptionWritten);
+    }
+
+    private IEnumerator INeedMainProfile()
+    {
+        while (!myPanel.activeInHierarchy)
+        {
+            yield return null; // Wait for the next frame
+        }
+        StartProfile();
     }
 
     public void ShowProfile()
     {
         DialogueState.GetInstance().currentDialogue = "profile";
+        StartCoroutine(INeedMainProfile());
     }
 }
