@@ -20,6 +20,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private FadeController fadeScript;
     private DialogueTrigger dialogueTrigger;
     [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private TextAsset inkIgnored;
+    [SerializeField] private FakeKeyboardTyping fakeKeyboardTyping;
 
     // Fields in the inspector window for communicating with the UI elements
     [Header("Dialogue UI")]
@@ -51,30 +53,12 @@ public class DialogueManager : MonoBehaviour
 
     private bool waitingForResponse = false;
     private bool timerEnabled = false;
-    
-    // To make this script a singleton we create a static instance of the script
-    //private static DialogueManager instance;
+    private bool chatIgnored = false;
 
     // Defining the tags we look for in the dialogue to define who is speaking and the layout.
     private const string SPEAKER_TAG = "speaker";
     private const string PORTRAIT_TAG = "portrait";
     private const string LAYOUT_TAG = "layout";
-
-    // In the awake method the instance is then initialized so that it runs once throughout the entire game
-    //private void Awake()
-    //{
-    //    if (instance != null)
-    //    {
-    //        Debug.Log("There is more than one DialogueManager in the scene");
-    //    }
-    //    instance = this;
-    //}
-
-    // Static method for accessing the singleton instance from other scripts
-    //public static DialogueManager GetInstance()
-    //{
-    //    return instance;
-    //}
 
     private void Start()
     {
@@ -123,12 +107,32 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        // Starts the timer for automatically changing to the next text after a certain time
         if (currentStory.currentChoices.Count == 0 && DialogueState.GetInstance().currentDialogue == dialogueName && waitingForResponse == false)
         {
             StartCoroutine(WaitThenContinue(3));
         }
 
-        // Handling continuing to next line of dialogue
+        // Specifically for act 3, where if the timer ever runs out, the chat will change to the ignored script instead
+        if (DialogueState.GetInstance().currentAct == "act3-1" && !chatIgnored)
+        {
+            if (dialogueName == "sam" && DialogueState.GetInstance().samIgnored)
+            {
+                currentStory = new Story(inkIgnored.text);
+                chatIgnored = true;
+                fakeKeyboardTyping.ResetKeyboardTypingMechanic();
+                ContinueStory();
+            }
+            else if (dialogueName == "riley" && DialogueState.GetInstance().rileyIgnored)
+            {
+                currentStory = new Story(inkIgnored.text);
+                chatIgnored = true;
+                fakeKeyboardTyping.ResetKeyboardTypingMechanic();
+                ContinueStory();
+            }
+        }
+
+        // Handling continuing to next line of dialogue faster by pressing space before timer is up
         if (Input.GetKeyDown(KeyCode.Space) && DialogueState.GetInstance().currentDialogue == dialogueName && currentStory.currentChoices.Count == 0 && waitingForResponse == true)
         {
             waitingForResponse = false;
@@ -153,32 +157,58 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueIsPlaying = false;
 
-        if (DialogueState.GetInstance().currentAct == "act1-1")
+        switch (DialogueState.GetInstance().currentAct)
         {
-            DialogueState.GetInstance().currentAct = "act1-2";
-        } 
-        else if (DialogueState.GetInstance().currentAct == "act2-1")
-        {
-            DialogueState.GetInstance().currentAct = "act2-2";
-            dialogueTrigger.StartDialogue();
+            case "act1-1":
+                DialogueState.GetInstance().currentAct = "act1-2";
+                break;
+            case "act2-1":
+                DialogueState.GetInstance().currentAct = "act2-2";
+                dialogueTrigger.StartDialogue();
+                break;
+            case "act2-2":
+                DialogueState.GetInstance().currentAct = "act2-3";
+                dialogueTrigger.StartDialogue();
+                break;
+            case "act2-3":
+                DialogueState.GetInstance().currentAct = "act3-1";
+                StartCoroutine(fadeScript.FadeToNewAct("Act 3", "After your talk with Riley a few days has passed. Sam has finally returned, but has something troubling him, while Riley still wants your attention. A choice has to be made..."));
+                break;
+            case "act3-1":
+                if (dialogueName == "sam")
+                {
+                    DialogueState.GetInstance().samDone = true;
+                }
+                else if (dialogueName == "riley")
+                {
+                    DialogueState.GetInstance().rileyDone = true;
+                }
+
+                // If both dialogues are done then end the game
+                if (DialogueState.GetInstance().samDone && DialogueState.GetInstance().rileyDone)
+                {
+                    if (!DialogueState.GetInstance().samIgnored && !DialogueState.GetInstance().rileyIgnored)
+                    {
+                        StartCoroutine(fadeScript.FadeToEnd("The Best Ending", "You were able to both help and connect with both Sam and Riley in their time of need"));
+                    }
+                    else if (!DialogueState.GetInstance().samIgnored && DialogueState.GetInstance().rileyIgnored)
+                    {
+                        StartCoroutine(fadeScript.FadeToEnd("The Sam Only Ending", "You were able to help sam, but neglected Riley. You remain good friends with Sam but Riley has stopped trying to reach you"));
+                    }
+                    else if (DialogueState.GetInstance().samIgnored && !DialogueState.GetInstance().rileyIgnored)
+                    {
+                        StartCoroutine(fadeScript.FadeToEnd("The Riley Only Ending", "You chose to talk with Riley, but neglected Sam. Sam has chosen to distance himself from you, but atleast you are able to write to Riley"));
+                    }
+                    else if (DialogueState.GetInstance().samIgnored && DialogueState.GetInstance().rileyIgnored)
+                    {
+                        StartCoroutine(fadeScript.FadeToEnd("The Worst Ending", "You chose to ignore both Sam and Riley. Both have chosen to distance themselves from you as you neglected them when you needed them most"));
+                    }
+                }
+                break;
+            default:
+                Debug.Log($"Act state not accounted for: {DialogueState.GetInstance().currentAct}");
+                break;
         }
-        else if (DialogueState.GetInstance().currentAct == "act2-2")
-        {
-            DialogueState.GetInstance().currentAct = "act2-3";
-            dialogueTrigger.StartDialogue();
-        }
-        else if (DialogueState.GetInstance().currentAct == "act2-3")
-        {
-            DialogueState.GetInstance().currentAct = "act3-1";
-            StartCoroutine(fadeScript.FadeToNewAct("Act 3", "After your talk with Riley a few days has passed. Sam has finally returned, but has something troubling him, while Riley still wants your attention. A choice has to be made..."));
-        }
-        else if (DialogueState.GetInstance().currentAct == "act3-1")
-        {
-            DialogueState.GetInstance().currentAct = "act3-2";
-        }
-        //dialoguePanel.SetActive(false);
-        //dialogueText.text = "";
-        //DialogueState.GetInstance().currentDialogue = "";
     }
 
     // Method for continuing the story to the next line of dialogue
@@ -334,6 +364,7 @@ public class DialogueManager : MonoBehaviour
             }
             catch
             {
+                timerEnabled = false;
                 Debug.Log("No timerEnabled bool in current Ink File");
             }
         }
@@ -424,14 +455,21 @@ public class DialogueManager : MonoBehaviour
     // Method for when making a choice which updates the ink story of the choice and then continues to next line of dialogue
     public void MakeChoice(int choiceIndex)
     {
-        currentStory.ChooseChoiceIndex(choiceIndex);
-        ContinueStory();
-        
-        // Stops choice timer
-        if (timerEnabled)
+        if (currentStory.currentChoices.Count != 0)
         {
-            ResetTimer();
-            StopAllCoroutines();
+            currentStory.ChooseChoiceIndex(choiceIndex);
+            ContinueStory();
+
+            // Stops choice timer
+            if (timerEnabled)
+            {
+                ResetTimer();
+                StopAllCoroutines();
+            }
+        }
+        else
+        {
+            Debug.Log("No choices to make, you are probably too late");
         }
     }
 

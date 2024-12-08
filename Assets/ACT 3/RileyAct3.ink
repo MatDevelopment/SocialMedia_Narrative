@@ -6,6 +6,7 @@ INCLUDE GlobalVariables.ink
 
 // Intro
 =stitch1
+VAR timerEnabled = true
 {RileyConnected == true:
 // Act 2 ended with Riley connection
 

@@ -17,6 +17,7 @@ public class FadeController : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI fadeTitle;
     [SerializeField] private TextMeshProUGUI fadeText;
+    [SerializeField] private GameObject endGameButton;
 
     // Update is called once per frame
     void Update()
@@ -48,6 +49,11 @@ public class FadeController : MonoBehaviour
                 Debug.Log("Hiding Text");
             }
         }
+    }
+
+    private void Start()
+    {
+        endGameButton.SetActive(false);
     }
 
     //Three different methods that can be called from anywhere (if needed) to start their respective animation.
@@ -91,5 +97,21 @@ public class FadeController : MonoBehaviour
         yield return new WaitForSeconds(8);
         HideText();
         FadeIn();
+    }
+
+    public IEnumerator FadeToEnd(string fadeControllerTitle, string fadeControllerText)
+    {
+        fadeTitle.text = fadeControllerTitle;
+        fadeText.text = fadeControllerText;
+
+        FadeOut();
+        ShowText();
+        yield return new WaitForSeconds(8);
+        endGameButton.SetActive(true);
+    }
+
+    public void EndGameButtonClick()
+    {
+        Application.Quit();
     }
 }

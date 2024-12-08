@@ -12,8 +12,6 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private TextAsset act2GrindInkJSON;
     [SerializeField] private TextAsset act2EndInkJSON;
     [SerializeField] private TextAsset act3InkJSON;
-    [SerializeField] private TextAsset act3IgnoredInkJSON;
-    [SerializeField] private TextAsset act3EngagedInkJSON;
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private string dialogueName;
 
@@ -64,28 +62,13 @@ public class DialogueTrigger : MonoBehaviour
             }
             else if (DialogueState.GetInstance().currentAct == "act3-1")
             {
-                dialogueManager.EnterDialogueMode(act3InkJSON);
-            }
-            else if (DialogueState.GetInstance().currentAct == "act3-2" && dialogueName == "sam")
-            {
-                if (DialogueState.GetInstance().samIgnored)
+                if (dialogueName == "sam" && !DialogueState.GetInstance().samDone)
                 {
-                    dialogueManager.EnterDialogueMode(act3IgnoredInkJSON);
+                    dialogueManager.EnterDialogueMode(act3InkJSON);
                 }
-                else if (!DialogueState.GetInstance().samIgnored)
+                else if (dialogueName == "riley" && !DialogueState.GetInstance().rileyDone)
                 {
-                    dialogueManager.EnterDialogueMode(act3EngagedInkJSON);
-                }
-            }
-            else if (DialogueState.GetInstance().currentAct == "act3-2" && dialogueName == "riley")
-            {
-                if (DialogueState.GetInstance().rileyIgnored)
-                {
-                    dialogueManager.EnterDialogueMode(act3IgnoredInkJSON);
-                }
-                else if (!DialogueState.GetInstance().rileyIgnored)
-                {
-                    dialogueManager.EnterDialogueMode(act3EngagedInkJSON);
+                    dialogueManager.EnterDialogueMode(act3InkJSON);
                 }
             }
             else
