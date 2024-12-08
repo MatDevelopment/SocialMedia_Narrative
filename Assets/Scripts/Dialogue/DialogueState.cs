@@ -179,14 +179,14 @@ public class DialogueState : MonoBehaviour
         // Code for Listening to algorithm scores to define theme for act 2
         if (listeningToAlgorithm)
         {
-            if (algorithmHolder.angerScore >= algorithmThreshold && currentAct == "act1-2")
+            if (algorithmHolder.anixetyScore >= algorithmThreshold && currentAct == "act1-2")
             {
                 finalTheme = "anxiety";
                 rileyFriendRequest.SetActive(true);
                 listeningToAlgorithm = false;
                 print(finalTheme);
             }
-            else if (algorithmHolder.stressScore >= algorithmThreshold && currentAct == "act1-2")
+            else if (algorithmHolder.esteemScore >= algorithmThreshold && currentAct == "act1-2")
             {
                 finalTheme = "lowselfesteem";
                 rileyFriendRequest.SetActive(true);

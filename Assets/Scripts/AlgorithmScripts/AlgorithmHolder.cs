@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AlgorithmHolder : MonoBehaviour
 {
-    public float angerScore = 0;
-    public float stressScore = 0;
+    public float anixetyScore = 0;
+    public float esteemScore = 0;
     public float grindScore = 0;
 
-    private float lastStress;
+    private float lastEsteem;
     private float lastGrind;
-    private float lastAnger;
+    private float lastAnixety;
 
     public void AddScore(float time, string algorithmCategory)
     {
@@ -18,11 +18,11 @@ public class AlgorithmHolder : MonoBehaviour
 
         switch (algorithmCategory)
         {
-            case "anger":
-                angerScore += roundedTime;
+            case "anixety":
+                anixetyScore += roundedTime;
                 break;
-            case "stress":
-                stressScore += roundedTime;
+            case "esteem":
+                esteemScore += roundedTime;
                 break;
             case "grind":
                 grindScore += roundedTime;
@@ -31,6 +31,21 @@ public class AlgorithmHolder : MonoBehaviour
                 Debug.LogWarning($"Unknown color category: {algorithmCategory}");
                 break;
         }
-        Debug.Log($"Score Updated! Anger: {angerScore:F2}, Stress: {stressScore:F2}, Grind: {grindScore:F2}");
+        Debug.Log($"Score Updated! Anixety: {anixetyScore:F2}, Esteem: {esteemScore:F2}, Grind: {grindScore:F2}");
     }
+
+        public Dictionary<string, float> FinalScore()
+    {
+        anixetyScore = lastAnixety;
+        lastGrind = grindScore;
+        lastEsteem = esteemScore;
+
+        return new Dictionary<string, float>
+        {
+            { "anixety", lastAnixety },
+            { "esteem", lastEsteem},
+            { "grind", lastGrind }
+        };
+    }
+
 }

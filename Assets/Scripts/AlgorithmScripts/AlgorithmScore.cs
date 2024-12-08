@@ -14,10 +14,7 @@ public class AlgorithmScore : MonoBehaviour
     private Button likeButton;
     private float likeButtonTimeBonus = 10f;
     private AlgorithmHolder algorithmHolder;
-    public float scrollCooldown = 0.5f;
-    private float lastScrollTime = -1f;
 
-    private bool isPointerOver = false;
     private bool likeButtonPressed = false;
     private Animator likeButtonAnimator;
 
@@ -90,17 +87,17 @@ public class AlgorithmScore : MonoBehaviour
 
     private string GetCategoryFromName(string name)
     {
-        if (name.Contains("stress"))
+        if (name.Contains("esteem"))
         {
-            return "stress";
+            return "esteem";
         }
         else if (name.Contains("grind"))
         {
             return "grind";
         }
-        else if (name.Contains("anger"))
+        else if (name.Contains("anixety"))
         {
-            return "anger";
+            return "anixety";
         }
 
         return string.Empty; // Return empty if no match is found

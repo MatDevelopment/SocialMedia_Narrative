@@ -5,6 +5,7 @@ using Image = UnityEngine.UI.Image;
 using Button = UnityEngine.UI.Button;
 using TMPro;
 using UnityEngine.UIElements;
+using System.Linq;
 
 public class AlgorithmScript : MonoBehaviour
 {
@@ -23,19 +24,20 @@ public class AlgorithmScript : MonoBehaviour
     private float lastScrollTime = -1f;
     private bool currentlyMoving = false;
     public float centerThreshold = 10f;
+    public AlgorithmHolder algorithmHolder;
 
     private List<GameObject> boxes = new List<GameObject>();
     private List<string> algorithmCategories = new List<string>();
     private Dictionary<string, List<QuoteData>> algorithmCategoriesData;
     private Dictionary<string, Sprite> imageDictionary;
-    private AlgorithmScore algorithmScore;
+    private bool isDynamicSpawning = false;
 
     void Start()
     {
         LoadImages();
         PrepareAlgorithmCategoryList();
-        PrepareDataDictionary();
-        StartCoroutine(SpawnWindows());
+        PrepareDataDictionary(); 
+        CheckwhichShouldRun();
     }
 
 
@@ -61,15 +63,15 @@ public class AlgorithmScript : MonoBehaviour
 
     void PrepareAlgorithmCategoryList()
     {
-        algorithmCategories.Add("stress"); //former blue + esteem
-        algorithmCategories.Add("anger");  //former red + anixety
+        algorithmCategories.Add("esteem"); //former blue + esteem
+        algorithmCategories.Add("anixety");  //former red + anixety
         algorithmCategories.Add("grind");  //former yellow
 
         for (int i = 0; i < 4; i++)  // 4 sets of 3 more to get to 15 in total
         {
             algorithmCategories.Add("grind");
-            algorithmCategories.Add("anger");
-            algorithmCategories.Add("stress");
+            algorithmCategories.Add("anixety");
+            algorithmCategories.Add("esteem");
         }
 
         for (int i = 3; i < algorithmCategories.Count; i++)
@@ -85,28 +87,40 @@ public class AlgorithmScript : MonoBehaviour
     {
         algorithmCategoriesData = new Dictionary<string, List<QuoteData>>()
         {
-            { "stress", new List<QuoteData> {
-                new QuoteData { quote = "I know I should take a break, but I can’t seem to relax. My mind is constantly jumping from one thing to the next. Does anyone else feel like they can never fully switch off?", imageLocation = "AI_leaksPrivateData" },
-                new QuoteData { quote = "Some days I feel like I’m doing okay, and other days it’s just… a lot. Like, I can’t breathe right. Anyone else trying to keep it all together but struggling to do so?", imageLocation = "AsteroidEarth" },
-                new QuoteData { quote = "You ever have those moments where you feel like everything's moving so fast and you're just... trying to keep up? It’s like everyone else is already where they need to be", imageLocation = "ClimateDisasterSiberia" },
-                new QuoteData { quote = "The more I think about it, the more I realize that maybe I don't actually know how to relax. I always feel like there’s something I should be doing", imageLocation = "ConferenceWoman" },
-                new QuoteData { quote = "I love how everyone seems so sure of themselves online. It's weird, right? How they just... handle everything. I sometimes feel like I’m always one step behind", imageLocation = "CoralReef" }
+            { "esteem", new List<QuoteData> {
+                new QuoteData { quote = "Can’t believe how far our hard work together has gotten us. I cannot wait to build a family with you in our dream house. I love you so much baby", imageLocation = "YoungCoupleNewHouse" },
+                new QuoteData { quote = "“If there is something to be thankful for in this life, it’s having friends that want to go on adventure together! These past 11 days with all of you have been amazing! Thank god we are all in decent shape tho, but now my knees need a rest haha”", imageLocation = "GroupHikingFront" },
+                new QuoteData { quote = "“An hour and 48 kilometers later, and you got yourself a refreshed man hungry for some chicken breast, brown rice and spinach. Discipline is key”.", imageLocation = "SportsWatchFlex" },
+                new QuoteData { quote = "“At Camber de Cheau restaurant having a lovely meal with the woman of my dreams. We always make sure to have date nights at least three times a week, and this time Marie got to choose. The tiramisu was almost as lovely as you, my love.", imageLocation = "CoupleAtFancyRestaurant" },
+                new QuoteData { quote = "“I love having these people around me. Always there for me and always ready to party some. BEST PARTY EVER, ADAM”", imageLocation = "FratParty" }
+            }},
+            { "anixety", new List<QuoteData> {
+                new QuoteData { quote = "A cutting-edge AI system went rogue in a high-profile tech company, exposing confidential data of individuals and governments. Experts warn this could be the start of a new era of digital insecurity.", imageLocation = "AI_leaksPrivateData" },
+                new QuoteData { quote = "NASA confirmed that an undetected asteroid fragment narrowly missed Earth, passing within 200 miles of the surface. Astronomers warn that next time, humanity may not be so lucky", imageLocation = "AsteroidEarth" },
+                new QuoteData { quote = "Scientists express alarm as record-breaking temperatures in the Arctic lead to a dramatic release of methane, a potent greenhouse gas. Environmentalists say this may trigger irreversible climate tipping points.", imageLocation = "ClimateDisasterSiberia" },
+                new QuoteData { quote = "A chemical plant explosion in central Europe has released a deadly cloud of toxic gas, forcing the evacuation of over 3 million residents. Emergency services struggle to contain the crisis as fatalities continue to climb.", imageLocation = "ConferenceWoman" },
+                new QuoteData { quote = "Marine biologists report a catastrophic decline in coral reef systems worldwide, warning that the ecosystem collapse could lead to mass extinctions of marine life within the next 20 years.", imageLocation = "CoralReef" }
             }},
             { "grind", new List<QuoteData> {
-                new QuoteData { quote = "I saw a tweet saying, 'You don’t get weekends off if you want to win.' Can’t let up if you want to succeed, right?", imageLocation = "CoupleAtFancyRestaurant" },
-                new QuoteData { quote = "You know, it's not about luck or talent. It’s about working nonstop. I’ve learned that sleep is overrated", imageLocation = "FratParty" },
-                new QuoteData { quote = "Woke up at 5 AM again today. People say that's when the real hustlers are working. I can already feel the difference. This is the grind", imageLocation = "GroupHikingBackTurned" },
-                new QuoteData { quote = "Saw some people complaining about how hard their week was. Honestly, though, if you really want to achieve something big, you’ve got to push through. There’s no room for weakness", imageLocation = "GroupHikingFront" },
-                new QuoteData { quote = "Another early morning, another grind. But you know, the hustle never stops. You can’t expect anything if you don’t push yourself to the absolute limit", imageLocation = "ManMirrorGymSelfie" }
-            }},
-            { "anger", new List<QuoteData> {
-                new QuoteData { quote = "Woke up feeling great after a week of hard work at the gym. It’s amazing what consistency can do for you. Who else is on a fitness journey?", imageLocation = "NewjobWoman" },
-                new QuoteData { quote = "Found a new skincare routine that’s totally transformed my skin. Feels so good to be able to go out without makeup now! Anyone else tried something that totally changed the game?", imageLocation = "PodcastChad" },
-                new QuoteData { quote = "Just finished my workout. The progress is slow, but at least it’s progress, right? One step closer", imageLocation = "WomanGymSelfie" },
-                new QuoteData { quote = "Tried a new recipe today. They say if you want to get serious, you need to treat food like fuel. But it’s hard not to compare when I see what others are eating", imageLocation = "SportsWatchFlex" },
-                new QuoteData { quote = "I’ve been really into taking care of myself lately. Everyone says self-care is important, but I wonder how long it takes before you start really seeing the results", imageLocation = "StockTradeGrinding" }
+                new QuoteData { quote = "Balance is an excuse made by people too weak and too comfortable not being successful. Just got my 5am workout in, followed by an hour of stock-trading that earned me enough to buy a new company car. Want to learn how to live your life more independently and become who you were meant to be?\nGo to my page and follow my stock-trading course that will earn YOU the right to become the successful individual you know you can be.", imageLocation = "ManMirrorGymSelfie" },
+                new QuoteData { quote = "Had a great talk on the PumpedUp podcast regarding the surge in weak mentality and motivation among young people, and especially young men. Lack of confidence and no discerness against today’s women contribute to the creation of weak men not able to lead us steadily into a productive future.\nThe masculine perspective is that life is war. It’s a war for the female you want. It’s a war for the car you want. It’s a war for the money you want. It’s a war for status. Masculine life is war, and young men today are not prepared for it", imageLocation = "PodcastChad" },
+                new QuoteData { quote = "Speaking at the Smart Housing conference today regarding my award-winning design of a smart house capable of being integrated in rural areas\nOften I find myself amazed at the lack of motivation and problem-solving skills present in today’s women in society. \nInstead of conforming to a slave-like existence as a wife and mom, today’s women should instead empower themselves and let their light shine on their own path, enlightening their potential and becoming the successful woman they were meant to be. \nOnly give energy to things that will lift you up, and not others.", imageLocation = "ConferenceWoman" },
+                new QuoteData { quote = "Couldn’t be happier for my new job at Electibon (thanks for the hat haha)! When choosing jobs it was important for me to know if it would let me grow to be the productive self I was meant to be. Wanting to come in for work earlier and also wanting to leave later than everyone else is something I have always done in search of becoming the person I need to be in my career\nPushing yourself forwards is required if you expect colleagues and partners to take you seriously. Do not sulk in your inadequacy when your hard-working colleague receives the promotion instead of you, instead you have to smile and work harder than them, then good things will come", imageLocation = "NewjobWoman" },
+                new QuoteData { quote = "Your ability to put away work when home after work, is directly correlated with the chance of failing in life. Don’t let nobody drag you down to their level of mediocrity, be grand. You cannot disappoint yourself any longer\nWant an easy step-by-step guide to get yourself where you want to be? Take a look in my bio", imageLocation = "StockTradeGrinding" }
             }}
         };
+    }
+
+    private void CheckwhichShouldRun()
+    {
+        if (isDynamicSpawning == false)
+        {
+            StartCoroutine(SpawnWindows());
+        }
+        else if (isDynamicSpawning == true)
+        {
+            StartCoroutine(SpawnDynamically());
+        }
     }
 
     IEnumerator SpawnWindows()
@@ -145,6 +159,105 @@ public class AlgorithmScript : MonoBehaviour
             yield return null;
         }
     }
+
+IEnumerator SpawnDynamically()
+{
+    if (algorithmHolder == null)
+    {
+        Debug.LogError("AlgorithmHolder reference is missing!");
+        yield break;
+    }
+
+    RectTransform canvasRect = gameCanvas.GetComponent<RectTransform>();
+    float canvasHeight = canvasRect.rect.height;
+    float pileOffset = -canvasHeight - 100; // Start below the canvas
+
+    // Retrieve scores and find the highest and lowest categories
+    Dictionary<string, float> scores = algorithmHolder.FinalScore();
+    var sortedScores = scores.OrderByDescending(kv => kv.Value).ToList();
+    string highestCategory = sortedScores[0].Key;
+    string lowestCategory = sortedScores[sortedScores.Count - 1].Key;
+
+    // Base spawns
+    int baseSpawnsPerCategory = numberOfWindows / scores.Count;
+
+    // Adjust spawn counts
+    Dictionary<string, int> spawnCounts = scores.ToDictionary(kv => kv.Key, kv => baseSpawnsPerCategory);
+    spawnCounts[highestCategory] += 1; // Add +1 for the highest category
+    if (spawnCounts[lowestCategory] > 0)
+        spawnCounts[lowestCategory] -= 1; // Subtract -1 for the lowest category
+
+    // Create a spawn list based on adjusted counts
+    List<string> spawnList = new List<string>();
+    foreach (var kv in spawnCounts)
+    {
+        spawnList.AddRange(Enumerable.Repeat(kv.Key, kv.Value));
+    }
+
+    // Shuffle and ensure the list is exactly 15 items
+    spawnList = spawnList.OrderBy(x => Random.value).Take(numberOfWindows).ToList();
+
+    // Spawn windows
+    for (int i = 0; i < spawnList.Count; i++)
+    {
+        GameObject gameObject = Instantiate(algorithmWindow, feedPanel);
+        RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+
+        // Position boxes
+        if (i == 0)
+        {
+            rectTransform.anchoredPosition = Vector2.zero; // Centered on the canvas
+        }
+        else if (i == 1)
+        {
+            rectTransform.anchoredPosition = new Vector2(0, -canvasHeight); // Just below the canvas
+        }
+        else
+        {
+            rectTransform.anchoredPosition = new Vector2(0, pileOffset); // Below the visible area
+            pileOffset -= 50; // Stack effect for further boxes
+        }
+
+        // Configure the box for its category
+        string category = spawnList[i];
+        ConfigureBox(gameObject, category);
+
+        // Add interaction
+        Button button = gameObject.AddComponent<Button>();
+        button.onClick.AddListener(() =>
+        {
+            int index = boxes.IndexOf(gameObject);
+            if (index >= 0)
+            {
+                CatapultBox(index);
+            }
+        });
+
+        boxes.Add(gameObject);
+        yield return null;
+    }
+
+    isDynamicSpawning = false;
+}
+
+
+public void TriggerDynamicSpawn()
+{
+    if (isDynamicSpawning == false)
+    {
+        StopCoroutine(SpawnWindows());
+    }
+    
+    isDynamicSpawning = true;
+    // Destroy existing boxes and clear the list
+    foreach (GameObject box in boxes)
+    {
+        if (box != null) Destroy(box);
+    }
+    boxes.Clear();
+
+    StartCoroutine(SpawnDynamically());
+}
 
     void ConfigureBox(GameObject box, string category)
     {
