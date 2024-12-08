@@ -25,6 +25,14 @@ public class DialogueState : MonoBehaviour
     public bool newMessageSam = false;
     public bool newMessageRiley = false;
 
+    // Bools for indicating online or offline
+    [SerializeField] private GameObject samInactiveIcon;
+    [SerializeField] private GameObject samInactiveIcon2;
+    [SerializeField] private GameObject rileyInactiveIcon;
+    [SerializeField] private GameObject rileyInactiveIcon2;
+    public bool samActive = true;
+    public bool rileyActive = true;
+
     [Header("Algorithm")]
     [SerializeField] private AlgorithmHolder algorithmHolder;
     private bool listeningToAlgorithm = true;
@@ -44,7 +52,7 @@ public class DialogueState : MonoBehaviour
     public string currentDialogue = "";
 
     // Bools to control what dialogue to trigger based on narrative structure
-    public string currentAct = "act1-1";
+    public string currentAct = "";
 
     // Bools for ignoring in Act 3
     public bool samIgnored = false;
@@ -143,6 +151,29 @@ public class DialogueState : MonoBehaviour
         else if (!newMessageRiley && rileyNotificationIcon.activeInHierarchy)
         {
             rileyNotificationIcon.SetActive(false);
+        }
+
+        // Code for handling the active Icons
+        if (!samActive && !samInactiveIcon.activeInHierarchy)
+        {
+            samInactiveIcon.SetActive(true);
+            samInactiveIcon2.SetActive(true);
+        }
+        else if (samActive && samInactiveIcon.activeInHierarchy)
+        {
+            samInactiveIcon.SetActive(false);
+            samInactiveIcon2.SetActive(false);
+        }
+
+        if (!rileyActive && !rileyInactiveIcon.activeInHierarchy)
+        {
+            rileyInactiveIcon.SetActive(true);
+            rileyInactiveIcon2.SetActive(true);
+        }
+        else if (rileyActive && rileyInactiveIcon.activeInHierarchy)
+        {
+            rileyInactiveIcon.SetActive(false);
+            rileyInactiveIcon2.SetActive(false);
         }
 
         // Code for Listening to algorithm scores to define theme for act 2

@@ -24,8 +24,7 @@ public class CreateAccount : MonoBehaviour
 
     [Header("Fade Controller")]
     [SerializeField] private FadeController fadeController;
-    //[SerializeField] private TextMeshProUGUI fadeTitle;
-    //[SerializeField] private TextMeshProUGUI fadeText;
+    [SerializeField] private AudioManager _audioManager;
 
     private void Start()
     {
@@ -40,6 +39,8 @@ public class CreateAccount : MonoBehaviour
         DialogueState.GetInstance().playerName = nameInput.text;
         playerNameText.text = nameInput.text;
         createAccountPanel.SetActive(false);
+
+        StartCoroutine(WaitThenStartConvo());
     }
 
     public void SelectPlayerPortrait(string portraitName)
@@ -66,22 +67,20 @@ public class CreateAccount : MonoBehaviour
         rileyFriendRequest.SetActive(false);
         DialogueState.GetInstance().currentAct = "act2-1";
 
-        StartCoroutine(fadeController.FadeToNewAct("Act 2", "A few days has passed and Sam has not been online in a while. Now a new friend wants to chat"));
+        StartCoroutine(fadeController.FadeToNewAct("Act 2", "A few days has passed and Sam has not been online in a while. Now a new friend wants to chat", false, true));
 
         rileyActiveButton.SetActive(true);
         rileyChatButton.SetActive(true);
         rileyFriendsPanel.SetActive(true);
     }
 
-    //public IEnumerator FadeToNewAct(string fadeControllerTitle, string fadeControllerText)
-    //{
-    //    fadeTitle.text = fadeControllerTitle;
-    //    fadeText.text = fadeControllerText;
+    // Function for waiting after creating account to show new message from sam
+    private IEnumerator WaitThenStartConvo()
+    {
+        yield return new WaitForSeconds(5);
 
-    //    fadeController.FadeOut();
-    //    fadeController.ShowText();
-    //    yield return new WaitForSeconds(5);
-    //    fadeController.HideText();
-    //    fadeController.FadeIn();
-    //}
+        DialogueState.GetInstance().newMessageSam = true;
+        DialogueState.GetInstance().currentAct = "act1-1";
+        _audioManager.Play("NotificationSound", 1);
+    }
 }

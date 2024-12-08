@@ -87,7 +87,7 @@ public class FadeController : MonoBehaviour
         Invoke(nameof(FadeOut), delay);
     }
 
-    public IEnumerator FadeToNewAct(string fadeControllerTitle, string fadeControllerText)
+    public IEnumerator FadeToNewAct(string fadeControllerTitle, string fadeControllerText, bool samMessage = false, bool rileyMessage = false)
     {
         fadeTitle.text = fadeControllerTitle;
         fadeText.text = fadeControllerText;
@@ -95,6 +95,17 @@ public class FadeController : MonoBehaviour
         FadeOut();
         ShowText();
         yield return new WaitForSeconds(8);
+        
+        if (samMessage)
+        {
+            DialogueState.GetInstance().newMessageSam = true;
+        }
+
+        if (rileyMessage)
+        {
+            DialogueState.GetInstance().newMessageRiley = true;
+        }
+
         HideText();
         FadeIn();
     }

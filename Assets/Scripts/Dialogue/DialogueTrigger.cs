@@ -18,7 +18,11 @@ public class DialogueTrigger : MonoBehaviour
     // Public method used on button input to trigger a dialogue session
     public void StartDialogue()
     {
-        DialogueState.GetInstance().currentDialogue = dialogueName;
+        // Switch page to current dialogue
+        if (DialogueState.GetInstance().currentAct != "")
+        {
+            DialogueState.GetInstance().currentDialogue = dialogueName;
+        }
 
         // Removing nofitication icon when pressing the button
         if (dialogueName == "sam")
@@ -31,7 +35,7 @@ public class DialogueTrigger : MonoBehaviour
         }
 
         // Logic based on the DialogueState script for what ink file to start when pressing the button
-        if (dialogueManager.dialogueIsPlaying == false)
+        if (dialogueManager.dialogueIsPlaying == false && DialogueState.GetInstance().currentAct != "")
         {
             if (DialogueState.GetInstance().currentAct == "act1-1" && dialogueName == "sam")
             {

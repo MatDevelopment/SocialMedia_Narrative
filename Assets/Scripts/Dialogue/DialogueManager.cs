@@ -161,6 +161,7 @@ public class DialogueManager : MonoBehaviour
         {
             case "act1-1":
                 DialogueState.GetInstance().currentAct = "act1-2";
+                DialogueState.GetInstance().samActive = false;
                 break;
             case "act2-1":
                 DialogueState.GetInstance().currentAct = "act2-2";
@@ -172,7 +173,8 @@ public class DialogueManager : MonoBehaviour
                 break;
             case "act2-3":
                 DialogueState.GetInstance().currentAct = "act3-1";
-                StartCoroutine(fadeScript.FadeToNewAct("Act 3", "After your talk with Riley a few days has passed. Sam has finally returned, but has something troubling him, while Riley still wants your attention. A choice has to be made..."));
+                StartCoroutine(fadeScript.FadeToNewAct("Act 3", "After your talk with Riley a few days has passed. Sam has finally returned, but has something troubling him, while Riley still wants your attention. A choice has to be made...", true, true));
+                DialogueState.GetInstance().samActive = true;
                 break;
             case "act3-1":
                 if (dialogueName == "sam")
@@ -201,7 +203,7 @@ public class DialogueManager : MonoBehaviour
                     }
                     else if (DialogueState.GetInstance().samIgnored && DialogueState.GetInstance().rileyIgnored)
                     {
-                        StartCoroutine(fadeScript.FadeToEnd("The Worst Ending", "You chose to ignore both Sam and Riley. Both have chosen to distance themselves from you as you neglected them when you needed them most"));
+                        StartCoroutine(fadeScript.FadeToEnd("The Worst Ending", "You chose to ignore both Sam and Riley. Both have chosen to distance themselves from you as you neglected them when they needed them most"));
                     }
                 }
                 break;
