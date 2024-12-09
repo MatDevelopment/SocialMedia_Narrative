@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,6 +17,11 @@ public class AlgorithmScore : MonoBehaviour
     private float likeButtonTimeBonus = 10f;
     private AlgorithmHolder algorithmHolder;
 
+    [SerializeField] private TextMeshProUGUI postText;
+    [SerializeField] private TextMeshProUGUI posterName;
+
+    [SerializeField] private GameObject VerificationIcon;
+
     private bool likeButtonPressed = false;
     private Animator likeButtonAnimator;
 
@@ -25,7 +32,7 @@ public class AlgorithmScore : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
         algorithmHolder = FindAnyObjectByType<AlgorithmHolder>();
         Canvas canvas = GetComponentInParent<Canvas>();
-
+        
         if (canvas != null)
         {
             canvasRect = canvas.GetComponent<RectTransform>();
@@ -64,6 +71,8 @@ public class AlgorithmScore : MonoBehaviour
         {
             Debug.LogWarning("Could not determine category from the box name.");
         }
+        
+        //VerificationIcon.SetActive(false);
     }
 
     void Update()
@@ -89,14 +98,79 @@ public class AlgorithmScore : MonoBehaviour
     {
         if (name.Contains("esteem"))
         {
+            if (postText.text.Contains("family")) //1
+            {
+                posterName.text = "Henrik Andersen ";
+            }
+            if (postText.text.Contains("friends")) //2
+            {
+                posterName.text = "Davids Travels ";
+                VerificationIcon.SetActive(true);
+            }
+            if (postText.text.Contains("kilometers")) //3
+            {
+                posterName.text = "ZacOnTheSpot ";
+            }
+            if (postText.text.Contains("Camber")) //4
+            {
+                posterName.text = "MattLovesLife ";
+                VerificationIcon.SetActive(true);
+            }
+            if (postText.text.Contains("party")) //5
+            {
+                posterName.text = "Vera Violette ";
+            }
             return "esteem";
         }
         else if (name.Contains("grind"))
         {
+            if (postText.text.Contains("Balance")) //1
+            {
+                posterName.text = "ClyveFitness ";
+            }
+            if (postText.text.Contains("PumpedUp")) //2
+            {
+                posterName.text = "JamesGrind ";
+                VerificationIcon.SetActive(true);
+            }
+            if (postText.text.Contains("Smart")) //3
+            {
+                posterName.text = "Archi Olivia ";
+            }
+            if (postText.text.Contains("Electibon")) //4
+            {
+                posterName.text = "Sophia Evelynne ";
+            }
+            if (postText.text.Contains("ability")) //5
+            {
+                posterName.text = "MarcoInvesting ";
+                VerificationIcon.SetActive(true);
+            }
             return "grind";
         }
         else if (name.Contains("anixety"))
         {
+            if (postText.text.Contains("AI")) //1
+            {
+                posterName.text = "CBN News ";
+                VerificationIcon.SetActive(true);
+            }
+            if (postText.text.Contains("NASA")) //2
+            {
+                posterName.text = "LoxNews ";
+                VerificationIcon.SetActive(true);
+            }
+            if (postText.text.Contains("Arctic")) //3
+            {
+                posterName.text = "WCA News ";
+                VerificationIcon.SetActive(true);
+            }
+            if (postText.text.Contains("Marine")) //4
+            {
+                posterName.text = "Pacifica News ";
+                VerificationIcon.SetActive(true);
+            }
+            
             return "anixety";
         }
 
