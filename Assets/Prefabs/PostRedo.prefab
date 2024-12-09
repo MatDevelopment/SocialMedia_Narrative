@@ -343,6 +343,7 @@ MonoBehaviour:
   centerThreshold: 10
   postText: {fileID: 1420395750461551675}
   posterName: {fileID: 5998288852075531284}
+  postTime: {fileID: 4855308705894522027}
   VerificationIcon: {fileID: 3299771388878834449}
 --- !u!95 &6020371681297168373
 Animator:

@@ -19,6 +19,7 @@ public class AlgorithmScore : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI postText;
     [SerializeField] private TextMeshProUGUI posterName;
+    [SerializeField] private TextMeshProUGUI postTime;
 
     [SerializeField] private GameObject VerificationIcon;
 
@@ -101,24 +102,29 @@ public class AlgorithmScore : MonoBehaviour
             if (postText.text.Contains("family")) //1
             {
                 posterName.text = "Henrik Andersen ";
+                postTime.text = "2 hours ago";
             }
             if (postText.text.Contains("friends")) //2
             {
                 posterName.text = "Davids Travels ";
                 VerificationIcon.SetActive(true);
+                postTime.text = "3 days ago";
             }
             if (postText.text.Contains("kilometers")) //3
             {
                 posterName.text = "ZacOnTheSpot ";
+                postTime.text = "5 hours ago";
             }
             if (postText.text.Contains("Camber")) //4
             {
                 posterName.text = "MattLovesLife ";
                 VerificationIcon.SetActive(true);
+                postTime.text = "8 hours ago";
             }
             if (postText.text.Contains("party")) //5
             {
                 posterName.text = "Vera Violette ";
+                postTime.text = "3 hours ago";
             }
             return "esteem";
         }
@@ -127,24 +133,29 @@ public class AlgorithmScore : MonoBehaviour
             if (postText.text.Contains("Balance")) //1
             {
                 posterName.text = "ClyveFitness ";
+                postTime.text = "12 hours ago";
             }
             if (postText.text.Contains("PumpedUp")) //2
             {
                 posterName.text = "JamesGrind ";
                 VerificationIcon.SetActive(true);
+                postTime.text = "5 hours ago";
             }
             if (postText.text.Contains("Smart")) //3
             {
                 posterName.text = "Archi Olivia ";
+                postTime.text = "4 days ago";
             }
             if (postText.text.Contains("Electibon")) //4
             {
                 posterName.text = "Sophia Evelynne ";
+                postTime.text = "14 hours ago";
             }
             if (postText.text.Contains("ability")) //5
             {
                 posterName.text = "MarcoInvesting ";
                 VerificationIcon.SetActive(true);
+                postTime.text = "3 days ago";
             }
             return "grind";
         }
@@ -154,21 +165,25 @@ public class AlgorithmScore : MonoBehaviour
             {
                 posterName.text = "CBN News ";
                 VerificationIcon.SetActive(true);
+                postTime.text = "10 hours ago";
             }
             if (postText.text.Contains("NASA")) //2
             {
                 posterName.text = "LoxNews ";
                 VerificationIcon.SetActive(true);
+                postTime.text = "9 hours ago";
             }
             if (postText.text.Contains("Arctic")) //3
             {
                 posterName.text = "WCA News ";
                 VerificationIcon.SetActive(true);
+                postTime.text = "2 days ago";
             }
             if (postText.text.Contains("Marine")) //4
             {
                 posterName.text = "Pacifica News ";
                 VerificationIcon.SetActive(true);
+                postTime.text = "17 hours ago";
             }
             
             return "anixety";
