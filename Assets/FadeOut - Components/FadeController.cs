@@ -10,6 +10,7 @@ public class FadeController : MonoBehaviour
 
     //Get animator with fade animations and insert in inspector.
     public Animator fadeAnimator;
+    public AlgorithmScript algorithmScript;
 
     //These are related to testing the methods of the script through number input.
     [Tooltip("While active: Fades can be tested. Press 1 to run FadeOut. Press 2 to run FadeIn. Press 3 to run ShowEndText.")]
@@ -102,7 +103,9 @@ public class FadeController : MonoBehaviour
         FadeOut();
         ShowText();
         yield return new WaitForSeconds(8);
-        
+        algorithmScript.TriggerDynamicSpawn();
+
+
         if (samMessage)
         {
             DialogueState.GetInstance().newMessageSam = true;

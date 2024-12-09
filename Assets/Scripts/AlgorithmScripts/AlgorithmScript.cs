@@ -178,32 +178,26 @@ IEnumerator SpawnDynamically()
     string highestCategory = sortedScores[0].Key;
     string lowestCategory = sortedScores[sortedScores.Count - 1].Key;
 
-    // Base spawns
     int baseSpawnsPerCategory = numberOfWindows / scores.Count;
 
-    // Adjust spawn counts
     Dictionary<string, int> spawnCounts = scores.ToDictionary(kv => kv.Key, kv => baseSpawnsPerCategory);
     spawnCounts[highestCategory] += 1; // Add +1 for the highest category
     if (spawnCounts[lowestCategory] > 0)
         spawnCounts[lowestCategory] -= 1; // Subtract -1 for the lowest category
 
-    // Create a spawn list based on adjusted counts
     List<string> spawnList = new List<string>();
     foreach (var kv in spawnCounts)
     {
         spawnList.AddRange(Enumerable.Repeat(kv.Key, kv.Value));
     }
 
-    // Shuffle and ensure the list is exactly 15 items
     spawnList = spawnList.OrderBy(x => Random.value).Take(numberOfWindows).ToList();
 
-    // Spawn windows
     for (int i = 0; i < spawnList.Count; i++)
     {
         GameObject gameObject = Instantiate(algorithmWindow, feedPanel);
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
 
-        // Position boxes
         if (i == 0)
         {
             rectTransform.anchoredPosition = Vector2.zero; // Centered on the canvas
