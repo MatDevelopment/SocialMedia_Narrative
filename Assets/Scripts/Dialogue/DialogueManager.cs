@@ -43,9 +43,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
     [SerializeField] private Image uiFillImage;
-    [SerializeField] private float choiceTimerDuration = 10;
+    [SerializeField] private float choiceTimerDuration = 20f;
     private float updateTimerRate = 0.05f;
-    private float remainingTime = 10;
+    private float remainingTime = 20;
 
     // Defining a variable to hold the currently active dialogue and if it is playing
     private Story currentStory;
@@ -53,6 +53,8 @@ public class DialogueManager : MonoBehaviour
 
     private bool waitingForResponse = false;
     private bool timerEnabled = false;
+    private float timerDuration = 20f;
+    private bool timerStopped = false;
     private bool chatIgnored = false;
 
     // Defining the tags we look for in the dialogue to define who is speaking and the layout.
@@ -108,7 +110,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         // Starts the timer for automatically changing to the next text after a certain time
-        if (currentStory.currentChoices.Count == 0 && DialogueState.GetInstance().currentDialogue == dialogueName && waitingForResponse == false)
+        if (currentStory.currentChoices.Count == 0 && waitingForResponse == false)
         {
             StartCoroutine(WaitThenContinue(3));
         }
@@ -116,6 +118,23 @@ public class DialogueManager : MonoBehaviour
         // Specifically for act 3, where if the timer ever runs out, the chat will change to the ignored script instead
         if (DialogueState.GetInstance().currentAct == "act3-1" && !chatIgnored)
         {
+            // Code for stopping timer in progress if other chat is ignored
+            if (dialogueName == "sam" && DialogueState.GetInstance().rileyIgnored && !timerStopped)
+            {
+                ResetTimer();
+                StopAllCoroutines();
+                timerStopped = true;
+                Debug.Log($"Dialogue: {dialogueName} timer is stopped: {timerStopped}");
+            }
+            else if (dialogueName == "riley" && DialogueState.GetInstance().samIgnored && !timerStopped)
+            {
+                ResetTimer();
+                StopAllCoroutines();
+                timerStopped = true;
+                Debug.Log($"Dialogue: {dialogueName} timer is stopped: {timerStopped}");
+            }
+
+            // Changing ink file and resetting UI
             if (dialogueName == "sam" && DialogueState.GetInstance().samIgnored)
             {
                 currentStory = new Story(inkIgnored.text);
@@ -180,10 +199,22 @@ public class DialogueManager : MonoBehaviour
                 if (dialogueName == "sam")
                 {
                     DialogueState.GetInstance().samDone = true;
+                    
+                    // Ensuring that only one can be engaged with
+                    if (!DialogueState.GetInstance().samIgnored)
+                    {
+                        DialogueState.GetInstance().rileyIgnored = true;
+                    }
                 }
                 else if (dialogueName == "riley")
                 {
                     DialogueState.GetInstance().rileyDone = true;
+
+                    // Ensuring that only one can be engaged with
+                    if (!DialogueState.GetInstance().rileyIgnored)
+                    {
+                        DialogueState.GetInstance().samIgnored = true;
+                    }
                 }
 
                 // If both dialogues are done then end the game
@@ -203,7 +234,7 @@ public class DialogueManager : MonoBehaviour
                     }
                     else if (DialogueState.GetInstance().samIgnored && DialogueState.GetInstance().rileyIgnored)
                     {
-                        StartCoroutine(fadeScript.FadeToEnd("The Worst Ending", "You chose to ignore both Sam and Riley. Both have chosen to distance themselves from you as you neglected them when they needed them most"));
+                        StartCoroutine(fadeScript.FadeToEnd("The Worst Ending", "You chose to ignore both Sam and Riley. Both have chosen to distance themselves from you as you neglected them when they needed you most"));
                     }
                 }
                 break;
@@ -358,16 +389,36 @@ public class DialogueManager : MonoBehaviour
             try
             {
                 timerEnabled = (bool)currentStory.variablesState["timerEnabled"];
-
-                if (timerEnabled)
-                {
-                    StartCoroutine(ChoiceTimer(choiceTimerDuration));
-                }
             }
             catch
             {
                 timerEnabled = false;
                 Debug.Log("No timerEnabled bool in current Ink File");
+            }
+
+            try
+            {
+                timerDuration = (float)currentStory.variablesState["timerDuration"];
+            }
+            catch
+            {
+                timerDuration = choiceTimerDuration;
+                Debug.Log("No timerDuration float in current Ink File");
+            }
+
+            // if the other dialogue is ignored then stop the timer on this dialogue:
+            if (dialogueName == "sam" && DialogueState.GetInstance().rileyIgnored && timerEnabled)
+            {
+                timerEnabled = false;
+            }
+            else if (dialogueName == "riley" && DialogueState.GetInstance().samIgnored && timerEnabled)
+            {
+                timerEnabled = false;
+            }
+
+            if (timerEnabled)
+            {
+                StartCoroutine(ChoiceTimer(timerDuration));
             }
         }
 
