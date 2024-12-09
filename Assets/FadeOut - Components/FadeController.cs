@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FadeController : MonoBehaviour
 {
@@ -12,12 +13,12 @@ public class FadeController : MonoBehaviour
 
     //These are related to testing the methods of the script through number input.
     [Tooltip("While active: Fades can be tested. Press 1 to run FadeOut. Press 2 to run FadeIn. Press 3 to run ShowEndText.")]
-    [SerializeField] private bool testFades = true;
+    [SerializeField] private bool testFades = false;
 
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI fadeTitle;
     [SerializeField] private TextMeshProUGUI fadeText;
-    [SerializeField] private GameObject endGameButton;
+    [SerializeField] private GameObject endingPanel;
 
     // Update is called once per frame
     void Update()
@@ -48,12 +49,18 @@ public class FadeController : MonoBehaviour
                 HideText();
                 Debug.Log("Hiding Text");
             }
+
+            if (Input.GetKey(KeyCode.Alpha5))
+            {
+                StartCoroutine(FadeToEnd("The End", "Testing"));
+                Debug.Log("Ending Function");
+            }
         }
     }
 
     private void Start()
     {
-        endGameButton.SetActive(false);
+        endingPanel.SetActive(false);
     }
 
     //Three different methods that can be called from anywhere (if needed) to start their respective animation.
@@ -118,11 +125,20 @@ public class FadeController : MonoBehaviour
         FadeOut();
         ShowText();
         yield return new WaitForSeconds(8);
-        endGameButton.SetActive(true);
+        HideText();
+        FadeIn();
+        endingPanel.SetActive(true);
     }
 
     public void EndGameButtonClick()
     {
+        Debug.Log("Exiting Game...");
         Application.Quit();
+    }
+
+    public void RetryButtonClick()
+    {
+        Debug.Log("Reloading Scene...");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
