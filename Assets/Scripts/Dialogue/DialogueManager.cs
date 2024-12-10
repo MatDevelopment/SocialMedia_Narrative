@@ -192,7 +192,7 @@ public class DialogueManager : MonoBehaviour
                 break;
             case "act2-3":
                 DialogueState.GetInstance().currentAct = "act3-1";
-                StartCoroutine(fadeScript.FadeToNewAct("Act 3", "After your talk with Riley a few days has passed. Sam has finally returned, but has something troubling him, while Riley still wants your attention. A choice has to be made...", true, true));
+                StartCoroutine(fadeScript.FadeToNewAct("Act 3", "After your talk with Riley a few weeks has passed. Sam has finally returned, but has something troubling him, while Riley still wants your attention. A choice has to be made...", true, true));
                 DialogueState.GetInstance().samActive = true;
                 break;
             case "act3-1":
@@ -226,11 +226,11 @@ public class DialogueManager : MonoBehaviour
                     }
                     else if (!DialogueState.GetInstance().samIgnored && DialogueState.GetInstance().rileyIgnored)
                     {
-                        StartCoroutine(fadeScript.FadeToEnd("The Sam Only Ending", "You were able to help sam, but neglected Riley. You remain good friends with Sam but Riley has stopped trying to reach you"));
+                        StartCoroutine(fadeScript.FadeToEnd("The Sam Ending", "You were able to help sam, but neglected Riley. You remain good friends with Sam but Riley has stopped trying to reach you"));
                     }
                     else if (DialogueState.GetInstance().samIgnored && !DialogueState.GetInstance().rileyIgnored)
                     {
-                        StartCoroutine(fadeScript.FadeToEnd("The Riley Only Ending", "You chose to talk with Riley, but neglected Sam. Sam has chosen to distance himself from you, but atleast you are able to write to Riley"));
+                        StartCoroutine(fadeScript.FadeToEnd("The Riley Ending", "You chose to talk with Riley, but neglected Sam. Sam has chosen to distance himself from you, but atleast you are able to write to Riley"));
                     }
                     else if (DialogueState.GetInstance().samIgnored && DialogueState.GetInstance().rileyIgnored)
                     {

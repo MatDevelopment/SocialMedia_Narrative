@@ -27,35 +27,7 @@ VAR timerEnabled = false
         -> stitch2
     *   Just say it. What's happening? #speaker:Player #portrait:player #layout:right
         -> stitch2
-    *   Ummmm, Ok.  #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness -= 2
-        -> stitch3
-}
-{RileyConnected == false:
-    // Act 2 ended without Riley connection
-    Hey. #speaker:Sam #portrait:sam #layout:left
-    
-    I know I’ve been out of touch. #speaker:Sam #portrait:sam #layout:left
-    
-    And I don’t blame you if you’re confused about it. #speaker:Sam #portrait:sam #layout:left
-    
-    Honestly, I’m just trying to figure things out for myself. #speaker:Sam #portrait:sam #layout:left
-    
-    I don’t have a good excuse.  #speaker:Sam #portrait:sam #layout:left
-    
-    Things are just a mess right now, and I don’t know what to say. #speaker:Sam #portrait:sam #layout:left
-
-    Can we meet up? Or at least talk properly? #speaker:Sam #portrait:sam #layout:left
-    
-    *   What happened, Sam? You just disapeared all of a sudden? #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness += 2
-        -> stitch2
-        
-    *   What’s going on? #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness += 1
-        -> stitch2
-    
-    *   I’m kind of busy right now. #speaker:Player #portrait:player #layout:right
+    *   Ummmm, Ok. Whatever, I don't really care. #speaker:Player #portrait:player #layout:right
         ~ reality_awareness -= 2
         -> stitch3
 }
@@ -63,338 +35,114 @@ VAR timerEnabled = false
 // Supportive at first
 = stitch2
 // Friends with Riley
-{RileyConnected == true:
 It's just that for the past few days thing have kind of gone to shit for me and my family. #speaker:Sam #portrait:sam #layout:left
-
 Last time after we spoke on here, we got a call from the hospital. #speaker:Sam #portrait:sam #layout:left
-
-They told us that dad had been sent to the emergency room, due to an accident at work. #speaker:Sam #portrait:sam #layout:left
-
+They told us that dad had been sent to the emergency room, due to an accident. #speaker:Sam #portrait:sam #layout:left
 He is fine now, but we really didn't think he was gonna make it, when they initially called.  #speaker:Sam #portrait:sam #layout:left
-
 I'm still kind of on edge from this whole experience and could really use a friend right now. #speaker:Sam #portrait:sam #layout:left
-
-Could we meet up somewhere? #speaker:Sam #portrait:sam #layout:left
 ~ timerEnabled = true
+* Im so sorry, I am always here for you Sam. #speaker:Player #portrait:player #layout:right
+    ->listeningstitch
+* You can tell me anything. What happened? #speaker:Player #portrait:player #layout:right
+    ->listeningstitch2
+* LoL, grow up Sam. I can't always be there for you, you know. #speaker:Player #portrait:player #layout:right
+    I just want you to listen. #speaker:Sam #portrait:sam #layout:left
+    That is all I am asking of you. #speaker:Sam #portrait:sam #layout:left
+    ** I did not mean it like that, I am always there for you. #speaker:Player #portrait:player #layout:right
+        -> listeningstitch
+    ** I really don't have the time for this. #speaker:Player #portrait:player #layout:right
+        ->stitch4
 
-* Of course. Any particular place you had in mind? #speaker:Player #portrait:player #layout:right
-    ~ reality_awareness += 2
-        The park across the train station. #speaker:Sam #portrait:sam #layout:left
-        Maybe we could meet each other there within the next 15 minutes? #speaker:Sam #portrait:sam #layout:left
-            ** Sure, i'll see you then. #speaker:Player #portrait:player #layout:right
-            ~ reality_awareness += 2
-            ~ MeetSam = true
-                Great. See ya. #speaker:Sam #portrait:sam #layout:left
-            ->END
-            ** Could we meet later today? It's just that I'm talking with someone else on here right now. #speaker:Player #portrait:player #layout:right
-               ~ reality_awareness -= 2 
-                And who is that? #speaker:Sam #portrait:sam #layout:left
-                
-                *** Someone called Riley I met on here a few days ago. #speaker:Player #portrait:player #layout:right
-                    
-                    Can't you just tell them that something has come up and you have to go? #speaker:Sam #portrait:sam #layout:left
-                    
-                        **** Sure i can do that. Just a sec. #speaker:Player #portrait:player #layout:right
-                            Ok. #speaker:Sam #portrait:sam #layout:left
-                            ~ reality_awareness += 2
-                            ~ MeetSam = true
-                            {SamWait:
-                            - 5: ->stitch4
-                            -10: ->stitch5
-                            -15: ->stitch6
-                            }
-                            
-                            
-                        **** Can't we just meet up later? #speaker:Player #portrait:player #layout:right
-                            ~ reality_awareness -= 2
-                            I literally just explained my situation to you. #speaker:Sam #portrait:sam #layout:left
-                            How can you do this to me? #speaker:Sam #portrait:sam #layout:left
-                            
-                            ***** Your right. I'm sorry. I'll tell Riley I have to go. #speaker:Player #portrait:player #layout:right
-                                ~ reality_awareness += 2
-                                Ok. 
-                                ~ MeetSam = true
-                                {SamWait:
-                                - 5: ->stitch4
-                                -10: ->stitch5
-                                -15: ->stitch6
-                                }
-                            
-                            ***** Because I was talking to them first. We are propably done in like an hour so, so can't you just wait? #speaker:Player #portrait:player #layout:right
-                                ~ reality_awareness -= 2 
-                                No. #speaker:Sam #portrait:sam #layout:left
-                                I clearly explained that I needed a friend right now. #speaker:Sam #portrait:sam #layout:left
-                                
-                                ****** Come on Sam. I am your friend. Just wait. I'll tell Riley i have to go. Then I'll meet up with you. #speaker:Player #portrait:player #layout:right
-                                    ~ reality_awareness += 2
-                                    Ok. Just be quick. #speaker:Sam #portrait:sam #layout:left
-                                     ~ MeetSam = true
-                                    {SamWait:
-                                    - 5: ->stitch4
-                                    -10: ->stitch5
-                                    -15: ->stitch6
-                                    }
-                                    
-                                ****** But why can't you just wait? Why does it have to be so soon? #speaker:Player #portrait:player #layout:right
-                                    ~ reality_awareness -= 2 
-                                    It just does. #speaker:Sam #portrait:sam #layout:left
-                                    The fact that you don't understand that, just proves that you aren't the friend I thought you were. #speaker:Sam #portrait:sam #layout:left
-                                    Clearly Riley is more important to you than i am, so have fun with your new friend.  #speaker:Sam #portrait:sam #layout:left
-                                    Don't bother contacting me ever again. #speaker:Sam #portrait:sam #layout:left
-                                    ->END
-                {ShutUpRiley == true:                    
-                *** Never mind. I'll be there as soon as I can. #speaker:Player #portrait:player #layout:right
-                    ~ reality_awareness += 2
-                    ~ MeetSam = true
-                    Nice. See ya. #speaker:Sam #portrait:sam #layout:left
-                        ->END
-                }
- 
-            
-* Can't we just talk about it here? What difference does it make if we meet up? #speaker:Player #portrait:player #layout:right
-    ~ reality_awareness -= 2
-    What difference does it make? #speaker:Sam #portrait:sam #layout:left
-    Do you care so little about my situation that you think it can be dealt with through a f***ing chat room? #speaker:Sam #portrait:sam #layout:left
-    ** [Don't you just want someone to talk to? I'm here. I listen.] #speaker:Player #portrait:player #layout:right
-        Don't you just want someone to talk to? #speaker:Player #portrait:player #layout:right
-        I'm here. #speaker:Player #portrait:player #layout:right
-        I listen. #speaker:Player #portrait:player #layout:right
-        Why bother trying to meet up somewhere, when we can discuss the issue right here, right now? #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness -= 2
-        I want someone to BE THERE FOR ME! #speaker:Sam #portrait:sam #layout:left
-        If you really can't be bothered to meet up, then you clearly aren't the friend I thought you were.  #speaker:Sam #portrait:sam #layout:left
-        *** Your right. I'm sorry. Don't know what i was thinking. Where would you like to meet? #speaker:Player #portrait:player #layout:right
-            ~reality_awareness += 2
-            Do you actually want to come? #speaker:Sam #portrait:sam #layout:left
-            Do you actually care? #speaker:Sam #portrait:sam #layout:left
-            
-            **** I do. I swear. Where should we meet? #speaker:Player #portrait:player #layout:right
-            ~reality_awareness += 2
-                Ok. #speaker:Sam #portrait:sam #layout:left
-                Just meet me by the park across the train station in 15 minutes. #speaker:Sam #portrait:sam #layout:left
-                Can you do that? #speaker:Sam #portrait:sam #layout:left
-                ***** Yes, i'll be there. See ya in 15. #speaker:Player #portrait:player #layout:right
-                    See ya. #speaker:Sam #portrait:sam #layout:left
-                    ~reality_awareness += 2
-                    ~ MeetSam = true
-                    ->END
-        
-        *** I'm here for you. But i just don't see how things will be different if we meet up. #speaker:Player #portrait:player #layout:right
-            ~ reality_awareness -= 2
-            Well then you aren't really here for me. Are you? #speaker:Sam #portrait:sam #layout:left
-            I thought you were my friend. #speaker:Sam #portrait:sam #layout:left
-            Don't contact me ever again. #speaker:Sam #portrait:sam #layout:left
-            -> END
-            
-                
-    ** Of course not. Sorry. Don't know what i was thinking. Where should we meet? #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness += 2
-        It's ok. #speaker:Sam #portrait:sam #layout:left
-        Let's just meet by the park across the train station. #speaker:Sam #portrait:sam #layout:left
-        Could you be there within 15 minutes or so? #speaker:Sam #portrait:sam #layout:left
-        
-        *** Sure, i'll be there. #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness += 2
-            Thank you. See you in a bit. #speaker:Sam #portrait:sam #layout:left
-            ~ MeetSam = true
-            ->END
-        
-        *** Maybe. I just have to deal with something before i can go. #speaker:Player #portrait:player #layout:right
-               ~ reality_awareness -= 2 
-                Really? #speaker:Sam #portrait:sam #layout:left
-                And what is that? #speaker:Sam #portrait:sam #layout:left
-                
-                **** Someone on here just keeps sending me posts and messages me. Just have to deal with it. #speaker:Player #portrait:player #layout:right
-                    
-                    Why don't you just ignore them and come over. #speaker:Sam #portrait:sam #layout:left
-                        ***** Your right. I'll be there as soon as i can. #speaker:Player #portrait:player #layout:right
-                         ~ reality_awareness += 2
-                         ~ MeetSam = true
-                            Nice. See ya. #speaker:Sam #portrait:sam #layout:left
-                            ->END
-                            
-                        ***** It won't take long just wait a bit. #speaker:Player #portrait:player #layout:right
-                            ~ reality_awareness -= 2
-                            I literally just explained my situation to you. #speaker:Sam #portrait:sam #layout:left
-                            How can you do this to me? #speaker:Sam #portrait:sam #layout:left
-                            
-                            ****** Your right. I'm sorry. I'll be there as soon as i can. #speaker:Player #portrait:player #layout:right
-                             ~ reality_awareness += 2
-                            Ok. See ya. #speaker:Sam #portrait:sam #layout:left
-                            ~ MeetSam = true
-                            ->END
-                            
-                            ****** It won't take more than 5 minutes more. Pls. Just wait. #speaker:Player #portrait:player #layout:right
-                            ~ reality_awareness -= 2
-                                No. #speaker:Sam #portrait:sam #layout:left
-                                I clearly explained that i needed a friend right now. #speaker:Sam #portrait:sam #layout:left
-                                I thought i could trust you. #speaker:Sam #portrait:sam #layout:left
-                                Clearly i was wrong. #speaker:Sam #portrait:sam #layout:left
-                                Don't bother coming. #speaker:Sam #portrait:sam #layout:left
-                                And don't try to contact me. #speaker:Sam #portrait:sam #layout:left
-                                ->END
-                {ShutUpRiley == true:               
-                **** Never mind. I'll be there as soon as I can. #speaker:Player #portrait:player #layout:right
-                    ~ reality_awareness += 2
-                    Nice. See ya. #speaker:Sam #portrait:sam #layout:left
-                    ~ MeetSam = true
-                        ->END 
-                }
-}
+=listeningstitch
+Thanks, it means a lot. #speaker:Sam #portrait:sam #layout:left
+He was caught in a serious car accident. #speaker:Sam #portrait:sam #layout:left
+Getting the phone call, thinking I had lost him... #speaker:Sam #portrait:sam #layout:left
+It's just hard you know? #speaker:Sam #portrait:sam #layout:left
+* I don't know what to say. I am so sorry you had to go through that. #speaker:Player #portrait:player #layout:right
+    Thanks. #speaker:Sam #portrait:sam #layout:left
+    He is so important to me #speaker:Sam #portrait:sam #layout:left
+    and the thought of loosing him is just too much handle #speaker:Sam #portrait:sam #layout:left
+    ** That sounds awful, but at least he's okay now. Try to focus on that. #speaker:Player #portrait:player #layout:right
+        ->listeningstitch2
+    ** Hey, even if he died you would still have your mom. Don't think about it too much. #speaker:Player #portrait:player #layout:right
+        ->stitch4
+* That must have been so heartbreaking and scary. #speaker:Player #portrait:player #layout:right
+    I have never been more scared #speaker:Sam #portrait:sam #layout:left
+    He means too much for me to lose him already #speaker:Sam #portrait:sam #layout:left
+    There is so much more I want to do with him. #speaker:Sam #portrait:sam #layout:left
+    ** I get that. Don't know what I would do if I lost my dad. #speaker:Player #portrait:player #layout:right
+        ->listeningstitch2
+    ** Hey you can still do all that. Dad or no dad. Doesn't matter really. #speaker:Player #portrait:player #layout:right
+        ->stitch4
+* That's so crazy. What then? #speaker:Player #portrait:player #layout:right
+    I would not call it crazy. #speaker:Sam #portrait:sam #layout:left
+    It was so scary. #speaker:Sam #portrait:sam #layout:left
+    I don't know how I would have dealt with it if I lost him... #speaker:Sam #portrait:sam #layout:left
+    ** Sorry didn't meant it like that. I would have been scared too. #speaker:Player #portrait:player #layout:right
+        ->listeningstitch2
+    ** It would make for a crazy good post on YapChat. It would create a lot of reactions. #speaker:Player #portrait:player #layout:right
+        wtf #speaker:Sam #portrait:sam #layout:left
+        that is my dad's life you are talking about #speaker:Sam #portrait:sam #layout:left
+        not some something to make jokes about #speaker:Sam #portrait:sam #layout:left
+        ->stitch4
 
+=listeningstitch2
+Its just. I feel like I should have been there for him. #speaker:Sam #portrait:sam #layout:left
+Done something. #speaker:Sam #portrait:sam #layout:left
+I know it's stupid, but I just... #speaker:Sam #portrait:sam #layout:left
+Feel helpless. #speaker:Sam #portrait:sam #layout:left
+* It's not stupid. You're going through a lot right now. Be kind to yourself. #speaker:Player #portrait:player #layout:right
+    Yeah.. #speaker:Sam #portrait:sam #layout:left
+    You are right. I shouldn't blame myself. #speaker:Sam #portrait:sam #layout:left
+    Its still just hard seeing him in the state he is in. #speaker:Sam #portrait:sam #layout:left
+    Hooked up to machines, in so much pain... #speaker:Sam #portrait:sam #layout:left
+    ** Hey. He will pull through and be back to normal in no time. You just need to be strong for him. #speaker:Player #portrait:player #layout:right
+        You are right. I know. #speaker:Sam #portrait:sam #layout:left
+        Its good to hear this comming from you. #speaker:Sam #portrait:sam #layout:left
+        ->goodendstitch
+    ** Your dad is the toughest guy I know. Nothing he can't beat. #speaker:Player #portrait:player #layout:right
+        He really is. #speaker:Sam #portrait:sam #layout:left
+        I could not wish for a better dad. #speaker:Sam #portrait:sam #layout:left
+        ->goodendstitch
+* You did what you could Sam. Sometimes things are out of your control. #speaker:Player #portrait:player #layout:right
+    Yeah. #speaker:Sam #portrait:sam #layout:left
+    Some things you can't control #speaker:Sam #portrait:sam #layout:left
+    Its just so unfair... #speaker:Sam #portrait:sam #layout:left
+    Why did this have to happen to him? #speaker:Sam #portrait:sam #layout:left
+    ** Life sometimes just isn't fair. He will pull through and be back to normal soon. #speaker:Player #portrait:player #layout:right
+        Yeah I know. #speaker:Sam #portrait:sam #layout:left
+        Thanks, it good to hear from you. #speaker:Sam #portrait:sam #layout:left
+        ->goodendstitch
+    ** Yeah it unfair. But he is strong he will pull through. #speaker:Player #portrait:player #layout:right
+        He is the strongest I know. #speaker:Sam #portrait:sam #layout:left
+        He always pulls through. #speaker:Sam #portrait:sam #layout:left
+        ->goodendstitch
+* You should have done more. Why didn't you? #speaker:Player #portrait:player #layout:right
+    I.. tried... #speaker:Sam #portrait:sam #layout:left
+    I thought you would support me? #speaker:Sam #portrait:sam #layout:left
+    ** I just mean that you shouldn't give up. Be strong and be there for him. #speaker:Player #portrait:player #layout:right
+        Oh. I thought you meant something different. #speaker:Sam #portrait:sam #layout:left
+        Thanks, I will always be by him. #speaker:Sam #portrait:sam #layout:left
+        I won't give up on him. #speaker:Sam #portrait:sam #layout:left
+        ->goodendstitch
+    ** Come on dude. If anyone is to blame its you. #speaker:Player #portrait:player #layout:right
+        I wasn't even there? #speaker:Sam #portrait:sam #layout:left
+        How are you so out of touch? #speaker:Sam #portrait:sam #layout:left
+        ->stitch4
 
-// Not friends with Riley
-{RileyConnected == false:
-It's just that for the past few days thing have kind of gone to shit for me and my family. #speaker:Sam #portrait:sam #layout:left
-
-Last time after we spoke on here, we got a call from the hospital. #speaker:Sam #portrait:sam #layout:left
-
-They told us that dad had been sent to the emergency room, due to an accident at work. #speaker:Sam #portrait:sam #layout:left
-
-He is fine now, but we really didn't think he was gonna make it, when they initially called. #speaker:Sam #portrait:sam #layout:left
-
-I'm still kind of on edge from this whole experience and could really use a friend right now, so I would appreciate it if we could meet somewhere. #speaker:Sam #portrait:sam #layout:left
-
-* Of course we can meet up. Any particular place you had in mind? #speaker:Player #portrait:player #layout:right
-    ~ reality_awareness += 2
-        Just meet me at the park across the train station. #speaker:Sam #portrait:sam #layout:left
-        Can you be there within 15 minutes? #speaker:Sam #portrait:sam #layout:left
-            ** Sure, i'll see you then. #speaker:Player #portrait:player #layout:right
-            ~ reality_awareness += 2
-                Great. See ya. #speaker:Sam #portrait:sam #layout:left
-            ->END
-            ** Maybe. I just have to deal with something before i can go. #speaker:Player #portrait:player #layout:right
-               ~ reality_awareness -= 2 
-                
-                And what is that? #speaker:Sam #portrait:sam #layout:left
-                
-                *** Someone on here just keeps sending me posts and messages me. Just have to deal with it. #speaker:Player #portrait:player #layout:right
-                    
-                    Why don't you just ignore them and come over. #speaker:Sam #portrait:sam #layout:left
-                        **** Your right. I'll be there as soon as i can. #speaker:Player #portrait:player #layout:right
-                         ~ reality_awareness += 2
-                            Nice. See ya. #speaker:Sam #portrait:sam #layout:left
-                            ~ MeetSam = true
-                            ->END
-                            
-                        **** It won't take long just wait a bit. #speaker:Player #portrait:player #layout:right
-                            ~ reality_awareness -= 2
-                            I literally just explained my situation to you. #speaker:Sam #portrait:sam #layout:left
-                            How can you do this to me? #speaker:Sam #portrait:sam #layout:left
-                            
-                            ***** Your right. I'm sorry. I'll be there as soon as i can. #speaker:Player #portrait:player #layout:right
-                             ~ reality_awareness += 2
-                            Ok. See ya. #speaker:Sam #portrait:sam #layout:left
-                            ~ MeetSam = true
-                            ->END
-                            
-                            ***** It won't take more than 5 minutes more. Pls. Just wait. #speaker:Player #portrait:player #layout:right
-                                ~ reality_awareness -= 2
-                                No. #speaker:Sam #portrait:sam #layout:left
-                                I clearly explained that i needed a friend right now. #speaker:Sam #portrait:sam #layout:left
-                                I thought i could trust you. #speaker:Sam #portrait:sam #layout:left
-                                Clearly i was wrong. #speaker:Sam #portrait:sam #layout:left
-                                Don't bother coming. #speaker:Sam #portrait:sam #layout:left
-                                And don't try to contact me ever again. #speaker:Sam #portrait:sam #layout:left
-                                ->END
-                                
-                *** Never mind. I'll be there as soon as I can. #speaker:Player #portrait:player #layout:right
-                    ~ reality_awareness += 2
-                    Nice. See ya. #speaker:Sam #portrait:sam #layout:left
-                    ~ MeetSam = true
-                        ->END
- 
-            
-* Can't we just talk about it here? What difference does it make if we meet up? #speaker:Player #portrait:player #layout:right
-    ~ reality_awareness -= 2
-    What difference does it make? #speaker:Sam #portrait:sam #layout:left
-    Do you care so little about my situation that you think it can be dealt with through a f***ing chat room? #speaker:Sam #portrait:sam #layout:left
-    ** [Don't you just want someone to talk to? I'm here. I listen.] #speaker:Player #portrait:player #layout:right
-        Don't you just want someone to talk to? #speaker:Player #portrait:player #layout:right
-        I'm here. #speaker:Player #portrait:player #layout:right
-        I listen. #speaker:Player #portrait:player #layout:right
-        Why bother trying to meet up somewhere, when we can discuss the issue right here, right now? #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness -= 2
-        I want someone to BE THERE FOR ME! #speaker:Sam #portrait:sam #layout:left
-        If you really can't be bothered to meet up, then you clearly aren't the friend I thought you were. #speaker:Sam #portrait:sam #layout:left
-        *** Your right. I'm sorry. Don't know what i was thinking. Where would you like to meet? #speaker:Player #portrait:player #layout:right
-            ~reality_awareness += 2
-            Do you actually want to come? #speaker:Sam #portrait:sam #layout:left
-            Do you actually care? #speaker:Sam #portrait:sam #layout:left
-            
-            **** I do. I swear. Where should we meet? #speaker:Player #portrait:player #layout:right
-            ~reality_awareness += 2
-                Ok.  #speaker:Sam #portrait:sam #layout:left
-                Just meet me by the park across the train station in 15 minutes. #speaker:Sam #portrait:sam #layout:left
-                Can you do that? #speaker:Sam #portrait:sam #layout:left
-                ***** Yes, i'll be there. See ya in 15. #speaker:Player #portrait:player #layout:right
-                    See ya.#speaker:Sam #portrait:sam #layout:left
-                    ~reality_awareness += 2
-                    ~ MeetSam = true
-                    ->END
-        
-        *** I'm here for you. But i just don't see how things will be different if we meet up. #speaker:Player #portrait:player #layout:right
-            ~ reality_awareness -= 2
-            Well then you aren't really here for me are you? #speaker:Sam #portrait:sam #layout:left
-            I thought you were my friend. #speaker:Sam #portrait:sam #layout:left
-            Don't contact me ever again. #speaker:Sam #portrait:sam #layout:left
-            -> END
-            
-                
-    ** Of course not. Sorry. Don't know what i was thinking. Where should we meet? #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness += 2
-        It's ok. #speaker:Sam #portrait:sam #layout:left
-        Let's just meet by the park across the train station. #speaker:Sam #portrait:sam #layout:left
-        Could you be there within 15 minutes or so? #speaker:Sam #portrait:sam #layout:left
-        
-        *** Sure, i'll be there. #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness += 2
-            Thank you. See you in a bit. #speaker:Sam #portrait:sam #layout:left
-            ~ MeetSam = true
-            ->END
-        
-        *** Maybe. I just have to deal with something before i can go. #speaker:Player #portrait:player #layout:right
-               ~ reality_awareness -= 2 
-                Really? #speaker:Sam #portrait:sam #layout:left
-                And what is that? #speaker:Sam #portrait:sam #layout:left
-                
-                **** Someone on here just keeps messaging me and shares a bunch of posts. Just have to deal with it. #speaker:Player #portrait:player #layout:right
-                    
-                    Why don't you just ignore them? It clearly can't be more important. #speaker:Sam #portrait:sam #layout:left
-                        ***** Your right. I'll be there as soon as i can. #speaker:Player #portrait:player #layout:right
-                         ~ reality_awareness += 2
-                            Nice. See ya. #speaker:Sam #portrait:sam #layout:left
-                            ~ MeetSam = true
-                            ->END
-                            
-                        ***** It won't take long just wait a bit. #speaker:Player #portrait:player #layout:right
-                            ~ reality_awareness -= 2
-                            I literally just explained my situation to you. #speaker:Sam #portrait:sam #layout:left
-                            How can you do this to me? #speaker:Sam #portrait:sam #layout:left
-                            
-                            ****** Your right. I'm sorry. I'll be there as soon as i can. #speaker:Player #portrait:player #layout:right
-                             ~ reality_awareness += 2
-                            Ok. See ya. #speaker:Sam #portrait:sam #layout:left
-                            ~ MeetSam = true
-                            ->END
-                            
-                            ****** It won't take more than 5 minutes more. Pls. Just wait. #speaker:Player #portrait:player #layout:right
-                                ~ reality_awareness -= 2
-                                No. #speaker:Sam #portrait:sam #layout:left
-                                I clearly explained that i needed a friend right now. #speaker:Sam #portrait:sam #layout:left
-                                I thought i could trust you. #speaker:Sam #portrait:sam #layout:left
-                                Clearly i was wrong. #speaker:Sam #portrait:sam #layout:left
-                                Don't bother coming. #speaker:Sam #portrait:sam #layout:left
-                                And don't try to contact me ever again. #speaker:Sam #portrait:sam #layout:left
-                                ->END
-                                
-                **** Nothing never mind. I'll be there as soon as I can. #speaker:Player #portrait:player #layout:right
-                    ~ reality_awareness += 2
-                    Nice. See ya. #speaker:Sam #portrait:sam #layout:left
-                    ~ MeetSam = true
-                        ->END 
-}
-
+=goodendstitch
+Hey. Thank you for listening to me. #speaker:Sam #portrait:sam #layout:left
+You are such a good friend. #speaker:Sam #portrait:sam #layout:left
+This really helped. I want you to know that. #speaker:Sam #portrait:sam #layout:left
+* I just hope your dad gets better soon. #speaker:Player #portrait:player #layout:right
+    Same here. #speaker:Sam #portrait:sam #layout:left
+    Will keep you updated. #speaker:Sam #portrait:sam #layout:left
+    ->END
+* Remember to take care of yourself. #speaker:Player #portrait:player #layout:right
+    Will do. #speaker:Sam #portrait:sam #layout:left
+    Will keep you updated. #speaker:Sam #portrait:sam #layout:left
+    See you later :) #speaker:Sam #portrait:sam #layout:left
+    ->END
 
 // Dismissive
 =stitch3
@@ -415,7 +163,7 @@ I'm still kind of on edge from this whole experience and could really use a frie
              ~ reality_awareness -= 2
              If that is truly how you feel, then I guess I'll just talk to someone who actually cares. #speaker:Sam #portrait:sam #layout:left
              And to think I thought you were a friend that I could count on. #speaker:Sam #portrait:sam #layout:left
-             ->END
+             ->stitch4
              
             
         
@@ -441,96 +189,34 @@ I'm still kind of on edge from this whole experience and could really use a frie
                 ~ reality_awareness -= 2
                 If that is truly how you feel, then I guess I'll just talk to someone who actually cares. #speaker:Sam #portrait:sam #layout:left
                 And to think I thought you were my friend. #speaker:Sam #portrait:sam #layout:left
-                ->END
+                ->stitch4
 }
 
-{RileyConnected == false:
-    Can't it wait? I really need someone to talk to right now. #speaker:Sam #portrait:sam #layout:left
-    
-    * Ok. What is going on? #speaker:Player #portrait:player #layout:right
-    ~ reality_awareness += 1
-        ->stitch2
-    * Sorry, but I'm busy with something else right now. We can talk later. #speaker:Player #portrait:player #layout:right
-        So you don't you care about me at all? #speaker:Sam #portrait:sam #layout:left
-    
-    ** Of course I care about you. Jesus. What is going on? #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness += 1
-        Are you actually listening? #speaker:Sam #portrait:sam #layout:left
-        *** Yes i am. #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness += 1
-            Ok then. #speaker:Sam #portrait:sam #layout:left
-            ->stitch2
-        *** I'll try. #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness -= 1
-            If that is the best you can do then don't bother. #speaker:Sam #portrait:sam #layout:left
-            Have fun with whatever it is that is more important than being friend for someone else. #speaker:Sam #portrait:sam #layout:left
-            ->END
-            
-    ** Sure i do, but I'm also kind of in the middle of something. #speaker:Player #portrait:player #layout:right
-        ~ reality_awareness -= 1
-        Can't you pls put that on hold and just listen? #speaker:Sam #portrait:sam #layout:left
-            *** Ok then. What is going on? #speaker:Player #portrait:player #layout:right
-             ~ reality_awareness += 1
-            ->stitch2
-            *** Sorry. Can't do that. #speaker:Player #portrait:player #layout:right
-             ~ reality_awareness -= 2
-             If that is truly how you feel, then I guess I'll just talk to someone who actually cares. #speaker:Sam #portrait:sam #layout:left
-             And to think I thought you were a friend that I could count on. #speaker:Sam #portrait:sam #layout:left
-             ->END
-}
-
-
-// Sam patience while waiting
-// 5
 =stitch4
-{ShutUpRiley == false:
-    Are you on your way yet? #speaker:Sam #portrait:sam #layout:left
-    ~ reality_awareness -= 1
-    
-    * Not yet. Just wait. I promise it won't take long. #speaker:Player #portrait:player #layout:right
-    ~ reality_awareness += 1
-    ->DONE
-- else: 
-    * Yes, I'm On my way now. #speaker:Player #portrait:player #layout:right
-    ~ reality_awareness += 2
-        Great. See you in a bit. #speaker:Sam #portrait:sam #layout:left
+What happened to you? #speaker:Sam #portrait:sam #layout:left
+you have really changed since joining YapChat. #speaker:Sam #portrait:sam #layout:left
+I don't even recognize my friend anymore. #speaker:Sam #portrait:sam #layout:left
+* I am sorry, I didn't mean it like that. I am still willing to listen. #speaker:Player #portrait:player #layout:right
+    Okay. #speaker:Sam #portrait:sam #layout:left
+    Pls. I just want my old friend back. #speaker:Sam #portrait:sam #layout:left
+    ** A lot has been going on since last time we spoke. I am still your best friend Sam, nothing will change that. #speaker:Player #portrait:player #layout:right
+        Thanks. #speaker:Sam #portrait:sam #layout:left
+        You have always been there for me. #speaker:Sam #portrait:sam #layout:left
+        ->listeningstitch2
+    ** Nah, I did mean it like that. Jokes on you. #speaker:Player #portrait:player #layout:right
+        You are such an ass. #speaker:Sam #portrait:sam #layout:left
+        I better just leave. #speaker:Sam #portrait:sam #layout:left
+        Goodbye. #speaker:Sam #portrait:sam #layout:left
+        ->END
+* Hey I haven't changed, you just lost your humor. #speaker:Player #portrait:player #layout:right
+    and you just lost a friend #speaker:Sam #portrait:sam #layout:left
+    Goodbye. #speaker:Sam #portrait:sam #layout:left
     ->END
-}
-->DONE
-
-// 10
-=stitch5
-{ShutUpRiley == false:
-    If you don't want to come then just say so instead of wasting my time. #speaker:Sam #portrait:sam #layout:left
-    ~ reality_awareness -= 2
-    
-    * I do want to come, just give me a little more time. #speaker:Player #portrait:player #layout:right
-    ~ reality_awareness += 1
-    ->DONE
-- else: 
-    * I do want to come. I'm on my way now. #speaker:Player #portrait:player #layout:right
-    ~ reality_awareness += 2
-        Great. See you in a bit then. #speaker:Sam #portrait:sam #layout:left
+* Don't put this on me. You are the one bringing down the atmosphere. #speaker:Player #portrait:player #layout:right
+    You are actually so out of touch. #speaker:Sam #portrait:sam #layout:left
+    I can't take anymore of this from you. #speaker:Sam #portrait:sam #layout:left
+    Goodbye. #speaker:Sam #portrait:sam #layout:left
     ->END
-}
-
-// 15
-=stitch6
-{ShutUpRiley == false:
-    Alright, i've had it. #speaker:Sam #portrait:sam #layout:left
-    Don't bother anymore. #speaker:Sam #portrait:sam #layout:left
-    You clearly don't want to help out. #speaker:Sam #portrait:sam #layout:left
-    ~ reality_awareness -= 2
-    
-    + I do want to help. Pls just wait for me. #speaker:Player #portrait:player #layout:right
-    ->DONE
-- else: 
-    * I'm on my way now. Pls just wait for me. #speaker:Player #portrait:player #layout:right
-    ~ reality_awareness += 1
-    ->END
-}
-
-->END
 
 
 
